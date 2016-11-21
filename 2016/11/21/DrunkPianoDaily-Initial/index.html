@@ -94,7 +94,7 @@
 <meta property="og:description" content="Hi all，从今天起我会每天写邮件给大家发送日报；日报的内容是每天工作以外学习的东西，比如对组内前人写的代码的阅读笔记，或是其他学到的东西。当然这些内容对各位老司机来说大概都是了解过的，而且由于时间的关系每天的内容可能比较简短，不妥的部分请指教。另外我的写作风格可能比较啰嗦，还望见谅。。日报使用Markdown语法编写, 会同步到我的GitHub Pages。
 
 下面开始。今天的内容是关于股神插">
-<meta property="og:updated_time" content="2016-11-21T05:19:59.000Z">
+<meta property="og:updated_time" content="2016-11-21T05:29:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DrunkPianoDaily-Initial">
 <meta name="twitter:description" content="Hi all，从今天起我会每天写邮件给大家发送日报；日报的内容是每天工作以外学习的东西，比如对组内前人写的代码的阅读笔记，或是其他学到的东西。当然这些内容对各位老司机来说大概都是了解过的，而且由于时间的关系每天的内容可能比较简短，不妥的部分请指教。另外我的写作风格可能比较啰嗦，还望见谅。。日报使用Markdown语法编写, 会同步到我的GitHub Pages。
@@ -191,7 +191,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -201,7 +201,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -280,7 +280,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <span class="post-meta-item-text">Posted on</span>
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-21T13:09:31+08:00">
                 2016-11-21
               </time>
@@ -317,14 +317,14 @@
       
 
       
-        <h4 id="Hi-all，"><a href="#Hi-all，" class="headerlink" title="Hi all，"></a>Hi all，</h4><p>从今天起我会每天写邮件给大家发送日报；日报的内容是每天<strong>工作以外</strong>学习的东西，比如对组内前人写的代码的阅读笔记，或是其他学到的东西。当然这些内容对各位老司机来说大概都是了解过的，而且由于<strong>时间的关系</strong>每天的内容可能比较简短，不妥的部分请指教。另外我的写作风格可能比较啰嗦，还望见谅。。日报使用Markdown语法编写, 会同步到我的GitHub Pages。</p>
+        <h3 id="Hi-all，"><a href="#Hi-all，" class="headerlink" title="Hi all，"></a>Hi all，</h3><p>从今天起我会每天写邮件给大家发送日报；日报的内容是每天<strong>工作以外</strong>学习的东西，比如对组内前人写的代码的阅读笔记，或是其他学到的东西。当然这些内容对各位老司机来说大概都是了解过的，而且由于<strong>时间的关系</strong>每天的内容可能比较简短，不妥的部分请指教。另外我的写作风格可能比较啰嗦，还望见谅。。日报使用Markdown语法编写, 会同步到我的GitHub Pages。</p>
 <hr>
 <p>下面开始。今天的内容是关于股神插件。<br>股神App开发的过程中使用了插件，把钱包中的股神插件作为了股神App唯一的插件，也是robile框架的应用。  </p>
-<h4 id="0x01-插件的话题切入点"><a href="#0x01-插件的话题切入点" class="headerlink" title="0x01  插件的话题切入点"></a>0x01  插件的话题切入点</h4><p>对于钱包中这套插件的原理，我大概是有印象的，简单描述就是，插件是可以放在宿主中运行的apk，但他没有自己的Activity，需要别人提供，比如Plugin框架提供的Activity(PluginActivity)；然后这个Activity的生命周期也是传递过来的。然后插件所有的新页面都是Fragment。嗯，大概就是这样。然后插件的包名根目录下一定有一个Plugin.java,它继承Activityable，接收生命周期，像下面这样。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">if (TextUtils.isEmpty(mPluginClass)) &#123;</div><div class="line">    if (PluginManager.getInstance().isDebugEnable()) &#123;</div><div class="line">        mPluginPackage = PluginActivity.this.getPackageName();</div><div class="line">    &#125;</div><div class="line">    pluginContextClass = mPluginPackage + ".Plugin";</div><div class="line">&#125;</div><div class="line">```    </div><div class="line"></div><div class="line">对于Module来说呢，也要有一个HostActivity。以前钱包中有ModuleActivity是插件宿主，继承自PluginActivity，可以直接setFunctionProvider，现在「Robile化」了，解耦了，ModuleActivity没有了，取而代之的是module aar中的HostActivity。需要用moduleData保存moduleFunctionProvider（只能是serializable的，不能含有activity对象；这个问题的话也许可以考虑使用Parceable解决，这一点以后再讨论）。</div><div class="line"></div><div class="line">好了，具体从哪里切入呢。无论是插件化，热修复还是动态加载，都涉及到classloader，从这里看起。</div><div class="line"></div><div class="line">#### 0x02 ClassLoader</div><div class="line">##### classloader实例</div><div class="line">PluginActivity中有这样的代码，它用loadClass()方法装载了pluginContextClass，也就是上面构造的.Plugin的那个类：    </div><div class="line"></div><div class="line">```Java</div><div class="line">Class&lt;?&gt; pluginMain = null;</div><div class="line">if (!PluginManager.getInstance().isDebugEnable()) &#123;</div><div class="line">    pluginMain = mPluginClassLoader.loadClass(pluginContextClass);</div><div class="line">&#125; else &#123;</div><div class="line">    pluginMain = PluginActivity.this.getClassLoader().loadClass(</div><div class="line">            pluginContextClass);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="0x01-插件的话题切入点"><a href="#0x01-插件的话题切入点" class="headerlink" title="0x01  插件的话题切入点"></a>0x01  插件的话题切入点</h3><p>对于钱包中这套插件的原理，我大概是有印象的，简单描述就是，插件是可以放在宿主中运行的apk，但他没有自己的Activity，需要别人提供，比如Plugin框架提供的Activity(PluginActivity)；然后这个Activity的生命周期也是传递过来的。然后插件所有的新页面都是Fragment。嗯，大概就是这样。然后插件的包名根目录下一定有一个Plugin.java,它继承Activityable，接收生命周期，像下面这样。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">if (TextUtils.isEmpty(mPluginClass)) &#123;</div><div class="line">    if (PluginManager.getInstance().isDebugEnable()) &#123;</div><div class="line">        mPluginPackage = PluginActivity.this.getPackageName();</div><div class="line">    &#125;</div><div class="line">    pluginContextClass = mPluginPackage + ".Plugin";</div><div class="line">&#125;</div><div class="line">```    </div><div class="line"></div><div class="line">对于Module来说呢，也要有一个HostActivity。以前钱包中有ModuleActivity是插件宿主，继承自PluginActivity，可以直接setFunctionProvider，现在「Robile化」了，解耦了，ModuleActivity没有了，取而代之的是module aar中的HostActivity。需要用moduleData保存moduleFunctionProvider（只能是serializable的，不能含有activity对象；这个问题的话也许可以考虑使用Parceable解决，这一点以后再讨论）。</div><div class="line"></div><div class="line">好了，具体从哪里切入呢。无论是插件化，热修复还是动态加载，都涉及到classloader，从这里看起。</div><div class="line"></div><div class="line">### 0x02 ClassLoader</div><div class="line">#### classloader实例</div><div class="line">PluginActivity中有这样的代码，它用loadClass()方法装载了pluginContextClass，也就是上面构造的.Plugin的那个类：    </div><div class="line"></div><div class="line">```Java</div><div class="line">Class&lt;?&gt; pluginMain = null;</div><div class="line">if (!PluginManager.getInstance().isDebugEnable()) &#123;</div><div class="line">    pluginMain = mPluginClassLoader.loadClass(pluginContextClass);</div><div class="line">&#125; else &#123;</div><div class="line">    pluginMain = PluginActivity.this.getClassLoader().loadClass(</div><div class="line">            pluginContextClass);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>loadClass()是什么呢？它是ClassLoader的方法，用来加载需要的类。类似JVM中的defineClass()方法。<br>Dalvik/ART虚拟机跟JVM虚拟机一样，运行时需要加载类到内存里。类加载器的实例不仅有一个。</p>
 <p>在Android系统启动的时候会创建一个Boot类型的ClassLoader实例，用于加载一些系统Framework层级需要的类，我们的Android应用里也需要用到一些系统的类，所以APP启动的时候也会把这个Boot类型的ClassLoader传进来。</p>
 <p>getClassLoader()可以在程序运行过程中读取到ClassLoader，classLoader.toString()之后可以看到，一个APP至少有两个ClassLoader，也就是上面引用部分提到的两个。</p>
-<h5 id="Parent-Delegation-Model"><a href="#Parent-Delegation-Model" class="headerlink" title="Parent-Delegation Model"></a>Parent-Delegation Model</h5><p>我们可以自己创建CloassLoader实例来加载class，构造函数是这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * constructor for the BootClassLoader which needs parent to be null.</div><div class="line"> */</div><div class="line">ClassLoader(ClassLoader parentLoader, <span class="keyword">boolean</span> nullAllowed) &#123;</div><div class="line">    <span class="keyword">if</span> (parentLoader == <span class="keyword">null</span> &amp;&amp; !nullAllowed) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"parentLoader == null &amp;&amp; !nullAllowed"</span>);</div><div class="line">    &#125;</div><div class="line">    parent = parentLoader;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="Parent-Delegation-Model"><a href="#Parent-Delegation-Model" class="headerlink" title="Parent-Delegation Model"></a>Parent-Delegation Model</h4><p>我们可以自己创建CloassLoader实例来加载class，构造函数是这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * constructor for the BootClassLoader which needs parent to be null.</div><div class="line"> */</div><div class="line">ClassLoader(ClassLoader parentLoader, <span class="keyword">boolean</span> nullAllowed) &#123;</div><div class="line">    <span class="keyword">if</span> (parentLoader == <span class="keyword">null</span> &amp;&amp; !nullAllowed) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"parentLoader == null &amp;&amp; !nullAllowed"</span>);</div><div class="line">    &#125;</div><div class="line">    parent = parentLoader;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>嗯，需要传入一个parent作为新建的classloader的父母。这样的话Android系统里所有的classloader实例都会关联在同一棵树。这就是Parent-Delegation Model。</p>
 <p>Sdk中看到的loadClass()方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String className, <span class="keyword">boolean</span> resolve) <span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">    Class&lt;?&gt; clazz = findLoadedClass(className);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (clazz == <span class="keyword">null</span>) &#123;<span class="comment">//1.classLoader已经加载过这个类的的话就返回</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">//2.parent加载过的话，就返回parent加载的类</span></div><div class="line">            clazz = parent.loadClass(className, <span class="keyword">false</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">            <span class="comment">// Don't want to see this.</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (clazz == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">//3.继承树上的classloadler都没有加载过这个类，就由child加载这个类</span></div><div class="line">            clazz = findClass(className);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> clazz;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Sdk源码里写得比较清楚，注释也很翔实，这大概是我第一次认真看Sdk源码。掌握阅读源码的姿势是很有必要的。<br>可以看到，如果一个类被加载过，那么这个类<strong>永远不会被重新加载</strong>。<br>思考一下，这个「永远」的期限是什么呢，从前面判断，系统启动之后就会有一个系统级别的ClassLoader，app启动之后会”fork”出一个新的，那么加载之后的内容会保存在哪里呢，保存的期限是多久呢。时间关系，明天再说吧。</p>
@@ -418,10 +418,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -438,7 +438,7 @@
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">2</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
@@ -448,7 +448,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -482,7 +482,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hi-all，"><span class="nav-number">1.</span> <span class="nav-text">Hi all，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-插件的话题切入点"><span class="nav-number">2.</span> <span class="nav-text">0x01  插件的话题切入点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Parent-Delegation-Model"><span class="nav-number">2.1.</span> <span class="nav-text">Parent-Delegation Model</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hi-all，"><span class="nav-number">1.</span> <span class="nav-text">Hi all，</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-插件的话题切入点"><span class="nav-number">2.</span> <span class="nav-text">0x01  插件的话题切入点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Parent-Delegation-Model"><span class="nav-number">2.1.</span> <span class="nav-text">Parent-Delegation Model</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -512,7 +512,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
