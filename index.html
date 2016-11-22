@@ -259,7 +259,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/DrunkPianoDaily-episode2/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/DrunkPianoDaily-ep2/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -284,8 +284,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/22/DrunkPianoDaily-episode2/" itemprop="url">
-                  未命名
+                <a class="post-title-link" href="/2016/11/22/DrunkPianoDaily-ep2/" itemprop="url">
+                  DrunkPianoDaily-ep2
                 </a>
               
             
@@ -299,7 +299,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T12:54:42+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T13:11:35+08:00">
                 2016-11-22
               </time>
             
@@ -315,8 +315,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/22/DrunkPianoDaily-episode2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/22/DrunkPianoDaily-episode2/" itemprop="commentCount"></span>
+                <a href="/2016/11/22/DrunkPianoDaily-ep2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/22/DrunkPianoDaily-ep2/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -344,9 +344,7 @@
       
         
           
-            <hr>
-<p>title: DrunkPianoDaily-episode2<br>date: 2016-11-22 11:35:42</p>
-<h2 id="tags-DrunkPianoDaily"><a href="#tags-DrunkPianoDaily" class="headerlink" title="tags:DrunkPianoDaily"></a>tags:DrunkPianoDaily</h2><h3 id="0x00-加载后的类存在的期限"><a href="#0x00-加载后的类存在的期限" class="headerlink" title="0x00 加载后的类存在的期限"></a>0x00 加载后的类存在的期限</h3><p>昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？<br>我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathClassLoader 来实现类加载。<br>从网络上可以查到，DexClassLoader、PathClassLoader 的区别是：    </p>
+            <h3 id="0x00-加载后的类存在的期限"><a href="#0x00-加载后的类存在的期限" class="headerlink" title="0x00 加载后的类存在的期限"></a>0x00 加载后的类存在的期限</h3><p>昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？<br>我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathClassLoader 来实现类加载。<br>从网络上可以查到，DexClassLoader、PathClassLoader 的区别是：    </p>
 <ul>
 <li>DexClassLoader 可以加载 jar/apk/dex，可以从 SD 卡中加载未安装的 apk；</li>
 <li>PathClassLoader 只能加载系统中已经安装过的 apk；</li>
