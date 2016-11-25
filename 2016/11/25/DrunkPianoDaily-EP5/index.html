@@ -84,25 +84,37 @@
 
 
 
-<meta name="description" content="动态加载dex(Part1)
-几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。
-javac生成.classjar命令把.class变成.jardx命令把.jar变成.dexjar可以转换成dex,apk中也可以解压出dex。
-之前说过，抽象类ClassLoader的子">
+<meta name="description" content="动态加载dex(Part1)几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。    
+
+javac生成.class
+jar命令把.class变成.jar
+dx命令把.jar变成.dex    
+
+jar可以转换成dex,apk中也可以解压出dex。      
+之前说">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DrunkPianoDaily-EP5">
 <meta property="og:url" content="http://yoursite.com/2016/11/25/DrunkPianoDaily-EP5/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="动态加载dex(Part1)
-几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。
-javac生成.classjar命令把.class变成.jardx命令把.jar变成.dexjar可以转换成dex,apk中也可以解压出dex。
-之前说过，抽象类ClassLoader的子">
-<meta property="og:updated_time" content="2016-11-25T13:54:52.000Z">
+<meta property="og:description" content="动态加载dex(Part1)几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。    
+
+javac生成.class
+jar命令把.class变成.jar
+dx命令把.jar变成.dex    
+
+jar可以转换成dex,apk中也可以解压出dex。      
+之前说">
+<meta property="og:updated_time" content="2016-11-25T14:01:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DrunkPianoDaily-EP5">
-<meta name="twitter:description" content="动态加载dex(Part1)
-几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。
-javac生成.classjar命令把.class变成.jardx命令把.jar变成.dexjar可以转换成dex,apk中也可以解压出dex。
-之前说过，抽象类ClassLoader的子">
+<meta name="twitter:description" content="动态加载dex(Part1)几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。    
+
+javac生成.class
+jar命令把.class变成.jar
+dx命令把.jar变成.dex    
+
+jar可以转换成dex,apk中也可以解压出dex。      
+之前说">
 
 
 
@@ -347,12 +359,18 @@ javac生成.classjar命令把.class变成.jardx命令把.jar变成.dexjar可以�
       
 
       
-        <p>动态加载dex(Part1)</p>
-<p>几年前我写过一篇博客(Click here)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。</p>
-<p>javac生成.class<br>jar命令把.class变成.jar<br>dx命令把.jar变成.dex<br>jar可以转换成dex,apk中也可以解压出dex。</p>
-<p>之前说过，抽象类ClassLoader的子类DexClassLoader或者PathClassLoader可以实现loadClass，区别是DexClassLoader多了一个参数optimizedDirectory，这个参数的意思是dexPath「优化」后的存储路径，也就是说DexClassLoader是可以读取外部存储上的apk/dex/jar的，然后把它们优化后拷贝到optimizedDirectory里。</p>
-<p>public BaseDexClassLoader(String dexPath, File optimizedDirectory,<br>            String libraryPath, ClassLoader parent) {<br>        super(parent);<br>        this.originalPath = dexPath;<br>        this.pathList =<br>            new DexPathList(this, dexPath, libraryPath, optimizedDirectory);<br>    }<br>libraryPath这个参数代表动态链接库的路径，这个路径也必须是内部存储的，不能是外部存储。这里暂时不讨论动态库的加载。</p>
-<p>File optimizedDexPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + “test.jar”); //<br>File dexOutputDir = this.getDir(“dex”, 0); // 自己指定的dex存放目录<br>DexClassLoader dexClassLoader = new DexClassLoader(optimizedDexPath.getAbsolutePath(),dexOutputDir.getAbsolutePath(), null, getClassLoader());<br>这个optimizedDirectory参数传的值，是自己在应用程序内部存储目录下创建的路径。</p>
+        <h3 id="动态加载dex-Part1"><a href="#动态加载dex-Part1" class="headerlink" title="动态加载dex(Part1)"></a>动态加载dex(Part1)</h3><p>几年前我写过一篇博客(<a href="http://www.cnblogs.com/larrylawrence/p/3818264.html" target="_blank" rel="external">Click here</a>)，当时是看了《Android软件安全与静态分析》这本书写的。里面有介绍dex的生成和反编译。现在我们不需要了解那么详细，大概说一下流程。    </p>
+<ul>
+<li>javac生成.class</li>
+<li>jar命令把.class变成.jar</li>
+<li>dx命令把.jar变成.dex    </li>
+</ul>
+<p>jar可以转换成dex,apk中也可以解压出dex。      </p>
+<p>之前说过，抽象类ClassLoader的子类DexClassLoader或者PathClassLoader可以实现loadClass，区别是DexClassLoader多了一个参数optimizedDirectory，这个参数的意思是dexPath「优化」后的存储路径，也就是说DexClassLoader<strong>是可以读取外部存储上的apk/dex/jar的</strong>，然后把它们优化后拷贝到optimizedDirectory里。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BaseDexClassLoader</span><span class="params">(String dexPath, File optimizedDirectory,</span></span></div><div class="line">            String libraryPath, ClassLoader parent) &#123;</div><div class="line">        <span class="keyword">super</span>(parent);</div><div class="line">        <span class="keyword">this</span>.originalPath = dexPath;</div><div class="line">        <span class="keyword">this</span>.pathList =</div><div class="line">            <span class="keyword">new</span> DexPathList(<span class="keyword">this</span>, dexPath, libraryPath, optimizedDirectory);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>libraryPath这个参数代表动态链接库的路径，这个路径也必须是内部存储的，不能是外部存储。这里暂时不讨论动态库的加载。    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">File optimizedDexPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + &quot;test.jar&quot;); // </div><div class="line">File dexOutputDir = this.getDir(&quot;dex&quot;, 0); // 自己指定的dex存放目录</div><div class="line">DexClassLoader dexClassLoader = new DexClassLoader(optimizedDexPath.getAbsolutePath(),dexOutputDir.getAbsolutePath(), null, getClassLoader());</div></pre></td></tr></table></figure>
+<p>这个optimizedDirectory参数传的值，是自己在应用程序内部存储目录下创建的路径。    </p>
 <p>有点累。一年一度的ingress双倍经验开始了，周末两天要出去冲一下 15级，估计要在寒风中肝十几个小时。今天先到这里。</p>
 <p>-NOV 25</p>
 
@@ -440,8 +458,17 @@ javac生成.classjar命令把.class变成.jardx命令把.jar变成.dexjar可以�
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -525,6 +552,22 @@ javac生成.classjar命令把.class变成.jardx命令把.jar变成.dexjar可以�
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态加载dex-Part1"><span class="nav-number">1.</span> <span class="nav-text">动态加载dex(Part1)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
