@@ -84,16 +84,22 @@
 
 
 
-<meta name="description" content="0x00 加载后的类存在的期限昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathCl">
+<meta name="description" content="资源替换前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    
+有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    
+dynamic-load-apk方案用的是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DrunkPianoDaily-ep2">
-<meta property="og:url" content="http://yoursite.com/2016/11/22/DrunkPianoDaily-ep2/index.html">
+<meta property="og:title" content="DrunkPianoDaily-EP7">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="0x00 加载后的类存在的期限昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathCl">
-<meta property="og:updated_time" content="2016-11-22T05:12:11.000Z">
+<meta property="og:description" content="资源替换前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    
+有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    
+dynamic-load-apk方案用的是">
+<meta property="og:updated_time" content="2016-11-29T14:35:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkPianoDaily-ep2">
-<meta name="twitter:description" content="0x00 加载后的类存在的期限昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathCl">
+<meta name="twitter:title" content="DrunkPianoDaily-EP7">
+<meta name="twitter:description" content="资源替换前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    
+有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    
+dynamic-load-apk方案用的是">
 
 
 
@@ -121,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/22/DrunkPianoDaily-ep2/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/"/>
 
 
 
 
 
-  <title> DrunkPianoDaily-ep2 | DrunkPiano的Android日常 </title>
+  <title> DrunkPianoDaily-EP7 | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/DrunkPianoDaily-ep2/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -282,7 +288,7 @@
             
             
               
-                DrunkPianoDaily-ep2
+                DrunkPianoDaily-EP7
               
             
           </h1>
@@ -295,8 +301,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T13:11:35+08:00">
-                2016-11-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T22:34:44+08:00">
+                2016-11-29
               </time>
             
 
@@ -311,8 +317,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/22/DrunkPianoDaily-ep2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/22/DrunkPianoDaily-ep2/" itemprop="commentCount"></span>
+                <a href="/2016/11/29/DrunkPianoDaily-EP7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/DrunkPianoDaily-EP7/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -338,27 +344,28 @@
       
 
       
-        <h3 id="0x00-加载后的类存在的期限"><a href="#0x00-加载后的类存在的期限" class="headerlink" title="0x00 加载后的类存在的期限"></a>0x00 加载后的类存在的期限</h3><p>昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？<br>我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathClassLoader 来实现类加载。<br>从网络上可以查到，DexClassLoader、PathClassLoader 的区别是：    </p>
+        <h3 id="资源替换"><a href="#资源替换" class="headerlink" title="资源替换"></a>资源替换</h3><p>前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    </p>
+<p>有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    </p>
+<p><a href="https://github.com/singwhatiwanna/dynamic-load-apk" target="_blank" rel="external">dynamic-load-apk</a>方案用的是这样的：<br>首先，Activity继承了Context，Context中有两个抽象方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** Return an AssetManager instance for your application's package. */</span></div><div class="line"><span class="comment">/** 为应用程序的包返回一个AssetManager实例。 */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AssetManager <span class="title">getAssets</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="comment">/** Return a Resources instance for your application's package. */</span></div><div class="line"><span class="comment">/** 为应用程序包返回一个Resources实例 */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Resources <span class="title">getResources</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure>
+<p>context就是通过这两个方法在Activity中获取资源的。这两个方法的实现在ContextImpl中。getResuorces返回的resources是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Resources resources = packageInfo.getResources(mainThread);</div><div class="line"><span class="keyword">if</span> (resources != <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (displayId != Display.DEFAULT_DISPLAY</div><div class="line">            || overrideConfiguration != <span class="keyword">null</span></div><div class="line">            || (compatInfo != <span class="keyword">null</span> &amp;&amp; compatInfo.applicationScale</div><div class="line">                    != resources.getCompatibilityInfo().applicationScale)) &#123;</div><div class="line">        <span class="comment">//getTopLevelResources根据资源目录、分隔资源目录..等参数提供顶级资源给application</span></div><div class="line">        resources = mResourcesManager.getTopLevelResources(packageInfo.getResDir(),</div><div class="line">                packageInfo.getSplitResDirs(), packageInfo.getOverlayDirs(),</div><div class="line">                packageInfo.getApplicationInfo().sharedLibraryFiles, displayId,</div><div class="line">                overrideConfiguration, compatInfo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也想通过<strong>getResources</strong>获取资源，那么可以模仿它这样来写。    </p>
 <ul>
-<li>DexClassLoader 可以加载 jar/apk/dex，可以从 SD 卡中加载未安装的 apk；</li>
-<li>PathClassLoader 只能加载系统中已经安装过的 apk；</li>
+<li><p>1.AssetManager中有addAssetsPath方法，参数可以是一个dircetory或者一个ZIP file。它里面有个native方法可以把资源加载到res中。   </p>
+</li>
+<li><p>2.嗯，然后用assetManager来反射调用（为什么addAssetPath是隐藏的API?）addAssetPath方法，参数是mDexPath，也就是外部apk的路径。如下。    </p>
+</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// DexClassLoader.java</div><div class="line">public class DexClassLoader extends BaseDexClassLoader &#123;</div><div class="line">    public DexClassLoader(String dexPath, String optimizedDirectory,</div><div class="line">            String libraryPath, ClassLoader parent) &#123;</div><div class="line">        super(dexPath, new File(optimizedDirectory), libraryPath, parent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>DexClassLoader的构造参数有dexPath，optimizedDirectory，libraryPath和parent。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// PathClassLoader.java</div><div class="line">public class PathClassLoader extends BaseDexClassLoader &#123;</div><div class="line">    public PathClassLoader(String dexPath, ClassLoader parent) &#123;</div><div class="line">        super(dexPath, null, null, parent);</div><div class="line">    &#125;</div><div class="line">    public PathClassLoader(String dexPath, String libraryPath,</div><div class="line">            ClassLoader parent) &#123;</div><div class="line">        super(dexPath, null, libraryPath, parent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>PathClassLoader的构造参数就只有dexPath和libraryPath，少了一个optimizedDirectory（super中传了null）。那么，看来<strong>这个optimizedDirectory就是为什么PathClassLoader「只能加载系统中已经安装过的 apk」的原因</strong>。</p>
-<p>看看他们共同的父类BaseDexClassLoader里面的实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BaseDexClassLoader</span><span class="params">(String dexPath, File optimizedDirectory,</span></span></div><div class="line">            String libraryPath, ClassLoader parent) &#123;</div><div class="line">        <span class="keyword">super</span>(parent);</div><div class="line">        <span class="keyword">this</span>.originalPath = dexPath;</div><div class="line">        <span class="keyword">this</span>.pathList = <span class="keyword">new</span> DexPathList(<span class="keyword">this</span>, dexPath, libraryPath, optimizedDirectory);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>创建了系统自动loadClass之后的dexPath，以及一个DexPathList对象。<br>在DexPathList.java中有这样的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">private static DexFile loadDexFile(File file, File optimizedDirectory)</div><div class="line">        throws IOException &#123;</div><div class="line">    if (optimizedDirectory == null) &#123;</div><div class="line">        return new DexFile(file);</div><div class="line">    &#125; else &#123;</div><div class="line">        String optimizedPath = optimizedPathFor(file, optimizedDirectory);</div><div class="line">        return DexFile.loadDex(file.getPath(), optimizedPath, 0);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以及：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Converts a dex/jar file path and an output directory to an</div><div class="line"> * output file path for an associated optimized dex file.</div><div class="line"> * 为关联的最优化dexfile把dex/jar文件路径和输出目录转换成一个output文件路径</div><div class="line"> */</div><div class="line">private static String optimizedPathFor(File path,</div><div class="line">        File optimizedDirectory) &#123;</div><div class="line">    String fileName = path.getName();</div><div class="line">    if (!fileName.endsWith(DEX_SUFFIX)) &#123;</div><div class="line">        int lastDot = fileName.lastIndexOf(&quot;.&quot;);</div><div class="line">        if (lastDot &lt; 0) &#123;</div><div class="line">            fileName += DEX_SUFFIX;</div><div class="line">        &#125; else &#123;</div><div class="line">            StringBuilder sb = new StringBuilder(lastDot + 4);</div><div class="line">            sb.append(fileName, 0, lastDot);</div><div class="line">            sb.append(DEX_SUFFIX);</div><div class="line">            fileName = sb.toString();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    File result = new File(optimizedDirectory, fileName);</div><div class="line">    return result.getPath();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>也就是optimizedDirectory用来存储加载的dex文件，比如想要加载sd卡上的dex，就填写对应的文件路径。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">return DexFile.loadDex(file.getPath(), optimizedPath, 0);</div></pre></td></tr></table></figure>
-<p>所以昨天的问题大概清楚了，既然是创建了一个文件来保存，而且这个文件是保存到应用内的（file.getPath()），所以类加载之后保存的「期限」<strong>就是在应用清空缓存或者卸载应用前</strong>。    </p>
-<p>前面我们了解到，凡是被父母加载过的类都不会重新被加载。这样的话，如果想要动态更新一个类，比如想要用到更新插件apk来实现「热修复」，就必须用一个不同的类，否则classloader会使用加载过的类。所以我们在使用新的插件的时候，要构造一个新的classLoader来加载这个插件的dex。或者，也许可以先清空之前加载过的dex的缓存路径。    </p>
-<p>时间不够了，明天再说吧。</p>
-<p>-NOV22</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">addAssetPath.invoke(assetManager, mDexPath);</div></pre></td></tr></table></figure>
+<ul>
+<li>3.然后用这个assetManager创建一个新的资源：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Resources superRes = <span class="keyword">super</span>.getResources();  </div><div class="line">mResources = <span class="keyword">new</span> Resources(mAssetManager, superRes.getDisplayMetrics(),  </div><div class="line">            superRes.getConfiguration());</div></pre></td></tr></table></figure>
+<p>最后，要覆写那两个抽象方法哦，不然的话会一直用父类默认得到的AssetManager和Resources：    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> AssetManager <span class="title">getAssets</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> mAssetManager == <span class="keyword">null</span> ? <span class="keyword">super</span>.getAssets() : mAssetManager;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> Resources <span class="title">getResources</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> mResources == <span class="keyword">null</span> ? <span class="keyword">super</span>.getResources() : mResources;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>大概就是这样了。    </p>
+<p>-NOV29</p>
 
       
     </div>
@@ -385,8 +392,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/21/DrunkPianoDaily-Initial/" rel="next" title="DrunkPianoDaily-Initial">
-                <i class="fa fa-chevron-left"></i> DrunkPianoDaily-Initial
+              <a href="/2016/11/28/DrunkPianoDaily-EP6/" rel="next" title="DrunkPianoDaily-EP6">
+                <i class="fa fa-chevron-left"></i> DrunkPianoDaily-EP6
               </a>
             
           </div>
@@ -394,10 +401,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/23/DrunkPianoDaily-ep3/" rel="prev" title="DrunkPianoDaily-ep3">
-                DrunkPianoDaily-ep3 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -423,8 +426,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/22/DrunkPianoDaily-ep2/"
-           data-title="DrunkPianoDaily-ep2" data-url="http://yoursite.com/2016/11/22/DrunkPianoDaily-ep2/">
+      <div class="ds-thread" data-thread-key="2016/11/29/DrunkPianoDaily-EP7/"
+           data-title="DrunkPianoDaily-EP7" data-url="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/">
       </div>
     
   </div>
@@ -552,7 +555,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-加载后的类存在的期限"><span class="nav-number">1.</span> <span class="nav-text">0x00 加载后的类存在的期限</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源替换"><span class="nav-number">1.</span> <span class="nav-text">资源替换</span></a></li></ol></div>
             
 
           </div>

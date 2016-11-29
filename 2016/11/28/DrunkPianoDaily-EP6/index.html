@@ -94,7 +94,7 @@
 <meta property="og:description" content="动态加载dex(Part2)上周五说到了把dex文件加载到DexClassLoader中去；加载完成后怎么调用dex中的源码呢？    
 0x00 Robile中的实现在Robile框架的PluginActivity.java中是这样实现的：1pluginContextClass = mPluginPackage + &quot;.Plugin&quot;;
 所有的插件都符合这样的规范，package根目录下有个.P">
-<meta property="og:updated_time" content="2016-11-28T12:00:58.000Z">
+<meta property="og:updated_time" content="2016-11-29T12:58:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DrunkPianoDaily-EP6">
 <meta name="twitter:description" content="动态加载dex(Part2)上周五说到了把dex文件加载到DexClassLoader中去；加载完成后怎么调用dex中的源码呢？    
@@ -350,7 +350,7 @@
 <p>这样就进入了插件的生命周期。问题是，这里的mActivity是怎么映射到Plugin的生命周期的？我们可以看到：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Constructor&lt;?&gt; pluginMainConstructor = pluginMain.getConstructor();<span class="comment">//获取pluginMain的构造方法（pluginMain就是读取的Plugin）</span></div><div class="line">mActivity = (Activityable) pluginMainConstructor</div><div class="line">		.newInstance();</div></pre></td></tr></table></figure></p>
 <p><strong>这里初始化了一个Plugin.java这个类的构造器，然后mActivity获得了它的instance。</strong>这就是为什么mActivity的onCreate、onResume等等生命周期对应了Plugin的生命周期。    </p>
 <h4 id="0x01-执行具体函数"><a href="#0x01-执行具体函数" class="headerlink" title="0x01 执行具体函数"></a>0x01 执行具体函数</h4><p>如果是「热修复」呢，也就是想要执行dex中某个具体的方法，可以反射到具体的方法然后执行：    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">targetClass = dexClassLoader.loadClass(&quot;com.drunkpiano.TestClass&quot;);</div><div class="line">// 遍历类中所有的方法</div><div class="line">Method[] methods = targetClass.getDeclaredMethods();</div><div class="line">for (int i = 0; i &lt; methods.length; i++) &#123;</div><div class="line">    Log.e(TAG, methods[i].toString());</div><div class="line">&#125;</div><div class="line">Method method = targetClass.getDeclaredMethod(&quot;function&quot;);// 读取指定的方法</div><div class="line">method.setAccessible(true);//把方法设为public以支持外部调用</div><div class="line">String string = (String) method.invoke(targetClass.newInstance());// 调用方法</div><div class="line">Toast.makeText(this, string, Toast.LENGTH_LONG).show();</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">targetClass = dexClassLoader.loadClass(<span class="string">"com.drunkpiano.TestClass"</span>);</div><div class="line"><span class="comment">// 遍历类中所有的方法</span></div><div class="line">Method[] methods = targetClass.getDeclaredMethods();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; methods.length; i++) &#123;</div><div class="line">    Log.e(TAG, methods[i].toString());</div><div class="line">&#125;</div><div class="line">Method method = targetClass.getDeclaredMethod(<span class="string">"function"</span>);<span class="comment">// 读取指定的方法</span></div><div class="line">method.setAccessible(<span class="keyword">true</span>);<span class="comment">//把方法设为public以支持外部调用</span></div><div class="line">String string = (String) method.invoke(targetClass.newInstance());<span class="comment">// 调用方法</span></div><div class="line">Toast.makeText(<span class="keyword">this</span>, string, Toast.LENGTH_LONG).show();</div></pre></td></tr></table></figure>
 <p>另外，看到有些方案说，还可以在主工程中打包一些接口来实现。这里不深究了。<br>-NOV 28</p>
 
       
@@ -387,6 +387,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/29/DrunkPianoDaily-EP7/" rel="prev" title="DrunkPianoDaily-EP7">
+                DrunkPianoDaily-EP7 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -458,7 +462,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
