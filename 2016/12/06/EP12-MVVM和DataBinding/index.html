@@ -84,22 +84,31 @@
 
 
 
-<meta name="description" content="动态加载dex(Part2)上周五说到了把dex文件加载到DexClassLoader中去；加载完成后怎么调用dex中的源码呢？    
-0x00 Robile中的实现在Robile框架的PluginActivity.java中是这样实现的：1pluginContextClass = mPluginPackage + &quot;.Plugin&quot;;
-所有的插件都符合这样的规范，package根目录下有个.P">
+<meta name="description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
+目前的Android程序结构，常见下面三种开发模式：    
+MVC:
+View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
+
+但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DrunkPianoDaily-EP6">
-<meta property="og:url" content="http://yoursite.com/2016/11/28/DrunkPianoDaily-EP6/index.html">
+<meta property="og:title" content="EP12-MVVM和DataBinding">
+<meta property="og:url" content="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="动态加载dex(Part2)上周五说到了把dex文件加载到DexClassLoader中去；加载完成后怎么调用dex中的源码呢？    
-0x00 Robile中的实现在Robile框架的PluginActivity.java中是这样实现的：1pluginContextClass = mPluginPackage + &quot;.Plugin&quot;;
-所有的插件都符合这样的规范，package根目录下有个.P">
-<meta property="og:updated_time" content="2016-11-29T12:58:45.000Z">
+<meta property="og:description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
+目前的Android程序结构，常见下面三种开发模式：    
+MVC:
+View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
+
+但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
+<meta property="og:updated_time" content="2016-12-06T13:15:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkPianoDaily-EP6">
-<meta name="twitter:description" content="动态加载dex(Part2)上周五说到了把dex文件加载到DexClassLoader中去；加载完成后怎么调用dex中的源码呢？    
-0x00 Robile中的实现在Robile框架的PluginActivity.java中是这样实现的：1pluginContextClass = mPluginPackage + &quot;.Plugin&quot;;
-所有的插件都符合这样的规范，package根目录下有个.P">
+<meta name="twitter:title" content="EP12-MVVM和DataBinding">
+<meta name="twitter:description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
+目前的Android程序结构，常见下面三种开发模式：    
+MVC:
+View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
+
+但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
 
 
 
@@ -127,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/28/DrunkPianoDaily-EP6/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/"/>
 
 
 
 
 
-  <title> DrunkPianoDaily-EP6 | DrunkPiano的Android日常 </title>
+  <title> EP12-MVVM和DataBinding | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +273,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/28/DrunkPianoDaily-EP6/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -288,7 +297,7 @@
             
             
               
-                DrunkPianoDaily-EP6
+                EP12-MVVM和DataBinding
               
             
           </h1>
@@ -301,8 +310,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-28T20:00:40+08:00">
-                2016-11-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-06T21:15:17+08:00">
+                2016-12-06
               </time>
             
 
@@ -317,8 +326,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/28/DrunkPianoDaily-EP6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/DrunkPianoDaily-EP6/" itemprop="commentCount"></span>
+                <a href="/2016/12/06/EP12-MVVM和DataBinding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/06/EP12-MVVM和DataBinding/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -344,14 +353,28 @@
       
 
       
-        <h3 id="动态加载dex-Part2"><a href="#动态加载dex-Part2" class="headerlink" title="动态加载dex(Part2)"></a>动态加载dex(Part2)</h3><p>上周五说到了把dex文件加载到DexClassLoader中去；加载完成后怎么调用dex中的源码呢？    </p>
-<h4 id="0x00-Robile中的实现"><a href="#0x00-Robile中的实现" class="headerlink" title="0x00 Robile中的实现"></a>0x00 Robile中的实现</h4><p>在Robile框架的PluginActivity.java中是这样实现的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pluginContextClass = mPluginPackage + <span class="string">".Plugin"</span>;</div></pre></td></tr></table></figure></p>
-<p>所有的插件都符合这样的规范，package根目录下有个.Plugin.java作为插件入口。<br>具体执行哪一个方法？Plugin.java是继承Activityable的，PluginActivity的onCreate结束之后执行onPluginCreate，onPluginCreate中执行了mActivity.onCreate()：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPluginCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (mActivity != <span class="keyword">null</span> &amp;&amp; mActivity <span class="keyword">instanceof</span> Activityable) &#123;</div><div class="line">		mActivity.onCreate(<span class="keyword">this</span>, savedInstanceState);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样就进入了插件的生命周期。问题是，这里的mActivity是怎么映射到Plugin的生命周期的？我们可以看到：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Constructor&lt;?&gt; pluginMainConstructor = pluginMain.getConstructor();<span class="comment">//获取pluginMain的构造方法（pluginMain就是读取的Plugin）</span></div><div class="line">mActivity = (Activityable) pluginMainConstructor</div><div class="line">		.newInstance();</div></pre></td></tr></table></figure></p>
-<p><strong>这里初始化了一个Plugin.java这个类的构造器，然后mActivity获得了它的instance。</strong>这就是为什么mActivity的onCreate、onResume等等生命周期对应了Plugin的生命周期。    </p>
-<h4 id="0x01-执行具体函数"><a href="#0x01-执行具体函数" class="headerlink" title="0x01 执行具体函数"></a>0x01 执行具体函数</h4><p>如果是「热修复」呢，也就是想要执行dex中某个具体的方法，可以反射到具体的方法然后执行：    </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">targetClass = dexClassLoader.loadClass(<span class="string">"com.drunkpiano.TestClass"</span>);</div><div class="line"><span class="comment">// 遍历类中所有的方法</span></div><div class="line">Method[] methods = targetClass.getDeclaredMethods();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; methods.length; i++) &#123;</div><div class="line">    Log.e(TAG, methods[i].toString());</div><div class="line">&#125;</div><div class="line">Method method = targetClass.getDeclaredMethod(<span class="string">"function"</span>);<span class="comment">// 读取指定的方法</span></div><div class="line">method.setAccessible(<span class="keyword">true</span>);<span class="comment">//把方法设为public以支持外部调用</span></div><div class="line">String string = (String) method.invoke(targetClass.newInstance());<span class="comment">// 调用方法</span></div><div class="line">Toast.makeText(<span class="keyword">this</span>, string, Toast.LENGTH_LONG).show();</div></pre></td></tr></table></figure>
-<p>另外，看到有些方案说，还可以在主工程中打包一些接口来实现。这里不深究了。<br>-NOV 28</p>
+        <h3 id="MVVM和DataBinding"><a href="#MVVM和DataBinding" class="headerlink" title="MVVM和DataBinding"></a>MVVM和DataBinding</h3><p>印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    </p>
+<p>目前的Android程序结构，常见下面三种开发模式：    </p>
+<h4 id="MVC"><a href="#MVC" class="headerlink" title="MVC:"></a><strong>MVC</strong>:</h4><blockquote>
+<p>View：对应于xml布局文件<br>Model：实体模型<br>Controllor：对应于Activity业务逻辑，数据处理和UI处理    </p>
+</blockquote>
+<p>但是XML的View功能太弱，很多视图都要放在Activigy中完成，Activity还承担一些控制逻辑。所以Activity就成了View+Controller。    </p>
+<h4 id="MVP"><a href="#MVP" class="headerlink" title="MVP:"></a><strong>MVP:</strong></h4><blockquote>
+<p>View: 对应于Activity和xml，负责View的绘制以及与用户交互<br>Model: 实体模型<br>Presenter: 负责完成View于Model间的交互和业务逻辑    </p>
+</blockquote>
+<p>这样的话Activity就能成为真正的View而不是View和Control的合体，Activity只做UI相关的事。但是Activity需要实现各种跟UI相关的接口，同时要在Activity中编写大量的事件，然后在事件处理中调用presenter的业务处理方法。    </p>
+<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM:"></a><strong>MVVM:</strong></h4><blockquote>
+<p>View: 对应于Activity和xml，负责View的绘制以及与用户交互<br>Model: 实体模型<br>ViewModel: 负责完成View于Model间的交互,负责业务逻辑    </p>
+</blockquote>
+<p>MVVM的目标和思想MVP类似，利用数据绑定(<strong>Data Binding</strong>)、依赖属性(Dependency Property)、命令(Command)、路由事件(Routed Event)等新特性，打造了一个更加灵活高效的架构。<br>MVVM有这样几个优点：    </p>
+<ul>
+<li>数据驱动（ViewModel只要关注数据和业务逻辑，不需要和UI或者控件打交道）</li>
+<li>低耦合度（数据是独立于UI的，ViewModel只负责处理和提供数据，控件变了也无所谓）    </li>
+<li>更新UI（可以在工作线程中直接修改View Model的数据，剩下的DataBinding搞定）</li>
+<li>可复用性（一个View Model复用到多个View中，同样的一份数据，用不同的UI去做展示）</li>
+</ul>
+<h4 id="DataBinding"><a href="#DataBinding" class="headerlink" title="DataBinding"></a>DataBinding</h4><p>MVVM是舶来品，从Web前端的Argular而来，Angular有<strong>DataBind</strong>功能。<br>Android之前也有一些库比如RoboGuice、ButterKnife实现了类似DataBind的依赖注入框架实现了类似的功能。<br>今年4月Android UI团队发布了一个DataBinding的库。<br>是不是能应用到印尼钱包中呢。明天我再了解一下。</p>
+<p>Reference：<br>[1]<a href="https://realm.io/cn/news/data-binding-android-boyar-mount/" target="_blank" rel="external">https://realm.io/cn/news/data-binding-android-boyar-mount/</a></p>
 
       
     </div>
@@ -378,8 +401,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/25/DrunkPianoDaily-EP5/" rel="next" title="DrunkPianoDaily-EP5">
-                <i class="fa fa-chevron-left"></i> DrunkPianoDaily-EP5
+              <a href="/2016/12/05/EP11-迷路在BroadcastReceiver/" rel="next" title="EP11-迷路在BroadcastReceiver">
+                <i class="fa fa-chevron-left"></i> EP11-迷路在BroadcastReceiver
               </a>
             
           </div>
@@ -387,10 +410,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/29/DrunkPianoDaily-EP7/" rel="prev" title="DrunkPianoDaily-EP7">
-                DrunkPianoDaily-EP7 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -416,8 +435,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/28/DrunkPianoDaily-EP6/"
-           data-title="DrunkPianoDaily-EP6" data-url="http://yoursite.com/2016/11/28/DrunkPianoDaily-EP6/">
+      <div class="ds-thread" data-thread-key="2016/12/06/EP12-MVVM和DataBinding/"
+           data-title="EP12-MVVM和DataBinding" data-url="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/">
       </div>
     
   </div>
@@ -545,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态加载dex-Part2"><span class="nav-number">1.</span> <span class="nav-text">动态加载dex(Part2)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x00-Robile中的实现"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 Robile中的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-执行具体函数"><span class="nav-number">1.2.</span> <span class="nav-text">0x01 执行具体函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM和DataBinding"><span class="nav-number">1.</span> <span class="nav-text">MVVM和DataBinding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC"><span class="nav-number">1.1.</span> <span class="nav-text">MVC:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP"><span class="nav-number">1.2.</span> <span class="nav-text">MVP:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM"><span class="nav-number">1.3.</span> <span class="nav-text">MVVM:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataBinding"><span class="nav-number">1.4.</span> <span class="nav-text">DataBinding</span></a></li></ol></li></ol></div>
             
 
           </div>
