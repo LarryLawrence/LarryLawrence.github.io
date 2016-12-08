@@ -259,6 +259,195 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/08/EP14-DataBinding-2/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="DrunkPiano">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="DrunkPiano的Android日常">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/08/EP14-DataBinding-2/" itemprop="url">
+                  EP14-DataBinding(2)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-08T22:58:11+08:00">
+                2016-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/08/EP14-DataBinding-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/EP14-DataBinding-2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><h4 id="Method-References"><a href="#Method-References" class="headerlink" title="Method References"></a>Method References</h4><p>事件可以被直接绑定到handler，类似于Activity中onClick可以被指派给一个方法。相比View#onClick的一个优势是，这个表达式会在编译时被处理，所以如果方法不存在或者签名不对，或编译错误。    </p>
+<p>Method References和Listener Bindings的一个主要区别是，前者的listener的真正实现是在data被绑定的时候，而不是事件被触发的时候。如果想在事件发生时评估表达式，请用listener binding。    </p>
+<p>分配event给handler，使用一个正常的binding表达式，它的值就是被调用的方法名。例如,if your data object has two methods:    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyHandlers</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickFriend</span><span class="params">(View view)</span> </span>&#123; ... &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>binding表达式可以分配click listener到一个View：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;layout xmlns:android="http://schemas.android.com/apk/res/android"&gt;</div><div class="line">   &lt;data&gt;</div><div class="line">       &lt;variable name="handlers" type="com.example.Handlers"/&gt;</div><div class="line">       &lt;variable name="user" type="com.example.User"/&gt;</div><div class="line">   &lt;/data&gt;</div><div class="line">   &lt;LinearLayout</div><div class="line">       android:orientation="vertical"</div><div class="line">       android:layout_width="match_parent"</div><div class="line">       android:layout_height="match_parent"&gt;</div><div class="line">       &lt;TextView android:layout_width="wrap_content"</div><div class="line">           android:layout_height="wrap_content"</div><div class="line">           android:text="@&#123;user.firstName&#125;"</div><div class="line">           android:onClick="@&#123;handlers::onClickFriend&#125;"/&gt;</div><div class="line">   &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<p>注意，表达式(expression)中的方法的签名(signature)必须和Listener Object中的方法的签名完全一致。</p>
+<h4 id="Listener-Bindings"><a href="#Listener-Bindings" class="headerlink" title="Listener Bindings"></a>Listener Bindings</h4><p>Listener Bindings使用更为灵活，跟Method References类似，但可以让你运行随意的data binding表达式。这里不介绍了。     </p>
+<h3 id="Layout的细节"><a href="#Layout的细节" class="headerlink" title="Layout的细节"></a>Layout的细节</h3><h4 id="1-Imports"><a href="#1-Imports" class="headerlink" title="1. Imports"></a>1. Imports</h4><p>在data节点中这样添加引用：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"android.view.View"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">data</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样，你可以在binding表达式中使用View了：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">   <span class="attr">android:text</span>=<span class="string">"@&#123;user.lastName&#125;"</span></div><div class="line">   <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">   <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">   <span class="attr">android:visibility</span>=<span class="string">"@&#123;user.isAdult ? View.VISIBLE : View.GONE&#125;"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>类名冲突的时候，可以取别名(alias):</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"android.view.View"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.example.real.estate.View"</span></span></div><div class="line">        <span class="attr">alias</span>=<span class="string">"Vista"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>variables和表达式的type references中都可以用引用的type：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.example.User"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"java.util.List"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">type</span>=<span class="string">"User"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"userList"</span> <span class="attr">type</span>=<span class="string">"List&lt;User&gt;"</span>/&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">data</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在表达式中引用静态field和方法的时候也能使用引用的type：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;data&gt;</div><div class="line">    &lt;import type=&quot;com.example.MyStringUtils&quot;/&gt;</div><div class="line">    &lt;variable name=&quot;user&quot; type=&quot;com.example.User&quot;/&gt;</div><div class="line">&lt;/data&gt;</div><div class="line">…</div><div class="line">&lt;TextView</div><div class="line">   android:text=&quot;@&#123;MyStringUtils.capitalize(user.lastName)&#125;&quot;</div><div class="line">   android:layout_width=&quot;wrap_content&quot;</div><div class="line">   android:layout_height=&quot;wrap_content&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>跟Java中一样，java.lang.*这种类会被自动导入。</p>
+<h4 id="2-Variables"><a href="#2-Variables" class="headerlink" title="2. Variables"></a>2. Variables</h4><p>这里涉及到实现Observable或observable collection的问题，暂时调过。    </p>
+<h4 id="3-自定义Binding类名称"><a href="#3-自定义Binding类名称" class="headerlink" title="3. 自定义Binding类名称"></a>3. 自定义Binding类名称</h4><p>默认情况下会根据layout文件生成一个Binding类，放置在包名根目录下。<br>也可以通过在data节点加入路径和Binding类名来自定义：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">data</span> <span class="attr">class</span>=<span class="string">"com.example.ContactItem"</span>&gt;</span></div><div class="line">    ...</div><div class="line"><span class="tag">&lt;/<span class="name">data</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="4-Includes"><a href="#4-Includes" class="headerlink" title="4. Includes"></a>4. Includes</h4><p>Variables may be passed into an included layout’s binding from the containing layout by using the application namespace and the variable name in an attribute:<br>通过使用application namespace和variable name，可以把变量传递给一个被包含的layout里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">        xmlns:bind=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;</div><div class="line">   &lt;data&gt;</div><div class="line">       &lt;variable name=&quot;user&quot; type=&quot;com.example.User&quot;/&gt;</div><div class="line">   &lt;/data&gt;</div><div class="line">   &lt;LinearLayout</div><div class="line">       android:orientation=&quot;vertical&quot;</div><div class="line">       android:layout_width=&quot;match_parent&quot;</div><div class="line">       android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line">       &lt;include layout=&quot;@layout/name&quot;</div><div class="line">           bind:user=&quot;@&#123;user&#125;&quot;/&gt;</div><div class="line">       &lt;include layout=&quot;@layout/contact&quot;</div><div class="line">           bind:user=&quot;@&#123;user&#125;&quot;/&gt;</div><div class="line">   &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<p>这里，name.xml和contact.xml里面必须要有user variable。<br>Data Binding不支持include merge 元素的直接child，<strong>下面这样是不行的</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">        xmlns:bind=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;</div><div class="line">   &lt;data&gt;</div><div class="line">       &lt;variable name=&quot;user&quot; type=&quot;com.example.User&quot;/&gt;</div><div class="line">   &lt;/data&gt;</div><div class="line">   &lt;merge&gt;</div><div class="line">       &lt;include layout=&quot;@layout/name&quot;</div><div class="line">           bind:user=&quot;@&#123;user&#125;&quot;/&gt;</div><div class="line">       &lt;include layout=&quot;@layout/contact&quot;</div><div class="line">           bind:user=&quot;@&#123;user&#125;&quot;/&gt;</div><div class="line">   &lt;/merge&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<h4 id="5-表达式"><a href="#5-表达式" class="headerlink" title="5. 表达式"></a>5. 表达式</h4><h5 id="通用特性："><a href="#通用特性：" class="headerlink" title="通用特性："></a>通用特性：</h5><ul>
+<li>Mathematical + - / * %</li>
+<li>String concatenation +</li>
+<li>Logical &amp;&amp; ||</li>
+<li>Binary &amp; | ^</li>
+<li>Unary + - ! ~</li>
+<li>Shift &gt;&gt; &gt;&gt;&gt; &lt;&lt;(移位 )</li>
+<li>Comparison == &gt; &lt; &gt;= &lt;=</li>
+<li>instanceof</li>
+<li>Grouping ()</li>
+<li>Literals - character, String, numeric, null</li>
+<li>Cast</li>
+<li>Method calls(方法调用)</li>
+<li>Field access</li>
+<li>Array access []</li>
+<li>Ternary operator(三元运算) ?:</li>
+</ul>
+<p>e.g.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android:text="@&#123;String.valueOf(index + 1)&#125;"</div><div class="line">android:visibility="@&#123;age <span class="tag">&lt; <span class="attr">13</span> ? <span class="attr">View.GONE</span> <span class="attr">:</span> <span class="attr">View.VISIBLE</span>&#125;"</span></div><div class="line"><span class="attr">android:transitionName</span>=<span class="string">'@&#123;"image_" + id&#125;'</span></div></pre></td></tr></table></figure></p>
+<h5 id="缺少的："><a href="#缺少的：" class="headerlink" title="缺少的："></a>缺少的：</h5><p>有些Java中能用的操作，在表达式函数中不能用：</p>
+<ul>
+<li>this</li>
+<li>super</li>
+<li>new</li>
+<li>Explicit generic invocatio</li>
+</ul>
+<h5 id="Null-Coalescing-操作："><a href="#Null-Coalescing-操作：" class="headerlink" title="Null Coalescing 操作："></a>Null Coalescing 操作：</h5><p>如果是null，选左边；不是，选右边<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:text=&quot;@&#123;user.displayName ?? user.lastName&#125;&quot;</div></pre></td></tr></table></figure></p>
+<p>等价于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:text=&quot;@&#123;user.displayName != null ? user.displayName : user.lastName&#125;&quot;</div></pre></td></tr></table></figure>
+<h5 id="Property-Reference："><a href="#Property-Reference：" class="headerlink" title="Property Reference："></a>Property Reference：</h5><p>使用这样的格式引用类的properties、fields、getters和ObservableFields：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:text=&quot;@&#123;user.lastName&#125;&quot;</div></pre></td></tr></table></figure></p>
+<h5 id="避免-NullPointerException"><a href="#避免-NullPointerException" class="headerlink" title="避免 NullPointerException"></a>避免 NullPointerException</h5><p>Data Binding代码生成时会自动检查null，如果存在null，会为对象赋默认值。</p>
+<h5 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h5><p>常见的有 arrays, lists, sparse lists, and maps；为了简便，可以使用[]来调用。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"android.util.SparseArray"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"java.util.Map"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"java.util.List"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"list"</span> <span class="attr">type</span>=<span class="string">"List&amp;lt;String&amp;gt;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"sparse"</span> <span class="attr">type</span>=<span class="string">"SparseArray&amp;lt;String&amp;gt;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"map"</span> <span class="attr">type</span>=<span class="string">"Map&amp;lt;String, String&amp;gt;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"index"</span> <span class="attr">type</span>=<span class="string">"int"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"key"</span> <span class="attr">type</span>=<span class="string">"String"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">data</span>&gt;</span></div><div class="line">…</div><div class="line">android:text="@&#123;list[index]&#125;"</div><div class="line">…</div><div class="line">android:text="@&#123;sparse[index]&#125;"</div><div class="line">…</div><div class="line">android:text="@&#123;map[key]&#125;"</div></pre></td></tr></table></figure>
+<h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><p>这样用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:text=&apos;@&#123;map[&quot;firstName&quot;]&#125;&apos;</div></pre></td></tr></table></figure></p>
+<p>或者这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">android:text=&quot;@&#123;map[`firstName`&#125;&quot;</div><div class="line">android:text=&quot;@&#123;map[&apos;firstName&apos;]&#125;&quot;</div></pre></td></tr></table></figure></p>
+<h5 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h5><p>简单的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:padding=&quot;@&#123;large? @dimen/largePadding : @dimen/smallPadding&#125;&quot;</div></pre></td></tr></table></figure></p>
+<h4 id="6-Data-对象"><a href="#6-Data-对象" class="headerlink" title="6. Data 对象"></a>6. Data 对象</h4><p>任何POJO都可用于Data Binding。修改POJO不会导致UI更新。data binding真正的力量在于，让你的data objects对data changes有notify的能力。有三种数据变化通知机制：</p>
+<ul>
+<li>observable objects</li>
+<li>observable fields</li>
+<li>observable collections</li>
+</ul>
+<p>更多请看：<a href="https://developer.android.com/topic/libraries/data-binding/index.html#listener_bindings" target="_blank" rel="external">https://developer.android.com/topic/libraries/data-binding/index.html#listener_bindings</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/07/EP13-DataBinding-1/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1507,146 +1696,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="DrunkPiano">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="DrunkPiano的Android日常">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/24/DrunkPianoDaily-ep4/" itemprop="url">
-                  DrunkPianoDaily-ep4
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-24T22:22:32+08:00">
-                2016-11-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/11/24/DrunkPianoDaily-ep4/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/24/DrunkPianoDaily-ep4/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="0x00-为什么PluginClassLoader对loadcass-进行覆写"><a href="#0x00-为什么PluginClassLoader对loadcass-进行覆写" class="headerlink" title="0x00 为什么PluginClassLoader对loadcass()进行覆写"></a>0x00 为什么PluginClassLoader对loadcass()进行覆写</h3><p>昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class&lt;?&gt; clazz = findLoadedClass(className);</div></pre></td></tr></table></figure>
-<p>替换成了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (child != null &amp;&amp; nestedLoadLevels &gt; 0) &#123;</div><div class="line">	nestedLoadLevels = 0;</div><div class="line">	// 再次尝试父类装载器，模拟抛出异常等操作</div><div class="line">	return getParent().loadClass(className);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>其中findLoadedClass的注释是：    </p>
-<blockquote>
-<p>Returns the class with the specified name if it has already been loaded by the VM or {@code null} if it has not yet been loaded.    </p>
-<p>如果一个类已经被VM装载过了，就返回这个Class。        </p>
-</blockquote>
-<p>覆写之后要判断child classloader是否为空。nestedLoadLevels是loadClass的嵌套调用次数，不为0时说明是内部调用，直接返回。这句话是什么意思？我们看PluginClassLoader.java，覆写了findClass()；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String className)</div><div class="line">		<span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">	<span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">		nestedLoadLevels = <span class="number">0</span>;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.findClass(className);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.findClass(className);</div><div class="line">	&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">		<span class="comment">// 尝试使用child装载</span></div><div class="line">		nestedLoadLevels++;</div><div class="line">		<span class="keyword">return</span> child.loadClass(className);</div><div class="line">	&#125; <span class="keyword">finally</span> &#123;</div><div class="line">		nestedLoadLevels = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我唯一看到nestedLoadLevels自加的地方就是在super.findClass也就是ClassLoader中的findClass找不到对应类名的时候。比如loadclass的时候找不到这个类了，我们知道找类会先去找load parent有没有加载过这个类，这里findClass重写的逻辑是：<br>1.判断子类有没有被加载过，如果没有，调用父类的findclass方法找这个类。<br>2.如果子类已经被加载过，尝试查找这个类。如果没找到（why？），就尝试使用child装载。</p>
-<p>之前我们分析过，findClass会调用BaseDexClassLoader中的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class clazz = pathList.findClass(name);</div></pre></td></tr></table></figure></p>
-<p>最终调用的是DexPathList中的findClass():</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Finds the named class in one of the dex files pointed at by</div><div class="line">     * this instance. This will find the one in the earliest listed</div><div class="line">     * path element. If the class is found but has not yet been</div><div class="line">     * defined, then this method will define it in the defining</div><div class="line">     * context that this instance was constructed with.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> the named class or &#123;<span class="doctag">@code</span> null&#125; if the class is not</div><div class="line">     * found in any of the dex files</div><div class="line">     */</div><div class="line">     <span class="comment">//找到最早在path元素中罗列出的类（我理解是根节点的那个类）</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Class <span class="title">findClass</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (Element element : dexElements) &#123;</div><div class="line">            DexFile dex = element.dexFile;</div><div class="line">            <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</div><div class="line">                Class clazz = dex.loadClassBinaryName(name, definingContext);</div><div class="line">                <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">return</span> clazz;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>PluginClassLoader中的findclass改变了类装载的顺序，先去子类中findClass，找不到才去走正常的loadClass流程。</p>
-<p>-NOV 24</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1692,7 +1741,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
