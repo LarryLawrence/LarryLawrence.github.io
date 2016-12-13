@@ -84,25 +84,22 @@
 
 
 
-<meta name="description" content="0x00 为什么PluginClassLoader对loadcass()进行覆写昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：
-1Class&amp;lt;?&amp;gt; clazz = findLoadedClass(className);
-替换成了：
-12345if (child != nu">
+<meta name="description" content="今天，我按照GoogleSamples提供的todoapp写了一个符合规范的、简单的Mvp Demo。这个demo把用户点击Floating Action Button的次数展示在界面上。下面简单介绍一下。    
+首先，我们要清楚一个原则，MVC允许View、Model交互，而MVP的View和Model交互由Presenter完成。
+也就是说，Model和View之间不要直接访问对方。怎么做到">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DrunkPianoDaily-ep4">
-<meta property="og:url" content="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/index.html">
+<meta property="og:title" content="EP17-MvpSample">
+<meta property="og:url" content="http://yoursite.com/2016/12/13/EP17-MvpSample/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="0x00 为什么PluginClassLoader对loadcass()进行覆写昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：
-1Class&amp;lt;?&amp;gt; clazz = findLoadedClass(className);
-替换成了：
-12345if (child != nu">
-<meta property="og:updated_time" content="2016-11-24T14:22:59.000Z">
+<meta property="og:description" content="今天，我按照GoogleSamples提供的todoapp写了一个符合规范的、简单的Mvp Demo。这个demo把用户点击Floating Action Button的次数展示在界面上。下面简单介绍一下。    
+首先，我们要清楚一个原则，MVC允许View、Model交互，而MVP的View和Model交互由Presenter完成。
+也就是说，Model和View之间不要直接访问对方。怎么做到">
+<meta property="og:updated_time" content="2016-12-13T15:57:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkPianoDaily-ep4">
-<meta name="twitter:description" content="0x00 为什么PluginClassLoader对loadcass()进行覆写昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：
-1Class&amp;lt;?&amp;gt; clazz = findLoadedClass(className);
-替换成了：
-12345if (child != nu">
+<meta name="twitter:title" content="EP17-MvpSample">
+<meta name="twitter:description" content="今天，我按照GoogleSamples提供的todoapp写了一个符合规范的、简单的Mvp Demo。这个demo把用户点击Floating Action Button的次数展示在界面上。下面简单介绍一下。    
+首先，我们要清楚一个原则，MVC允许View、Model交互，而MVP的View和Model交互由Presenter完成。
+也就是说，Model和View之间不要直接访问对方。怎么做到">
 
 
 
@@ -130,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/13/EP17-MvpSample/"/>
 
 
 
 
 
-  <title> DrunkPianoDaily-ep4 | DrunkPiano的Android日常 </title>
+  <title> EP17-MvpSample | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/13/EP17-MvpSample/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -291,7 +288,7 @@
             
             
               
-                DrunkPianoDaily-ep4
+                EP17-MvpSample
               
             
           </h1>
@@ -304,8 +301,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-24T22:22:32+08:00">
-                2016-11-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-13T23:57:11+08:00">
+                2016-12-13
               </time>
             
 
@@ -320,8 +317,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/24/DrunkPianoDaily-ep4/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/24/DrunkPianoDaily-ep4/" itemprop="commentCount"></span>
+                <a href="/2016/12/13/EP17-MvpSample/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/13/EP17-MvpSample/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -347,23 +344,19 @@
       
 
       
-        <h3 id="0x00-为什么PluginClassLoader对loadcass-进行覆写"><a href="#0x00-为什么PluginClassLoader对loadcass-进行覆写" class="headerlink" title="0x00 为什么PluginClassLoader对loadcass()进行覆写"></a>0x00 为什么PluginClassLoader对loadcass()进行覆写</h3><p>昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class&lt;?&gt; clazz = findLoadedClass(className);</div></pre></td></tr></table></figure>
-<p>替换成了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (child != null &amp;&amp; nestedLoadLevels &gt; 0) &#123;</div><div class="line">	nestedLoadLevels = 0;</div><div class="line">	// 再次尝试父类装载器，模拟抛出异常等操作</div><div class="line">	return getParent().loadClass(className);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>其中findLoadedClass的注释是：    </p>
-<blockquote>
-<p>Returns the class with the specified name if it has already been loaded by the VM or {@code null} if it has not yet been loaded.    </p>
-<p>如果一个类已经被VM装载过了，就返回这个Class。        </p>
-</blockquote>
-<p>覆写之后要判断child classloader是否为空。nestedLoadLevels是loadClass的嵌套调用次数，不为0时说明是内部调用，直接返回。这句话是什么意思？我们看PluginClassLoader.java，覆写了findClass()；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String className)</div><div class="line">		<span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">	<span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">		nestedLoadLevels = <span class="number">0</span>;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.findClass(className);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.findClass(className);</div><div class="line">	&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">		<span class="comment">// 尝试使用child装载</span></div><div class="line">		nestedLoadLevels++;</div><div class="line">		<span class="keyword">return</span> child.loadClass(className);</div><div class="line">	&#125; <span class="keyword">finally</span> &#123;</div><div class="line">		nestedLoadLevels = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我唯一看到nestedLoadLevels自加的地方就是在super.findClass也就是ClassLoader中的findClass找不到对应类名的时候。比如loadclass的时候找不到这个类了，我们知道找类会先去找load parent有没有加载过这个类，这里findClass重写的逻辑是：<br>1.判断子类有没有被加载过，如果没有，调用父类的findclass方法找这个类。<br>2.如果子类已经被加载过，尝试查找这个类。如果没找到（why？），就尝试使用child装载。</p>
-<p>之前我们分析过，findClass会调用BaseDexClassLoader中的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class clazz = pathList.findClass(name);</div></pre></td></tr></table></figure></p>
-<p>最终调用的是DexPathList中的findClass():</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Finds the named class in one of the dex files pointed at by</div><div class="line">     * this instance. This will find the one in the earliest listed</div><div class="line">     * path element. If the class is found but has not yet been</div><div class="line">     * defined, then this method will define it in the defining</div><div class="line">     * context that this instance was constructed with.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> the named class or &#123;<span class="doctag">@code</span> null&#125; if the class is not</div><div class="line">     * found in any of the dex files</div><div class="line">     */</div><div class="line">     <span class="comment">//找到最早在path元素中罗列出的类（我理解是根节点的那个类）</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Class <span class="title">findClass</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (Element element : dexElements) &#123;</div><div class="line">            DexFile dex = element.dexFile;</div><div class="line">            <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</div><div class="line">                Class clazz = dex.loadClassBinaryName(name, definingContext);</div><div class="line">                <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">return</span> clazz;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>PluginClassLoader中的findclass改变了类装载的顺序，先去子类中findClass，找不到才去走正常的loadClass流程。</p>
-<p>-NOV 24</p>
+        <p>今天，我按照GoogleSamples提供的<a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/todoapp" target="_blank" rel="external">todoapp</a>写了一个符合规范的、简单的Mvp Demo。这个demo把用户点击Floating Action Button的次数展示在界面上。下面简单介绍一下。    </p>
+<p>首先，我们要清楚一个原则，<strong>MVC允许View、Model交互，而MVP的View和Model交互由Presenter完成</strong>。</p>
+<p>也就是说，Model和View之间不要直接访问对方。怎么做到呢？用接口。</p>
+<p>我们定义一个包含View和Presenter两个interface的「协议(Contract)」interface：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SloganContract</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">View</span> <span class="keyword">extends</span> <span class="title">BaseView</span>&lt;<span class="title">Presenter</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">setSlogan</span><span class="params">(String slogan)</span></span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Presenter</span> <span class="keyword">extends</span> <span class="title">BasePresenter</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后，我们定义一个SloganFragment，实现View接口。是的，Fragment充当了MVP中的View角色。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SloganFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> <span class="keyword">implements</span> <span class="title">SloganContract</span>.<span class="title">View</span> </span>&#123;<span class="meta">@BindView</span>(R.id.fab)</div><div class="line">    FloatingActionButton mFab;</div><div class="line"></div><div class="line">    <span class="meta">@BindView</span>(R.id.slogan_text)</div><div class="line">    TextView mSloganText;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个view接口里面，有个<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">public class SloganPresenter implements SloganContract.Presenter &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>SloganPresenter实现了changeSlogan方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public void updateCount(int count) &#123;</div><div class="line">            changeSlogan(count);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>chageSlogan里面调用了View的setSlogan():<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mSloganView.setSlogan(mSloganModel.sloganContent);</div></pre></td></tr></table></figure></p>
+<p>然后，在SloganFragment里面实现了setSlogan方法，这个方法又反过来调用了presenter的updateCount方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSlogan</span><span class="params">(<span class="keyword">final</span> String slogan)</span> </span>&#123;</div><div class="line">        mFab.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">                mPresenter.updateCount(++mCount);</div><div class="line">                mSloganText.setText(slogan);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>写得急，有点绕。。总的来说就是避免了model、view的直接接触。后面我会把代码传到github。</p>
+<p>-DEC 13</p>
 
       
     </div>
@@ -390,8 +383,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/23/DrunkPianoDaily-ep3/" rel="next" title="DrunkPianoDaily-ep3">
-                <i class="fa fa-chevron-left"></i> DrunkPianoDaily-ep3
+              <a href="/2016/12/12/EP15-android-architecture-2/" rel="next" title="EP15-android-architecture(2)">
+                <i class="fa fa-chevron-left"></i> EP15-android-architecture(2)
               </a>
             
           </div>
@@ -399,10 +392,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/25/DrunkPianoDaily-EP5/" rel="prev" title="DrunkPianoDaily-EP5">
-                DrunkPianoDaily-EP5 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -428,8 +417,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/24/DrunkPianoDaily-ep4/"
-           data-title="DrunkPianoDaily-ep4" data-url="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/">
+      <div class="ds-thread" data-thread-key="2016/12/13/EP17-MvpSample/"
+           data-title="EP17-MvpSample" data-url="http://yoursite.com/2016/12/13/EP17-MvpSample/">
       </div>
     
   </div>
@@ -453,17 +442,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -547,22 +527,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-为什么PluginClassLoader对loadcass-进行覆写"><span class="nav-number">1.</span> <span class="nav-text">0x00 为什么PluginClassLoader对loadcass()进行覆写</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
