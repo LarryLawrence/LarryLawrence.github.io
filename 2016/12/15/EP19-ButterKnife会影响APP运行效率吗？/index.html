@@ -84,31 +84,22 @@
 
 
 
-<meta name="description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
-目前的Android程序结构，常见下面三种开发模式：    
-MVC:
-View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
-
-但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
+<meta name="description" content="0x00 要不要使用
+ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了findViewById的操作。像这样：
+@BindView(R.id.user) EditText username;  @BindView(R.id.pass) EditText password">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EP12-MVVM和DataBinding">
-<meta property="og:url" content="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/index.html">
+<meta property="og:title" content="EP19-ButterKnife会影响APP运行效率吗？">
+<meta property="og:url" content="http://yoursite.com/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
-目前的Android程序结构，常见下面三种开发模式：    
-MVC:
-View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
-
-但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
-<meta property="og:updated_time" content="2016-12-06T13:15:36.000Z">
+<meta property="og:description" content="0x00 要不要使用
+ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了findViewById的操作。像这样：
+@BindView(R.id.user) EditText username;  @BindView(R.id.pass) EditText password">
+<meta property="og:updated_time" content="2016-12-15T13:53:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EP12-MVVM和DataBinding">
-<meta name="twitter:description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
-目前的Android程序结构，常见下面三种开发模式：    
-MVC:
-View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
-
-但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
+<meta name="twitter:title" content="EP19-ButterKnife会影响APP运行效率吗？">
+<meta name="twitter:description" content="0x00 要不要使用
+ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了findViewById的操作。像这样：
+@BindView(R.id.user) EditText username;  @BindView(R.id.pass) EditText password">
 
 
 
@@ -136,13 +127,13 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/"/>
 
 
 
 
 
-  <title> EP12-MVVM和DataBinding | DrunkPiano的Android日常 </title>
+  <title> EP19-ButterKnife会影响APP运行效率吗？ | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +264,7 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -297,7 +288,7 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
             
             
               
-                EP12-MVVM和DataBinding
+                EP19-ButterKnife会影响APP运行效率吗？
               
             
           </h1>
@@ -310,8 +301,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-06T21:15:17+08:00">
-                2016-12-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-15T21:51:55+08:00">
+                2016-12-15
               </time>
             
 
@@ -326,8 +317,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/06/EP12-MVVM和DataBinding/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/06/EP12-MVVM和DataBinding/" itemprop="commentCount"></span>
+                <a href="/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -353,28 +344,17 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
       
 
       
-        <h3 id="MVVM和DataBinding"><a href="#MVVM和DataBinding" class="headerlink" title="MVVM和DataBinding"></a>MVVM和DataBinding</h3><p>印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    </p>
-<p>目前的Android程序结构，常见下面三种开发模式：    </p>
-<h4 id="MVC"><a href="#MVC" class="headerlink" title="MVC:"></a><strong>MVC</strong>:</h4><blockquote>
-<p>View：对应于xml布局文件<br>Model：实体模型<br>Controllor：对应于Activity业务逻辑，数据处理和UI处理    </p>
-</blockquote>
-<p>但是XML的View功能太弱，很多视图都要放在Activigy中完成，Activity还承担一些控制逻辑。所以Activity就成了View+Controller。    </p>
-<h4 id="MVP"><a href="#MVP" class="headerlink" title="MVP:"></a><strong>MVP:</strong></h4><blockquote>
-<p>View: 对应于Activity和xml，负责View的绘制以及与用户交互<br>Model: 实体模型<br>Presenter: 负责完成View于Model间的交互和业务逻辑    </p>
-</blockquote>
-<p>这样的话Activity就能成为真正的View而不是View和Control的合体，Activity只做UI相关的事。但是Activity需要实现各种跟UI相关的接口，同时要在Activity中编写大量的事件，然后在事件处理中调用presenter的业务处理方法。    </p>
-<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM:"></a><strong>MVVM:</strong></h4><blockquote>
-<p>View: 对应于Activity和xml，负责View的绘制以及与用户交互<br>Model: 实体模型<br>ViewModel: 负责完成View于Model间的交互,负责业务逻辑    </p>
-</blockquote>
-<p>MVVM的目标和思想MVP类似，利用数据绑定(<strong>Data Binding</strong>)、依赖属性(Dependency Property)、命令(Command)、路由事件(Routed Event)等新特性，打造了一个更加灵活高效的架构。<br>MVVM有这样几个优点：    </p>
-<ul>
-<li>数据驱动（ViewModel只要关注数据和业务逻辑，不需要和UI或者控件打交道）</li>
-<li>低耦合度（数据是独立于UI的，ViewModel只负责处理和提供数据，控件变了也无所谓）    </li>
-<li>更新UI（可以在工作线程中直接修改View Model的数据，剩下的DataBinding搞定）</li>
-<li>可复用性（一个View Model复用到多个View中，同样的一份数据，用不同的UI去做展示）</li>
-</ul>
-<h4 id="DataBinding"><a href="#DataBinding" class="headerlink" title="DataBinding"></a>DataBinding</h4><p>MVVM是舶来品，从Web前端的Argular而来，Angular有<strong>DataBind</strong>功能。<br>Android之前也有一些库比如RoboGuice、ButterKnife实现了类似DataBind的依赖注入框架实现了类似的功能。<br>今年4月Android UI团队发布了一个DataBinding的库。<br>是不是能应用到印尼钱包中呢。明天我再了解一下。</p>
-<p>Reference：<br>[1]<a href="https://realm.io/cn/news/data-binding-android-boyar-mount/" target="_blank" rel="external">https://realm.io/cn/news/data-binding-android-boyar-mount/</a></p>
+        <p>0x00 要不要使用</p>
+<p>ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了findViewById的操作。像这样：</p>
+<p>@BindView(R.id.user) EditText username;<br>  @BindView(R.id.pass) EditText password;</p>
+<p>  @BindString(R.string.login_error) String loginErrorMessage;</p>
+<p>  @OnClick(R.id.submit) void submit() {<br>    // TODO call server…<br>  }<br>这边提一下「依赖注入」这个概念，我理解的就是在运行时给类注入一些参数，比如构造方法传入参数。这叫做「构造方法注入」，可以实现解耦。</p>
+<p>类似的工具还是Dagger、RoboGuice等等，我们看到很多人会担心依赖注入的工具会影响性能，比如有的人提到：</p>
+<p>使用RoboGuice之后，代码是简化了不少；然而，注入框架会扫描你的代码执行很多初始化的操作，会导致你的代码需要大量内存空间来mapping代码，而且mapped pages会长时间被保留在内存中。除非很有必要，谨慎使用这种技术。<br>对于内存管理，Google在Manage Your App’s Memory点名批评了Guice和RoboGuice（现在已经去掉了..），然后安利了Dagger 2，因为：</p>
+<p>If you intend to use a dependency injection framework in your app, consider using Dagger 2. Dagger does not use reflection to scan your app’s code. Dagger’s static, compile-time implementation means that it can be used in Android apps without needless runtime cost or memory usage.<br>如果你想要使用依赖注入框架，考虑使用Dagger 2，Dagger不会使用反射来扫描你app的代码。Dagger的静态、编译时实现意味着它不会产生额外的runtime cost或者内存使用。<br>Other dependency injection frameworks that use reflection tend to initialize processes by scanning your code for annotations. This process can require significantly more CPU cycles and RAM, and can cause a noticeable lag when the app launches.<br>其他使用反射的依赖注入框架倾向于通过扫描你代码里的注解来初始化进程。需要显著的CPU和RAM资源。<br>0x01 ButterKnife的原理</p>
+<p>使用注解处理器。Java编译器编译代码之前会先调用注解处理器，所以可以继承AbstractProcessor，自己写注解处理器。这样就可以在编译代码之前执行一段我们自己的代码了。比如生成新的代码，或者检查注解的代码是否规范。在ButterKnifeProcessor.process里：</p>
+<p>扫描所有的注解<br>自动生成一个ViewBinder类，包含findViewById、setOnClickListener等等<br>加载生成的ViewBinder，调用其中的bind方法<br>// Process each @Bind element.<br> for (Element element : env.getElementsAnnotatedWith(Bind.class)) {<br>   if (!SuperficialValidation.validateElement(element)) continue;<br>   try {<br>     parseBind(element, targetClassMap, erasedTargetNames);<br>   } catch (Exception e) {<br>     logParsingError(element, Bind.class, e);<br>   }<br> }<br>这个跟笑哥的hotfix不同，hotfix是在运行时在补丁apk(dex)里搜寻fixed注解然后生成新的类，替换原来的dex。这个过几天可以分析一波。<br>嗯，结论就是，ButterKnife是不影响App性能的，可以放心食用。</p>
+<p>具体的话，可以参考：<br>[1]<a href="http://bxbxbai.github.io/2016/03/12/how-butterknife-works/?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://bxbxbai.github.io/2016/03/12/how-butterknife-works/?utm_source=tuicool&amp;utm_medium=referral</a><br>[2]<a href="https://zhuanlan.zhihu.com/p/21628698" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/21628698</a></p>
 
       
     </div>
@@ -401,8 +381,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/05/EP11-迷路在BroadcastReceiver/" rel="next" title="EP11-迷路在BroadcastReceiver">
-                <i class="fa fa-chevron-left"></i> EP11-迷路在BroadcastReceiver
+              <a href="/2016/12/14/EP18-TODO-DataBinding浏览/" rel="next" title="EP18-TODO-DataBinding浏览">
+                <i class="fa fa-chevron-left"></i> EP18-TODO-DataBinding浏览
               </a>
             
           </div>
@@ -410,10 +390,6 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/07/EP13-DataBinding-1/" rel="prev" title="EP13-DataBinding(1)">
-                EP13-DataBinding(1) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -439,8 +415,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/06/EP12-MVVM和DataBinding/"
-           data-title="EP12-MVVM和DataBinding" data-url="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/">
+      <div class="ds-thread" data-thread-key="2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/"
+           data-title="EP19-ButterKnife会影响APP运行效率吗？" data-url="http://yoursite.com/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/">
       </div>
     
   </div>
@@ -464,17 +440,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -558,22 +525,6 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM和DataBinding"><span class="nav-number">1.</span> <span class="nav-text">MVVM和DataBinding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC"><span class="nav-number">1.1.</span> <span class="nav-text">MVC:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP"><span class="nav-number">1.2.</span> <span class="nav-text">MVP:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM"><span class="nav-number">1.3.</span> <span class="nav-text">MVVM:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataBinding"><span class="nav-number">1.4.</span> <span class="nav-text">DataBinding</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
