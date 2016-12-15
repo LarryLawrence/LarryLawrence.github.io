@@ -344,16 +344,34 @@
       
         
           
-            <p>0x00 要不要使用</p>
-<p>ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了findViewById的操作。像这样：</p>
-<p>@BindView(R.id.user) EditText username;<br>  @BindView(R.id.pass) EditText password;</p>
-<p>  @BindString(R.string.login_error) String loginErrorMessage;</p>
-<p>  @OnClick(R.id.submit) void submit() {<br>    // TODO call server…<br>  }<br>这边提一下「依赖注入」这个概念，我理解的就是在运行时给类注入一些参数，比如构造方法传入参数。这叫做「构造方法注入」，可以实现解耦。</p>
+            <h2 id="0x00-要不要使用"><a href="#0x00-要不要使用" class="headerlink" title="0x00 要不要使用"></a>0x00 要不要使用</h2><p>ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```Java</div><div class="line">@BindView(R.id.user) EditText username;</div><div class="line">  @BindView(R.id.pass) EditText password;</div><div class="line"></div><div class="line">  @BindString(R.string.login_error) String loginErrorMessage;</div><div class="line"></div><div class="line">  @OnClick(R.id.submit) void submit() &#123;</div><div class="line">    // TODO call server...</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>这边提一下「依赖注入」这个概念，我理解的就是在运行时给类注入一些参数，比如构造方法传入参数。这叫做「<a href="https://www.zhihu.com/question/32108444" target="_blank" rel="external">构造方法注入</a>」，可以实现解耦。    </p>
 <p>类似的工具还是Dagger、RoboGuice等等，我们看到很多人会担心依赖注入的工具会影响性能，比如有的人提到：</p>
-<p>使用RoboGuice之后，代码是简化了不少；然而，注入框架会扫描你的代码执行很多初始化的操作，会导致你的代码需要大量内存空间来mapping代码，而且mapped pages会长时间被保留在内存中。除非很有必要，谨慎使用这种技术。<br>对于内存管理，Google在Manage Your App’s Memory点名批评了Guice和RoboGuice（现在已经去掉了..），然后安利了Dagger 2，因为：</p>
-<p>If you intend to use a dependency injection framework in your app, consider using Dagger 2. Dagger does not use reflection to scan your app’s code. Dagger’s static, compile-time implementation means that it can be used in Android apps without needless runtime cost or memory usage.<br>如果你想要使用依赖注入框架，考虑使用Dagger 2，Dagger不会使用反射来扫描你app的代码。Dagger的静态、编译时实现意味着它不会产生额外的runtime cost或者内存使用。<br>Other dependency injection frameworks that use reflection tend to initialize processes by scanning your code for annotations. This process can require significantly more CPU cycles and RAM, and can cause a noticeable lag when the app launches.<br>其他使用反射的依赖注入框架倾向于通过扫描你代码里的注解来初始化进程。需要显著的CPU和RAM资源。<br>0x01 ButterKnife的原理</p>
-<p>使用注解处理器。Java编译器编译代码之前会先调用注解处理器，所以可以继承AbstractProcessor，自己写注解处理器。这样就可以在编译代码之前执行一段我们自己的代码了。比如生成新的代码，或者检查注解的代码是否规范。在ButterKnifeProcessor.process里：</p>
-<p>扫描所有的注解<br>自动生成一个ViewBinder类，包含findViewById、setOnClickListener等等<br>加载生成的ViewBinder，调用其中的bind方法<br>// Process each @Bind element.<br> for (Element element : env.getElementsAnnotatedWith(Bind.class)) {<br>   if (!SuperficialValidation.validateElement(element)) continue;<br>   try {<br>     parseBind(element, targetClassMap, erasedTargetNames);<br>   } catch (Exception e) {<br>     logParsingError(element, Bind.class, e);<br>   }<br> }<br>这个跟笑哥的hotfix不同，hotfix是在运行时在补丁apk(dex)里搜寻fixed注解然后生成新的类，替换原来的dex。这个过几天可以分析一波。<br>嗯，结论就是，ButterKnife是不影响App性能的，可以放心食用。</p>
+<blockquote>
+<p>使用RoboGuice之后，代码是简化了不少；然而，注入框架会扫描你的代码执行很多初始化的操作，会导致你的代码需要大量内存空间来mapping代码，而且mapped pages会长时间被保留在内存中。除非很有必要，谨慎使用这种技术。   </p>
+</blockquote>
+<p>对于内存管理，Google在<a href="https://developer.android.com/topic/performance/memory.html" target="_blank" rel="external">Manage Your App’s Memory</a>点名批评了Guice和RoboGuice（现在已经去掉了..），然后安利了Dagger 2，因为：</p>
+<blockquote>
+<p>If you intend to use a dependency injection framework in your app, consider using Dagger 2. Dagger does not use reflection to scan your app’s code. Dagger’s static, compile-time implementation means that it can be used in Android apps without needless runtime cost or memory usage.<br>如果你想要使用依赖注入框架，考虑使用Dagger 2，Dagger不会使用反射来扫描你app的代码。Dagger的静态、编译时实现意味着它不会产生额外的runtime cost或者内存使用。</p>
+<p>Other dependency injection frameworks that use reflection tend to initialize processes by scanning your code for annotations. This process can require significantly more CPU cycles and RAM, and can cause a noticeable lag when the app launches.<br>其他使用反射的依赖注入框架倾向于通过扫描你代码里的注解来初始化进程。需要显著的CPU和RAM资源。</p>
+</blockquote>
+<h2 id="0x01-ButterKnife的原理"><a href="#0x01-ButterKnife的原理" class="headerlink" title="0x01 ButterKnife的原理"></a>0x01 ButterKnife的原理</h2><p>使用<strong>注解处理器</strong>。Java编译器编译代码之前会先调用注解处理器，所以可以继承AbstractProcessor，自己写注解处理器。这样就可以在编译代码之前执行一段我们自己的代码了。比如生成新的代码，或者检查注解的代码是否规范。在ButterKnifeProcessor.process里：</p>
+<ol>
+<li>扫描所有的注解   </li>
+<li>自动生成一个ViewBinder类，包含<code>findViewById</code>、<code>setOnClickListener</code>等等</li>
+<li>加载生成的ViewBinder，调用其中的bind方法</li>
+</ol>
+<pre><code class="Java"><span class="comment">// Process each @Bind element.</span>
+ <span class="keyword">for</span> (Element element : env.getElementsAnnotatedWith(Bind.class)) {
+   <span class="keyword">if</span> (!SuperficialValidation.validateElement(element)) <span class="keyword">continue</span>;
+   <span class="keyword">try</span> {
+     parseBind(element, targetClassMap, erasedTargetNames);
+   } <span class="keyword">catch</span> (Exception e) {
+     logParsingError(element, Bind.class, e);
+   }
+ }
+</code></pre>
+<p>这个跟笑哥的<code>hotfix</code>不同，<code>hotfix</code>是在运行时在补丁apk(dex)里搜寻<code>fixed</code>注解然后生成新的类，替换原来的dex。这个过几天可以分析一波。<br>嗯，结论就是，ButterKnife是不影响App性能的，可以放心食用。</p>
 <p>具体的话，可以参考：<br>[1]<a href="http://bxbxbai.github.io/2016/03/12/how-butterknife-works/?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://bxbxbai.github.io/2016/03/12/how-butterknife-works/?utm_source=tuicool&amp;utm_medium=referral</a><br>[2]<a href="https://zhuanlan.zhihu.com/p/21628698" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/21628698</a></p>
 
           
