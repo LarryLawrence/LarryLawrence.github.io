@@ -84,16 +84,25 @@
 
 
 
-<meta name="description" content="let&apos;s get started">
+<meta name="description" content="今天调试上传文件接口时发现iOS那边在传Header的时候，在Content Type中传了一个boundary。这个是干什么用的？  
+我们先了解一下application/x-www-form-urlencoded。这个一般是Content-Type的默认值。比如你想传递：这样的post请求：    
+12name = Johnage = 12
+content-type填写applicatio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EP20-Header中的Content-Type">
 <meta property="og:url" content="http://yoursite.com/2016/12/19/EP20-Header中的Content-Type/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="let&apos;s get started">
-<meta property="og:updated_time" content="2016-12-19T13:26:36.000Z">
+<meta property="og:description" content="今天调试上传文件接口时发现iOS那边在传Header的时候，在Content Type中传了一个boundary。这个是干什么用的？  
+我们先了解一下application/x-www-form-urlencoded。这个一般是Content-Type的默认值。比如你想传递：这样的post请求：    
+12name = Johnage = 12
+content-type填写applicatio">
+<meta property="og:updated_time" content="2016-12-19T13:28:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EP20-Header中的Content-Type">
-<meta name="twitter:description" content="let&apos;s get started">
+<meta name="twitter:description" content="今天调试上传文件接口时发现iOS那边在传Header的时候，在Content Type中传了一个boundary。这个是干什么用的？  
+我们先了解一下application/x-www-form-urlencoded。这个一般是Content-Type的默认值。比如你想传递：这样的post请求：    
+12name = Johnage = 12
+content-type填写applicatio">
 
 
 
@@ -338,7 +347,17 @@
       
 
       
-        
+        <p>今天调试上传文件接口时发现iOS那边在传Header的时候，在Content Type中传了一个boundary。这个是干什么用的？  </p>
+<p>我们先了解一下<strong>application/x-www-form-urlencoded</strong>。这个一般是Content-Type的默认值。比如你想传递：这样的post请求：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">name = John</div><div class="line">age = 12</div></pre></td></tr></table></figure>
+<p>content-type填写application/x-www-form-urlencoded，服务器就知道参数用&amp;隔开了：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">name=John&amp;age=12</div></pre></td></tr></table></figure>
+<p>那么当服务端接受一个<strong>multipart/form-data</strong>类型的post请求的时候，它怎么知道参数的开始和结束呢？这时候就是使用boundary了，作用跟&amp;类似。</p>
+<p>我们可以看看下面的例子：    </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">POST http://www.example.com HTTP/1.1</div><div class="line">Content-Type:multipart/form-data; boundary=WebKitFormBoundaryrGKCBY7qhFd3TrwA</div><div class="line">//消息主体开始</div><div class="line">--WebKitFormBoundaryrGKCBY7qhFd3TrwA</div><div class="line">Content-Disposition: form-data; name="text"</div><div class="line"></div><div class="line">title</div><div class="line"></div><div class="line">//消息主体开始</div><div class="line">--WebKitFormBoundaryrGKCBY7qhFd3TrwA</div><div class="line">Content-Disposition: form-data; name="file"; filename="chrome.png"</div><div class="line">Content-Type: image/png</div><div class="line"></div><div class="line">PNG ... content of chrome.png ...</div><div class="line"></div><div class="line">//消息主体结束</div><div class="line">--WebKitFormBoundaryrGKCBY7qhFd3TrwA--</div></pre></td></tr></table></figure>
+<p>boundary是用来分割不同字段用的，可以任意定义，但要保证不与消息主体重复啊。<code>--boundary</code>代表消息主体开始，<code>--boundary--</code>代表结束。     </p>
+<p>Reference：<br>[1]<a href="http://stackoverflow.com/questions/3508338/what-is-the-boundary-in-multipart-form-data" target="_blank" rel="external">http://stackoverflow.com/questions/3508338/what-is-the-boundary-in-multipart-form-data</a><br>[2]<a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" target="_blank" rel="external">https://imququ.com/post/four-ways-to-post-data-in-http.html</a></p>
+
       
     </div>
 
