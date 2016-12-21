@@ -259,6 +259,285 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/23/DrunkPianoDaily-ep3/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="DrunkPiano">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="DrunkPiano的Android日常">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/23/DrunkPianoDaily-ep3/" itemprop="url">
+                  DrunkPianoDaily-ep3
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-23T22:50:08+08:00">
+                2016-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/23/DrunkPianoDaily-ep3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/23/DrunkPianoDaily-ep3/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Android源码的食用方法"><a href="#Android源码的食用方法" class="headerlink" title="Android源码的食用方法"></a>Android源码的食用方法</h3><h4 id="0x00-Prelude"><a href="#0x00-Prelude" class="headerlink" title="0x00 Prelude"></a>0x00 Prelude</h4><p>有时候感觉发自内心地喜欢Android。不仅是因为我们可以创造「小而美」的应用程序，还因为Google提供了很好的售后服务。    </p>
+<p>前两天了解了一些关于ClassLoader的东西，我想真正的学习模式应该是在用到的时候再去查找，比如公司需要真正开发一套插件框架，我再去学习，这样的动机下可能动力会更足。现在是处于学习阶段，虽然不知道看了有什么用，但还是去看吧。        </p>
+<p>Android源码很庞大，要完整看完是不太可能，我想起高中数学老师常常教育我们的一句话：「不要想着一口吃成个胖子。」所以可以慢慢来。好在我们可以站在巨人的肩膀上，已经有很多人写了源码的阅读笔记，比如罗升阳的博客和书。    </p>
+<h4 id="0x01-怎么找到具体的类"><a href="#0x01-怎么找到具体的类" class="headerlink" title="0x01 怎么找到具体的类"></a>0x01 怎么找到具体的类</h4><p>ClassLoader.java可以在Android Studio的android.jar中看到，只要按住CMD点击左键就可以跳转了，这是因为Android Studio下载sdk的时候attach了源码到android.jar上。但是DexClassLoade.java的源码打开的时候，看到的就是反编译出来的代码了；<br>这是因为android.jar只会attach到一些常用的源码，DexClassLoader.java这个类，是在Dalvik目录下的，也许不是很常用，所以我们看到的是反编译出来的源码。反编译出来的源码没有注释，可读性也差很多。比如，我们看到的是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public BaseDexClassLoader(String dexPath, File optimizedDirectory, String libraryPath, ClassLoader parent) &#123;</div><div class="line">       throw new RuntimeException(&quot;Stub!&quot;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这个的意思是，函数具体的实现都放在ROM中了，不在这里暴露。</p>
+<p>我们可以去谷歌<a href="https://android.googlesource.com/?format=HTML" target="_blank" rel="external">AOSP</a>的网站上去看源码。比如android.jar，它的内容基本都在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-6.0.1_r21/core/java/android/" target="_blank" rel="external">https://android.googlesource.com/platform/frameworks/base/+/android-6.0.1_r21/core/java/android/</a>这个路径下。但是内容太多，找了一段时间也没找到BaseDexClassLoader.java的位置，怎么办？    </p>
+<p>这时候可以借助Google，直接搜索：<br>where is BaseDexClassLoader.java,可以看到，贴心的Google第一条给出了API的地址，第二条给出了BaseDexClassLoader在AOSP中的地址。<br><img src="/uploads/where_is_basedexclassloader.png" alt="image">.</p>
+<h4 id="0x02-插件的加载"><a href="#0x02-插件的加载" class="headerlink" title="0x02 插件的加载"></a>0x02 插件的加载</h4><p>插件装载的执行顺序是：    </p>
+<p>BaseDexClassLoader—&gt;pathList.findClass(name)—&gt;loadClassBinaryName()，最终指向了一个native方法loadClassBinaryName()。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Finds the named class in one of the dex files pointed at by</div><div class="line"> * this instance. This will find the one in the earliest listed</div><div class="line"> * path element. If the class is found but has not yet been</div><div class="line"> * defined, then this method will define it in the defining</div><div class="line"> * context that this instance was constructed with.</div><div class="line"> *</div><div class="line"> * @return the named class or &#123;@code null&#125; if the class is not</div><div class="line"> * found in any of the dex files</div><div class="line"> */</div><div class="line">public Class findClass(String name) &#123;</div><div class="line">    for (Element element : dexElements) &#123;</div><div class="line">        DexFile dex = element.dexFile;</div><div class="line">        if (dex != null) &#123;</div><div class="line">            Class clazz = dex.loadClassBinaryName(name, definingContext);</div><div class="line">            if (clazz != null) &#123;</div><div class="line">                return clazz;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>好了，明天我们看看Robile中的Plugin为什么重写了loadClass()方法。</p>
+<p>-NOV23</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/DrunkPianoDaily-ep2/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="DrunkPiano">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="DrunkPiano的Android日常">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/22/DrunkPianoDaily-ep2/" itemprop="url">
+                  DrunkPianoDaily-ep2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T13:11:35+08:00">
+                2016-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/22/DrunkPianoDaily-ep2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/22/DrunkPianoDaily-ep2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="0x00-加载后的类存在的期限"><a href="#0x00-加载后的类存在的期限" class="headerlink" title="0x00 加载后的类存在的期限"></a>0x00 加载后的类存在的期限</h3><p>昨天说到的问题是，ClassLoader在一个App中至少有两个实例，一个是系统启动时创建的Boot类型的，一个是App中fork出来的；而且如果一个类被加载过，那么这个类永远不会被重新加载。 这个「永远」的期限是什么呢？<br>我们可以看看ClassLoader的实现。ClassLoader是Abstract类型，我们要使用它的子类DexClassLoader、PathClassLoader 来实现类加载。<br>从网络上可以查到，DexClassLoader、PathClassLoader 的区别是：    </p>
+<ul>
+<li>DexClassLoader 可以加载 jar/apk/dex，可以从 SD 卡中加载未安装的 apk；</li>
+<li>PathClassLoader 只能加载系统中已经安装过的 apk；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// DexClassLoader.java</div><div class="line">public class DexClassLoader extends BaseDexClassLoader &#123;</div><div class="line">    public DexClassLoader(String dexPath, String optimizedDirectory,</div><div class="line">            String libraryPath, ClassLoader parent) &#123;</div><div class="line">        super(dexPath, new File(optimizedDirectory), libraryPath, parent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>DexClassLoader的构造参数有dexPath，optimizedDirectory，libraryPath和parent。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// PathClassLoader.java</div><div class="line">public class PathClassLoader extends BaseDexClassLoader &#123;</div><div class="line">    public PathClassLoader(String dexPath, ClassLoader parent) &#123;</div><div class="line">        super(dexPath, null, null, parent);</div><div class="line">    &#125;</div><div class="line">    public PathClassLoader(String dexPath, String libraryPath,</div><div class="line">            ClassLoader parent) &#123;</div><div class="line">        super(dexPath, null, libraryPath, parent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>PathClassLoader的构造参数就只有dexPath和libraryPath，少了一个optimizedDirectory（super中传了null）。那么，看来<strong>这个optimizedDirectory就是为什么PathClassLoader「只能加载系统中已经安装过的 apk」的原因</strong>。</p>
+<p>看看他们共同的父类BaseDexClassLoader里面的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BaseDexClassLoader</span><span class="params">(String dexPath, File optimizedDirectory,</span></span></div><div class="line">            String libraryPath, ClassLoader parent) &#123;</div><div class="line">        <span class="keyword">super</span>(parent);</div><div class="line">        <span class="keyword">this</span>.originalPath = dexPath;</div><div class="line">        <span class="keyword">this</span>.pathList = <span class="keyword">new</span> DexPathList(<span class="keyword">this</span>, dexPath, libraryPath, optimizedDirectory);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>创建了系统自动loadClass之后的dexPath，以及一个DexPathList对象。<br>在DexPathList.java中有这样的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">private static DexFile loadDexFile(File file, File optimizedDirectory)</div><div class="line">        throws IOException &#123;</div><div class="line">    if (optimizedDirectory == null) &#123;</div><div class="line">        return new DexFile(file);</div><div class="line">    &#125; else &#123;</div><div class="line">        String optimizedPath = optimizedPathFor(file, optimizedDirectory);</div><div class="line">        return DexFile.loadDex(file.getPath(), optimizedPath, 0);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以及：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Converts a dex/jar file path and an output directory to an</div><div class="line"> * output file path for an associated optimized dex file.</div><div class="line"> * 为关联的最优化dexfile把dex/jar文件路径和输出目录转换成一个output文件路径</div><div class="line"> */</div><div class="line">private static String optimizedPathFor(File path,</div><div class="line">        File optimizedDirectory) &#123;</div><div class="line">    String fileName = path.getName();</div><div class="line">    if (!fileName.endsWith(DEX_SUFFIX)) &#123;</div><div class="line">        int lastDot = fileName.lastIndexOf(&quot;.&quot;);</div><div class="line">        if (lastDot &lt; 0) &#123;</div><div class="line">            fileName += DEX_SUFFIX;</div><div class="line">        &#125; else &#123;</div><div class="line">            StringBuilder sb = new StringBuilder(lastDot + 4);</div><div class="line">            sb.append(fileName, 0, lastDot);</div><div class="line">            sb.append(DEX_SUFFIX);</div><div class="line">            fileName = sb.toString();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    File result = new File(optimizedDirectory, fileName);</div><div class="line">    return result.getPath();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也就是optimizedDirectory用来存储加载的dex文件，比如想要加载sd卡上的dex，就填写对应的文件路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">return DexFile.loadDex(file.getPath(), optimizedPath, 0);</div></pre></td></tr></table></figure>
+<p>所以昨天的问题大概清楚了，既然是创建了一个文件来保存，而且这个文件是保存到应用内的（file.getPath()），所以类加载之后保存的「期限」<strong>就是在应用清空缓存或者卸载应用前</strong>。    </p>
+<p>前面我们了解到，凡是被父母加载过的类都不会重新被加载。这样的话，如果想要动态更新一个类，比如想要用到更新插件apk来实现「热修复」，就必须用一个不同的类，否则classloader会使用加载过的类。所以我们在使用新的插件的时候，要构造一个新的classLoader来加载这个插件的dex。或者，也许可以先清空之前加载过的dex的缓存路径。    </p>
+<p>时间不够了，明天再说吧。</p>
+<p>-NOV22</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/21/DrunkPianoDaily-Initial/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -434,7 +713,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
