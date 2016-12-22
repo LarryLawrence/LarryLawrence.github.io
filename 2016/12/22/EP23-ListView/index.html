@@ -84,31 +84,22 @@
 
 
 
-<meta name="description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
-目前的Android程序结构，常见下面三种开发模式：    
-MVC:
-View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
-
-但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
+<meta name="description" content="ListViewListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。
+后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。
+借助AdapterListView继">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EP12-MVVM和DataBinding">
-<meta property="og:url" content="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/index.html">
+<meta property="og:title" content="EP23-ListView">
+<meta property="og:url" content="http://yoursite.com/2016/12/22/EP23-ListView/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
-目前的Android程序结构，常见下面三种开发模式：    
-MVC:
-View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
-
-但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
-<meta property="og:updated_time" content="2016-12-06T13:15:36.000Z">
+<meta property="og:description" content="ListViewListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。
+后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。
+借助AdapterListView继">
+<meta property="og:updated_time" content="2016-12-22T13:19:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EP12-MVVM和DataBinding">
-<meta name="twitter:description" content="MVVM和DataBinding印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    
-目前的Android程序结构，常见下面三种开发模式：    
-MVC:
-View：对应于xml布局文件Model：实体模型Controllor：对应于Activity业务逻辑，数据处理和UI处理    
-
-但是XML的View功能太弱，很多视图都要放在Activigy中完成，A">
+<meta name="twitter:title" content="EP23-ListView">
+<meta name="twitter:description" content="ListViewListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。
+后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。
+借助AdapterListView继">
 
 
 
@@ -136,13 +127,13 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/22/EP23-ListView/"/>
 
 
 
 
 
-  <title> EP12-MVVM和DataBinding | DrunkPiano的Android日常 </title>
+  <title> EP23-ListView | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +264,7 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/EP23-ListView/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -297,7 +288,7 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
             
             
               
-                EP12-MVVM和DataBinding
+                EP23-ListView
               
             
           </h1>
@@ -310,8 +301,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-06T21:15:17+08:00">
-                2016-12-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-22T21:19:16+08:00">
+                2016-12-22
               </time>
             
 
@@ -326,8 +317,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/06/EP12-MVVM和DataBinding/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/06/EP12-MVVM和DataBinding/" itemprop="commentCount"></span>
+                <a href="/2016/12/22/EP23-ListView/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/EP23-ListView/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -353,28 +344,29 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
       
 
       
-        <h3 id="MVVM和DataBinding"><a href="#MVVM和DataBinding" class="headerlink" title="MVVM和DataBinding"></a>MVVM和DataBinding</h3><p>印尼钱包可能采用新的开发模式，所以今天了解一下MVVM和DataBinding。    </p>
-<p>目前的Android程序结构，常见下面三种开发模式：    </p>
-<h4 id="MVC"><a href="#MVC" class="headerlink" title="MVC:"></a><strong>MVC</strong>:</h4><blockquote>
-<p>View：对应于xml布局文件<br>Model：实体模型<br>Controllor：对应于Activity业务逻辑，数据处理和UI处理    </p>
-</blockquote>
-<p>但是XML的View功能太弱，很多视图都要放在Activigy中完成，Activity还承担一些控制逻辑。所以Activity就成了View+Controller。    </p>
-<h4 id="MVP"><a href="#MVP" class="headerlink" title="MVP:"></a><strong>MVP:</strong></h4><blockquote>
-<p>View: 对应于Activity和xml，负责View的绘制以及与用户交互<br>Model: 实体模型<br>Presenter: 负责完成View于Model间的交互和业务逻辑    </p>
-</blockquote>
-<p>这样的话Activity就能成为真正的View而不是View和Control的合体，Activity只做UI相关的事。但是Activity需要实现各种跟UI相关的接口，同时要在Activity中编写大量的事件，然后在事件处理中调用presenter的业务处理方法。    </p>
-<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM:"></a><strong>MVVM:</strong></h4><blockquote>
-<p>View: 对应于Activity和xml，负责View的绘制以及与用户交互<br>Model: 实体模型<br>ViewModel: 负责完成View于Model间的交互,负责业务逻辑    </p>
-</blockquote>
-<p>MVVM的目标和思想MVP类似，利用数据绑定(<strong>Data Binding</strong>)、依赖属性(Dependency Property)、命令(Command)、路由事件(Routed Event)等新特性，打造了一个更加灵活高效的架构。<br>MVVM有这样几个优点：    </p>
-<ul>
-<li>数据驱动（ViewModel只要关注数据和业务逻辑，不需要和UI或者控件打交道）</li>
-<li>低耦合度（数据是独立于UI的，ViewModel只负责处理和提供数据，控件变了也无所谓）    </li>
-<li>更新UI（可以在工作线程中直接修改View Model的数据，剩下的DataBinding搞定）</li>
-<li>可复用性（一个View Model复用到多个View中，同样的一份数据，用不同的UI去做展示）</li>
+        <h2 id="ListView"><a href="#ListView" class="headerlink" title="ListView"></a>ListView</h2><p>ListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。</p>
+<p>后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。</p>
+<h3 id="借助Adapter"><a href="#借助Adapter" class="headerlink" title="借助Adapter"></a>借助Adapter</h3><p>ListView继承了AdpterView, AdapterView继承了ViewGroup。</p>
+<p>ListView依赖着Adapter。ListView更多是用来展示数据，Adapter去访问数据。这让我觉得<strong>有点像MVP</strong>的结构，Model就是数据源，View就是ListView，Adapter就是Processor。ListView跟数据源不直接发生联系。</p>
+<p>Adapter是接口，然后不同类型的数据源可以实现不同的子类来完成数据的处理。比如ArrayAdapter处理数据或者list类型的数据源，SimpleCursorAdapter处理Cursor类型的数据源。  </p>
+<p>怎么用Adapter？把它set给一个listview就行了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mListView.setAdapter(new ArrayAdapter&lt;String&gt;(this, android.R.layout.simple_expandable_list_item_1, arrayList));</div></pre></td></tr></table></figure>
+<p>其中第二个参数是单个item的样式。<br>除此之外，还有SimpleAdapter，CursorAdapter等等，不过好像都不怎么常用；也可以直接用BaseAdapter。</p>
+<h3 id="跟RecyclerView的主要区别"><a href="#跟RecyclerView的主要区别" class="headerlink" title="跟RecyclerView的主要区别"></a>跟RecyclerView的主要区别</h3><ul>
+<li><p><strong>需要Adapter中的ViewHodler</strong><br>ListView Adapter不需要ViewHolder 模式来提高性能。相反，RecyclerView的Adatper就需要。</p>
+</li>
+<li><p><strong>可自定义的item layout</strong><br>ListView只能垂直、linear地部署item；相反，RecyclerView有一个RecyclerView.LayoutManager，可以实现水平和栅格(staggerd grids)布局item。</p>
+</li>
+<li><p><strong>简单的item动画</strong><br>ListView没有添加/删除item的动画，相反，RecyclerView.ItemAnimator可以实现。</p>
+</li>
+<li><p><strong>人工的数据源</strong><br>ListView有ArrayAdapter和CursorAdapter之类的对应Array和database的adapter，相反地，RecyclerView.Adapter需要一个自定义的实现来给adapter提供数据。</p>
+</li>
+<li><p><strong>人工的item装饰</strong><br>ListView 有<code>android:divider</code>来实现简单的item之间的divide，相反地，RecyclerView需要ecyclerView.ItemDecoration来实现更手动的divider 装饰。</p>
+</li>
+<li><p><strong>人工的点击监听</strong><br>ListView有一个<code>AdapterView.OnItemClickListener</code>接口来绑定item的点击事件。相反，RecyclerView只有<code>RecyclerView.OnItemTouchListener</code>,只能处理触摸监听，没有内置的点击监听。</p>
+</li>
 </ul>
-<h4 id="DataBinding"><a href="#DataBinding" class="headerlink" title="DataBinding"></a>DataBinding</h4><p>MVVM是舶来品，从Web前端的Argular而来，Angular有<strong>DataBind</strong>功能。<br>Android之前也有一些库比如RoboGuice、ButterKnife实现了类似DataBind的依赖注入框架实现了类似的功能。<br>今年4月Android UI团队发布了一个DataBinding的库。<br>是不是能应用到印尼钱包中呢。明天我再了解一下。</p>
-<p>Reference：<br>[1]<a href="https://realm.io/cn/news/data-binding-android-boyar-mount/" target="_blank" rel="external">https://realm.io/cn/news/data-binding-android-boyar-mount/</a></p>
+<p>Reference:<br>[1]<a href="https://guides.codepath.com/android/using-the-recyclerview" target="_blank" rel="external">https://guides.codepath.com/android/using-the-recyclerview</a></p>
 
       
     </div>
@@ -401,8 +393,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/05/EP11-迷路在BroadcastReceiver/" rel="next" title="EP11-迷路在BroadcastReceiver">
-                <i class="fa fa-chevron-left"></i> EP11-迷路在BroadcastReceiver
+              <a href="/2016/12/21/EP22-ToolBar的前世今生/" rel="next" title="EP22-ToolBar的前世今生">
+                <i class="fa fa-chevron-left"></i> EP22-ToolBar的前世今生
               </a>
             
           </div>
@@ -410,10 +402,6 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/07/EP13-DataBinding-1/" rel="prev" title="EP13-DataBinding(1)">
-                EP13-DataBinding(1) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -439,8 +427,8 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/06/EP12-MVVM和DataBinding/"
-           data-title="EP12-MVVM和DataBinding" data-url="http://yoursite.com/2016/12/06/EP12-MVVM和DataBinding/">
+      <div class="ds-thread" data-thread-key="2016/12/22/EP23-ListView/"
+           data-title="EP23-ListView" data-url="http://yoursite.com/2016/12/22/EP23-ListView/">
       </div>
     
   </div>
@@ -568,7 +556,7 @@ View：对应于xml布局文件Model：实体模型Controllor：对应于Activit
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM和DataBinding"><span class="nav-number">1.</span> <span class="nav-text">MVVM和DataBinding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC"><span class="nav-number">1.1.</span> <span class="nav-text">MVC:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP"><span class="nav-number">1.2.</span> <span class="nav-text">MVP:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM"><span class="nav-number">1.3.</span> <span class="nav-text">MVVM:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataBinding"><span class="nav-number">1.4.</span> <span class="nav-text">DataBinding</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView"><span class="nav-number">1.</span> <span class="nav-text">ListView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#借助Adapter"><span class="nav-number">1.1.</span> <span class="nav-text">借助Adapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跟RecyclerView的主要区别"><span class="nav-number">1.2.</span> <span class="nav-text">跟RecyclerView的主要区别</span></a></li></ol></li></ol></div>
             
 
           </div>
