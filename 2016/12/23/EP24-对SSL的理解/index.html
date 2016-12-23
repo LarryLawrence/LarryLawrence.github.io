@@ -84,24 +84,37 @@
 
 
 
-<meta name="description" content="发现了一个Google samples提供的关于开发模式的android-architecture仓库：https://github.com/googlesamples/android-architecture。他说：    
+<meta name="description" content="对SSL的理解SSL和证书几年前我曾经做过一个对短信内容进行加密的app，当时就发现非对称加密（比如AES）的耗时要比对称加密（比如DES）长得多。我们知道http使用「三次握手」建立连接，客户端发送SYN，服务端发回SYN/ACK，客户端再发回ACK，连接就建立了。SSL建立连接的过程是四次握手：
 
-The Android framework offers a lot of flexibility when it comes to defining how to or">
+客户端发出请求，内容包含
+
+
+支持的协议
+一个用于生成session key的随机数
+支持的加密">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EP15-android-architecture(1)">
-<meta property="og:url" content="http://yoursite.com/2016/12/09/EP15-android-architecture-1/index.html">
+<meta property="og:title" content="EP24-对SSL的理解">
+<meta property="og:url" content="http://yoursite.com/2016/12/23/EP24-对SSL的理解/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="发现了一个Google samples提供的关于开发模式的android-architecture仓库：https://github.com/googlesamples/android-architecture。他说：    
+<meta property="og:description" content="对SSL的理解SSL和证书几年前我曾经做过一个对短信内容进行加密的app，当时就发现非对称加密（比如AES）的耗时要比对称加密（比如DES）长得多。我们知道http使用「三次握手」建立连接，客户端发送SYN，服务端发回SYN/ACK，客户端再发回ACK，连接就建立了。SSL建立连接的过程是四次握手：
 
-The Android framework offers a lot of flexibility when it comes to defining how to or">
-<meta property="og:image" content="http://yoursite.com/uploads/android-architecture.png">
-<meta property="og:updated_time" content="2016-12-09T12:48:35.000Z">
+客户端发出请求，内容包含
+
+
+支持的协议
+一个用于生成session key的随机数
+支持的加密">
+<meta property="og:updated_time" content="2016-12-23T12:15:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EP15-android-architecture(1)">
-<meta name="twitter:description" content="发现了一个Google samples提供的关于开发模式的android-architecture仓库：https://github.com/googlesamples/android-architecture。他说：    
+<meta name="twitter:title" content="EP24-对SSL的理解">
+<meta name="twitter:description" content="对SSL的理解SSL和证书几年前我曾经做过一个对短信内容进行加密的app，当时就发现非对称加密（比如AES）的耗时要比对称加密（比如DES）长得多。我们知道http使用「三次握手」建立连接，客户端发送SYN，服务端发回SYN/ACK，客户端再发回ACK，连接就建立了。SSL建立连接的过程是四次握手：
 
-The Android framework offers a lot of flexibility when it comes to defining how to or">
-<meta name="twitter:image" content="http://yoursite.com/uploads/android-architecture.png">
+客户端发出请求，内容包含
+
+
+支持的协议
+一个用于生成session key的随机数
+支持的加密">
 
 
 
@@ -129,13 +142,13 @@ The Android framework offers a lot of flexibility when it comes to defining how 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/09/EP15-android-architecture-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/23/EP24-对SSL的理解/"/>
 
 
 
 
 
-  <title> EP15-android-architecture(1) | DrunkPiano的Android日常 </title>
+  <title> EP24-对SSL的理解 | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +279,7 @@ The Android framework offers a lot of flexibility when it comes to defining how 
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/09/EP15-android-architecture-1/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/EP24-对SSL的理解/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -290,7 +303,7 @@ The Android framework offers a lot of flexibility when it comes to defining how 
             
             
               
-                EP15-android-architecture(1)
+                EP24-对SSL的理解
               
             
           </h1>
@@ -303,8 +316,8 @@ The Android framework offers a lot of flexibility when it comes to defining how 
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-09T20:48:22+08:00">
-                2016-12-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-23T20:15:07+08:00">
+                2016-12-23
               </time>
             
 
@@ -319,8 +332,8 @@ The Android framework offers a lot of flexibility when it comes to defining how 
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/09/EP15-android-architecture-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/09/EP15-android-architecture-1/" itemprop="commentCount"></span>
+                <a href="/2016/12/23/EP24-对SSL的理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/EP24-对SSL的理解/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,15 +359,68 @@ The Android framework offers a lot of flexibility when it comes to defining how 
       
 
       
-        <p>发现了一个Google samples提供的关于开发模式的android-architecture仓库：<br><a href="https://github.com/googlesamples/android-architecture。" target="_blank" rel="external">https://github.com/googlesamples/android-architecture。</a><br>他说：    </p>
-<blockquote>
-<p>The Android framework offers a lot of flexibility when it comes to defining how to organize and architect an Android app. This freedom, whilst very valuable, can also result in apps with large classes, inconsistent naming and architectures (or lack of) that can make testing, maintaining and extending difficult.<br>在涉及到如何组织和搭建App的时候，Android Framework提供了很多弹性的机制。这种自由很有价值，但也会造成app体积臃肿，前后命名冲突，和架构在测试、维持和扩展上的困难。    </p>
-</blockquote>
-<p>所以他们提供了一些简单的、直接的例子来展示一些架构。但是所有的例子都是基于MVP的，包括里面的DataBinding也是基于MVP。所以，对于Android来说，MVP是很流行，也很合适。下面这个图是各种MVP sample的对比：<br><img src="/uploads/android-architecture.png" alt="image"></p>
-<p>**dex方法数仅仅是对例子中的app来说的，不会线性增长。比如大型工程应该会受益于使用Data Binding的补偿修正(compensating the overhead)。    </p>
-<p>**LOC代表Lines of code，Java代码的行数。    </p>
-<p>在不对这些种类的MVP进行了解的前提下，仅仅从这张图看来，todo-mvp，todo-mvp-clean和todo-mvp-loaders大概是最适合使用的。通过对DataBinding的了解，我感觉Complexity / Learning cost也是很重要的。接下来会继续了解一下他们。    </p>
-<p>-DEC 9</p>
+        <h2 id="对SSL的理解"><a href="#对SSL的理解" class="headerlink" title="对SSL的理解"></a>对SSL的理解</h2><h3 id="SSL和证书"><a href="#SSL和证书" class="headerlink" title="SSL和证书"></a>SSL和证书</h3><p>几年前我曾经做过一个对短信内容进行加密的app，当时就发现非对称加密（比如AES）的耗时要比对称加密（比如DES）长得多。我们知道http使用「三次握手」建立连接，客户端发送SYN，服务端发回SYN/ACK，客户端再发回ACK，连接就建立了。SSL建立连接的过程是四次握手：</p>
+<ol>
+<li>客户端发出请求，内容包含</li>
+</ol>
+<ul>
+<li>支持的协议</li>
+<li>一个用于生成session key的<strong>随机数</strong></li>
+<li>支持的加密算法</li>
+<li>支持的压缩算法</li>
+</ul>
+<ol>
+<li>服务端回应       </li>
+</ol>
+<ul>
+<li>确认协议版本（双方必须一致）</li>
+<li>一个用于生成session key的<strong>随机数</strong></li>
+<li>确认使用的加密方法</li>
+<li>服务器<strong>证书</strong></li>
+</ul>
+<ol>
+<li><p>客户端回应<br>从服务器拿到了证书，客户端要先检查证书颁发机构是是否可信，证书中的域名是否与实际域名一致，证书是否过期。  </p>
+<p> 好了，验证了证书之后就从里面取出公钥，现在往回发：  </p>
+</li>
+</ol>
+<ul>
+<li>一个用公钥加密过的<strong>随机数</strong>（这是第三个随机数了，这3个随机数生成Session Key来加密传输内容, 随机数保证了Session Key不会每次都一样）</li>
+<li>编码改变通知(接下来通信用新的加密方法来通信了) </li>
+<li>客户端握手结束通知</li>
+</ul>
+<ol>
+<li>服务器最后回应</li>
+</ol>
+<ul>
+<li>编码改变通知</li>
+<li>握手结束通知</li>
+</ul>
+<p>握手结束之后，客户端和服务端进行的通信就是普通的HTTP通信了，只不过传输的内容都是用前面的Session Key加密过的，你在fiddler里看到的都将是加密过的数据。啊对了，这时候用的加密算法就是<strong>对称加密</strong>了，速度很快。频繁地建立SSL session的话会对服务器造成很大负担。</p>
+<p>又要拿12306举例子。。访问12306的时候chrome会提示「您的连接不是私密连接」，这是因为12306的SSL证书不是CA颁布的，而是自己用keytool生成的。</p>
+<h3 id="Android应用程序中验证证书"><a href="#Android应用程序中验证证书" class="headerlink" title="Android应用程序中验证证书"></a>Android应用程序中验证证书</h3><p>比如，股神的证书验证是这样的：<br>创建一个<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>//父类引用指向子类对象。。。但是父类引用不能访问子类独有的方法哦<br>TrustManager tm = new X509TrustManager() {<br>            public void checkClientTrusted(X509Certificate[] chain,<br>                                           String authType) throws CertificateException {<br>            }</p>
+<pre><code>public void checkServerTrusted(X509Certificate[] chain,
+                               String authType) throws CertificateException {
+    if (mPublicKeyWangYin == null) {
+        throw new CertificateException(
+                &quot;checkServerTrusted: publickey is null&quot;);
+    }
+
+    // 对比
+    boolean expected = Arrays.equals(mPublicKeyWangYin, chain[0]
+            .getPublicKey().getEncoded());
+    assert (expected);
+    if (expected) {
+        return;
+    }
+    ...
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">注意，这里验证本地证书的方法没有重写，因为只有某些特别的场合，比如某些网络要求特定的设备才能连接的情况下才需要重写这个方法。    </div><div class="line">然后就可以把这个```TrustManager```塞进SSLontext：</div></pre></td></tr></table></figure>
+<pre><code>mSSLContext.init(null, new TrustManager[] { tm }, null);
+</code></pre><p>```<br>注意，上面的mPublicKeyWangYin是保存在本地的证书中提取的公钥的字符串。</p>
+<p>另外，<code>checkServerTrusted</code>这个方法是查不到调用者的，这个就像onClickListener一样，是系统触发的。我们把验证的方法塞进去就行了。</p>
+<hr>
+<p>此外，关于对称和分对称加密可以看看下面这个故事，很逗：<br><a href="http://zhihu.com/question/21518760/answer/19698894" target="_blank" rel="external">http://zhihu.com/question/21518760/answer/19698894</a></p>
+<p>Reference：<br>[1]<a href="http://blog.csdn.net/mr_jj_lian/article/details/6860845" target="_blank" rel="external">http://blog.csdn.net/mr_jj_lian/article/details/6860845</a><br>[2]<a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="external">http://blog.csdn.net/lmj623565791/article/details/48129405</a></p>
 
       
     </div>
@@ -381,8 +447,8 @@ The Android framework offers a lot of flexibility when it comes to defining how 
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/08/EP14-DataBinding-2/" rel="next" title="EP14-DataBinding(2)">
-                <i class="fa fa-chevron-left"></i> EP14-DataBinding(2)
+              <a href="/2016/12/22/EP23-ListView/" rel="next" title="EP23-ListView">
+                <i class="fa fa-chevron-left"></i> EP23-ListView
               </a>
             
           </div>
@@ -390,10 +456,6 @@ The Android framework offers a lot of flexibility when it comes to defining how 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/12/EP15-android-architecture-2/" rel="prev" title="EP15-android-architecture(2)">
-                EP15-android-architecture(2) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -419,8 +481,8 @@ The Android framework offers a lot of flexibility when it comes to defining how 
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/09/EP15-android-architecture-1/"
-           data-title="EP15-android-architecture(1)" data-url="http://yoursite.com/2016/12/09/EP15-android-architecture-1/">
+      <div class="ds-thread" data-thread-key="2016/12/23/EP24-对SSL的理解/"
+           data-title="EP24-对SSL的理解" data-url="http://yoursite.com/2016/12/23/EP24-对SSL的理解/">
       </div>
     
   </div>
@@ -444,8 +506,17 @@ The Android framework offers a lot of flexibility when it comes to defining how 
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -529,6 +600,22 @@ The Android framework offers a lot of flexibility when it comes to defining how 
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对SSL的理解"><span class="nav-number">1.</span> <span class="nav-text">对SSL的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL和证书"><span class="nav-number">1.1.</span> <span class="nav-text">SSL和证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android应用程序中验证证书"><span class="nav-number">1.2.</span> <span class="nav-text">Android应用程序中验证证书</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
