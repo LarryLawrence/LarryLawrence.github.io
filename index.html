@@ -259,6 +259,183 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/26/EP25-BottomNavigation的实现和改进方案/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="DrunkPiano">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="DrunkPiano的Android日常">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/26/EP25-BottomNavigation的实现和改进方案/" itemprop="url">
+                  EP25-BottomNavigation的实现和改进方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-26T23:55:24+08:00">
+                2016-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/26/EP25-BottomNavigation的实现和改进方案/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/26/EP25-BottomNavigation的实现和改进方案/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="BottomNavigation的实现"><a href="#BottomNavigation的实现" class="headerlink" title="BottomNavigation的实现"></a>BottomNavigation的实现</h1><p>今年早些时候，Google在安卓自家的看图应用「照片」中加入了底部导航条，这在当时引起不小的震动(<a href="https://www.zhihu.com/question/41390254" target="_blank" rel="external">learn more</a>)；底部导航(BottomNavigation)也就是国内很多应用比如微信，包括iOS中广泛采用的那种那种底部tab。大家都说Google是两面派，因为Google从前一直说底部tab不好，不符合material design，那时候大家都在跟Google一样执迷于左侧的抽屉<figure class="highlight plain"><figcaption><span>Drawer```，Google这一举动简直是打了自己的脸。真有意思啊。。    </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">后来```Bottom Navigation```被写进文档了，渐渐地没人争了，大家也发现底栏确实挺好用的，毕竟抽屉还需要拉开才能用，底栏只要点一下就直接跳转了(虽然多了个大下巴)。越来越多的应用去掉抽屉，采用底栏了。国内比较Material的应用，比如知乎，酷安网这种一直是紧随Material步伐的，先后都去掉了抽屉，采用了底栏，当时知乎安卓客户端刚改版时也被一群安卓粉/谷歌粉狂喷「叛徒」，因为他们觉得这跟iOS一样low，还是忘记不了KitKat经典的抽屉。场面非常有趣。</div><div class="line"></div><div class="line">其实当时我就懂得，不是说采用了```NavigationDrawer```就是Material Design，不是说采用了```BottomNavigation```就是投奔iOS的叛徒，滥用```Drawer/Card/Fab```的应用数不胜数，**设计的本质是要为用户服务**,不要为了Material而Material，不要觉得用了xx控件就符合安卓规范了。Bilibili也是风格比较Material的应用，它们就一直保留着NavigationDrawer，因为他们的应用确实很适合Drawer。</div><div class="line"></div><div class="line">说了这么多废话，赶紧写点有用的。印尼钱包里面要用到这个，所以又想起来，十月初我按照谷歌的规范写了一个```BottomNavigation```，名字叫[SimpleBottomNavigation](https://github.com/LarryLawrence/SimpleBottomNavigationBar)，是这样子的：</div><div class="line"></div><div class="line">![image](https://github.com/LarryLawrence/SimpleBottomNavigationBar/blob/master/screenshots/navi.gif)     </div><div class="line">点击的时候会有放大，原始的尺寸，放大的尺寸，padding，ripple效果等等都是按照文档中来的。内部实现的话我当时想法比较简单粗暴：在布局文件中一口气定义了5个底栏的tab,下面是其中一个：</div><div class="line"></div><div class="line">```XML</div><div class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">        android:id=&quot;@+id/tab1&quot;</div><div class="line">        android:layout_width=&quot;0dp&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:layout_weight=&quot;1&quot;</div><div class="line">        android:gravity=&quot;center&quot;</div><div class="line">        android:orientation=&quot;vertical&quot;</div><div class="line">        android:paddingBottom=&quot;10dp&quot;</div><div class="line">        android:paddingLeft=&quot;12dp&quot;</div><div class="line">        android:paddingRight=&quot;12dp&quot;</div><div class="line">        android:paddingTop=&quot;8dp&quot;&gt;</div><div class="line"></div><div class="line">        &lt;ImageView</div><div class="line">            android:id=&quot;@+id/imageView1&quot;</div><div class="line">            android:layout_width=&quot;24dp&quot;</div><div class="line">            android:layout_height=&quot;24dp&quot;</div><div class="line">            android:scaleType=&quot;fitCenter&quot;</div><div class="line">            android:src=&quot;@android:drawable/ic_menu_camera&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/textView1&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:text=&quot;tab1&quot;</div><div class="line">            android:textSize=&quot;12sp&quot; /&gt;</div><div class="line">    &lt;/LinearLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>但我默认只让前两个显示，后三个的visibility都是<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">在代码中，用了这样的方法：</div></pre></td></tr></table></figure></p>
+<pre><code>switch (size) {
+    case 2:
+        mTextView1.setText(tabTxtArray.get(0));
+        mTextView2.setText(tabTxtArray.get(1));
+        mImageView1.setImageResource(tabDrawableArray.get(0));
+        mImageView2.setImageResource(tabDrawableArray.get(1));
+        mTab1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnTabSelectedListener.onTabSelected(0);
+</code></pre><p>//                    public void setPadding(int left, int top, int right, int bottom) {<br>                        mTab1.setPadding(dp12, dp6, dp12, dp10);<br>                        mTextView1.setTextSize(14);</p>
+<pre><code>        mTab2.setPadding(dp12, dp8, dp12, dp10);
+        mTextView2.setTextSize(12);
+    }
+});
+mTab2.setOnClickListener(new OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        mOnTabSelectedListener.onTabSelected(1);
+        mTab2.setPadding(dp12, dp6, dp12, dp10);
+        mTextView2.setTextSize(14);
+
+        mTab1.setPadding(dp12, dp8, dp12, dp10);
+        mTextView1.setTextSize(12);
+    }
+});
+break;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">我根据传进来的ArrayList的size来switch，然后控制每一个tab的点击事件，因为涉及到要控制图标和文字的大小，我想了一个办法，每点一个tab，就用viewhodler的```setPadding```方法，把这个tab的文字和图片放大，**同时其他tab的文字和图片都缩小**。我总觉的这个方法有点蠢。因为后面我写了大量重复代码，比如：</div></pre></td></tr></table></figure>
+<p>mTab5.setOnClickListener(new OnClickListener() {<br>                    @Override<br>                    public void onClick(View view) {<br>                        mOnTabSelectedListener.onTabSelected(4);<br>                        mTab1.setPadding(dp12, dp8, dp12, dp10);<br>                        mTextView1.setTextSize(12);</p>
+<pre><code>        mTab2.setPadding(dp12, dp8, dp12, dp10);
+        mTextView2.setTextSize(12);
+
+        mTab3.setPadding(dp12, dp8, dp12, dp10);
+        mTextView3.setTextSize(12);
+
+        mTab4.setPadding(dp12, dp8, dp12, dp10);
+        mTextView4.setTextSize(12);
+
+        mTab5.setPadding(dp12, dp6, dp12, dp10);
+        mTextView5.setTextSize(14);
+    }
+});
+break;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">同举说他看到这个人的代码比较简洁：[MainNavigateTabBar](https://github.com/Luckymin/MainNavigateTabBar/blob/master/mainnavigatetabbar/src/main/java/com/startsmake/mainnavigatetabbar/widget/MainNavigateTabBar.java)，</div><div class="line">我阅读了一下，发现它的布局非常简单，只包含了一个&quot;cell&quot;，一个图标和一个文字。怎么根据```fragment```的个数来显示呢？使用了```ViewGroup```的```addView```方法：</div></pre></td></tr></table></figure>
+<p>addView(view, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0F));<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">当然，他采用的是LinearLayout，所以它的LayoutParams是按照这样构造参数设置的：</div></pre></td></tr></table></figure></p>
+<pre><code>public LayoutParams(int width, int height, float weight) {
+    super(width, height);
+    this.weight = weight;
+}
+</code></pre><p><code>嗯。我也可以这样改进。至于点击放大缩小的效果，也可以通过一定的手段来减少胶水代码，比如设置一个list，把没点击到的所有text和image统一</code>setPadding```。</p>
+<p>另，今天是我妈妈生日。还有黄珊生日。。生日快乐。</p>
+<p>-DEC 26</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/EP24-对SSL的理解/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1695,138 +1872,6 @@ mCurrentLevel = savedInstanceState.getInt(STATE_LEVEL);
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/09/EP15-android-architecture-1/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="DrunkPiano">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="DrunkPiano的Android日常">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/09/EP15-android-architecture-1/" itemprop="url">
-                  EP15-android-architecture(1)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-09T20:48:22+08:00">
-                2016-12-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/09/EP15-android-architecture-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/09/EP15-android-architecture-1/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>发现了一个Google samples提供的关于开发模式的android-architecture仓库：<br><a href="https://github.com/googlesamples/android-architecture。" target="_blank" rel="external">https://github.com/googlesamples/android-architecture。</a><br>他说：    </p>
-<blockquote>
-<p>The Android framework offers a lot of flexibility when it comes to defining how to organize and architect an Android app. This freedom, whilst very valuable, can also result in apps with large classes, inconsistent naming and architectures (or lack of) that can make testing, maintaining and extending difficult.<br>在涉及到如何组织和搭建App的时候，Android Framework提供了很多弹性的机制。这种自由很有价值，但也会造成app体积臃肿，前后命名冲突，和架构在测试、维持和扩展上的困难。    </p>
-</blockquote>
-<p>所以他们提供了一些简单的、直接的例子来展示一些架构。但是所有的例子都是基于MVP的，包括里面的DataBinding也是基于MVP。所以，对于Android来说，MVP是很流行，也很合适。下面这个图是各种MVP sample的对比：<br><img src="/uploads/android-architecture.png" alt="image"></p>
-<p>**dex方法数仅仅是对例子中的app来说的，不会线性增长。比如大型工程应该会受益于使用Data Binding的补偿修正(compensating the overhead)。    </p>
-<p>**LOC代表Lines of code，Java代码的行数。    </p>
-<p>在不对这些种类的MVP进行了解的前提下，仅仅从这张图看来，todo-mvp，todo-mvp-clean和todo-mvp-loaders大概是最适合使用的。通过对DataBinding的了解，我感觉Complexity / Learning cost也是很重要的。接下来会继续了解一下他们。    </p>
-<p>-DEC 9</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1872,7 +1917,7 @@ mCurrentLevel = savedInstanceState.getInt(STATE_LEVEL);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
