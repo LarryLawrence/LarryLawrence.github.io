@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="ListViewListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。
-后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。
-借助AdapterListView继">
+<meta name="description" content="BottomNavigation的改进SimpleBottomNavigationBar首先要把FrameLayout改成LinearLayout。这是因为我们要使用12345678910111213141516171819202122232425## View的构造方法每一个自定义的View/ViewGroup都要有三个构造方法，这个自定义的控件才有用，通常是这样的：```Java/**">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EP23-ListView">
-<meta property="og:url" content="http://yoursite.com/2016/12/22/EP23-ListView/index.html">
+<meta property="og:title" content="EP26-BottomNavigation改进">
+<meta property="og:url" content="http://yoursite.com/2016/12/27/EP26-BottomNavigation改进/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="ListViewListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。
-后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。
-借助AdapterListView继">
-<meta property="og:updated_time" content="2016-12-22T13:19:36.000Z">
+<meta property="og:description" content="BottomNavigation的改进SimpleBottomNavigationBar首先要把FrameLayout改成LinearLayout。这是因为我们要使用12345678910111213141516171819202122232425## View的构造方法每一个自定义的View/ViewGroup都要有三个构造方法，这个自定义的控件才有用，通常是这样的：```Java/**">
+<meta property="og:updated_time" content="2016-12-27T14:37:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EP23-ListView">
-<meta name="twitter:description" content="ListViewListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。
-后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。
-借助AdapterListView继">
+<meta name="twitter:title" content="EP26-BottomNavigation改进">
+<meta name="twitter:description" content="BottomNavigation的改进SimpleBottomNavigationBar首先要把FrameLayout改成LinearLayout。这是因为我们要使用12345678910111213141516171819202122232425## View的构造方法每一个自定义的View/ViewGroup都要有三个构造方法，这个自定义的控件才有用，通常是这样的：```Java/**">
 
 
 
@@ -127,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/22/EP23-ListView/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/27/EP26-BottomNavigation改进/"/>
 
 
 
 
 
-  <title> EP23-ListView | DrunkPiano的Android日常 </title>
+  <title> EP26-BottomNavigation改进 | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/EP23-ListView/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/27/EP26-BottomNavigation改进/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -288,7 +282,7 @@
             
             
               
-                EP23-ListView
+                EP26-BottomNavigation改进
               
             
           </h1>
@@ -301,8 +295,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-22T21:19:16+08:00">
-                2016-12-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T22:37:32+08:00">
+                2016-12-27
               </time>
             
 
@@ -317,8 +311,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/22/EP23-ListView/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/EP23-ListView/" itemprop="commentCount"></span>
+                <a href="/2016/12/27/EP26-BottomNavigation改进/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/27/EP26-BottomNavigation改进/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -344,29 +338,24 @@
       
 
       
-        <h2 id="ListView"><a href="#ListView" class="headerlink" title="ListView"></a>ListView</h2><p>ListView是所有控件中最难用的，应该没有人有异议吧。我至今仍需要对照使用说明书才能使用ListView。</p>
-<p>后来出现了RecyclerView，这个我倒用过几次，ListView和RecyclerView从功能上和使用方法上看来是差不多的；都说RecyclerView性能更好，那ListView是怎么实现的？今天先了解一下listView。</p>
-<h3 id="借助Adapter"><a href="#借助Adapter" class="headerlink" title="借助Adapter"></a>借助Adapter</h3><p>ListView继承了AdpterView, AdapterView继承了ViewGroup。</p>
-<p>ListView依赖着Adapter。ListView更多是用来展示数据，Adapter去访问数据。这让我觉得<strong>有点像MVP</strong>的结构，Model就是数据源，View就是ListView，Adapter就是Processor。ListView跟数据源不直接发生联系。</p>
-<p>Adapter是接口，然后不同类型的数据源可以实现不同的子类来完成数据的处理。比如ArrayAdapter处理数据或者list类型的数据源，SimpleCursorAdapter处理Cursor类型的数据源。  </p>
-<p>怎么用Adapter？把它set给一个listview就行了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mListView.setAdapter(new ArrayAdapter&lt;String&gt;(this, android.R.layout.simple_expandable_list_item_1, arrayList));</div></pre></td></tr></table></figure>
-<p>其中第二个参数是单个item的样式。<br>除此之外，还有SimpleAdapter，CursorAdapter等等，不过好像都不怎么常用；也可以直接用BaseAdapter。</p>
-<h3 id="跟RecyclerView的主要区别"><a href="#跟RecyclerView的主要区别" class="headerlink" title="跟RecyclerView的主要区别"></a>跟RecyclerView的主要区别</h3><ul>
-<li><p><strong>需要Adapter中的ViewHodler</strong><br>ListView Adapter不需要ViewHolder 模式来提高性能。相反，RecyclerView的Adatper就需要。</p>
+        <h1 id="BottomNavigation的改进"><a href="#BottomNavigation的改进" class="headerlink" title="BottomNavigation的改进"></a>BottomNavigation的改进</h1><p><a href="https://github.com/LarryLawrence/SimpleBottomNavigationBar" target="_blank" rel="external">SimpleBottomNavigationBar</a><br>首先要把FrameLayout改成LinearLayout。这是因为我们要使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">## View的构造方法</div><div class="line">每一个自定义的View/ViewGroup都要有三个构造方法，这个自定义的控件才有用，通常是这样的：</div><div class="line"></div><div class="line">```Java</div><div class="line">/**</div><div class="line">     * 第一个构造函数</div><div class="line">     */</div><div class="line">    public CustomView(Context context) &#123;</div><div class="line">        this(context, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 第二个构造函数</div><div class="line">     */</div><div class="line">    public CustomView(Context context, AttributeSet attrs) &#123;</div><div class="line">        this(context, attrs, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 第三个构造函数</div><div class="line">     */</div><div class="line">    public CustomView(Context context, AttributeSet attrs, int defStyle) &#123;</div><div class="line">        super(context, attrs, defStyle);</div><div class="line">        // TODO:获取自定义属性</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以看到第一个构造函数调用了第二个构造函数，第二个构造函数调用了第三个构造函数。</p>
+<ul>
+<li>在代码中直接new一个Custom View实例的时候,会调用第一个构造函数。</li>
+<li><p>在xml布局文件中调用Custom View的时候,会调用第二个构造函数，attrs就是我们在xml中为view设置的属性啦。</p>
 </li>
-<li><p><strong>可自定义的item layout</strong><br>ListView只能垂直、linear地部署item；相反，RecyclerView有一个RecyclerView.LayoutManager，可以实现水平和栅格(staggerd grids)布局item。</p>
-</li>
-<li><p><strong>简单的item动画</strong><br>ListView没有添加/删除item的动画，相反，RecyclerView.ItemAnimator可以实现。</p>
-</li>
-<li><p><strong>人工的数据源</strong><br>ListView有ArrayAdapter和CursorAdapter之类的对应Array和database的adapter，相反地，RecyclerView.Adapter需要一个自定义的实现来给adapter提供数据。</p>
-</li>
-<li><p><strong>人工的item装饰</strong><br>ListView 有<code>android:divider</code>来实现简单的item之间的divide，相反地，RecyclerView需要ecyclerView.ItemDecoration来实现更手动的divider 装饰。</p>
-</li>
-<li><p><strong>人工的点击监听</strong><br>ListView有一个<code>AdapterView.OnItemClickListener</code>接口来绑定item的点击事件。相反，RecyclerView只有<code>RecyclerView.OnItemTouchListener</code>,只能处理触摸监听，没有内置的点击监听。</p>
+<li><p>在xml布局文件中调用Custom View,并且Custom View标签中还有自定义属性时,这里调用的还是第二个构造函数。</p>
 </li>
 </ul>
-<p>Reference:<br>[1]<a href="https://guides.codepath.com/android/using-the-recyclerview" target="_blank" rel="external">https://guides.codepath.com/android/using-the-recyclerview</a></p>
+<p>既然如此，我们可以把自定义View的一些初始化操作放在第二个或者第三个构造函数里面了，毕竟我们的View都是写在<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## ViewHolder思想</div><div class="line">昨天我用了很笨的方法，把所有tab的View都初始化了一遍，一共有10个之多，写了大量初始化方法。今天参考了一个人写的，他用了```ViewHolder```来包含每一个Tab底下的```TextView```、```ImageView```等等。</div></pre></td></tr></table></figure></p>
+<pre><code>public static class ViewHolder {
+    public BottomNavItem bottomNavItem;
+    public ImageView tabIcon;
+    public TextView tabTitle;
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">然后在onClick的时候轮询ViewHodlerList中的viewHodler，突出显示选中的tab，恢复未选中的tab的原有样式。</div><div class="line"></div><div class="line">```Java</div><div class="line">        for (ViewHolder holder : mViewHolderList) &#123;</div><div class="line">            //每次点击都轮询一遍，突出显示选中的，恢复未选中的</div><div class="line">            if (viewHolder.bottomNavItem.mText.equals(holder.bottomNavItem.mText)) &#123;</div><div class="line">                holder.tabIcon.setImageResource(holder.bottomNavItem.drawableSelected);</div><div class="line">                holder.tabTitle.setTextColor(Color.RED);</div><div class="line">                mOnTabSelectedListener.onTabSelected(holder.bottomNavItem.mText);</div><div class="line">            &#125; else &#123;</div><div class="line">                holder.tabIcon.setImageResource(holder.bottomNavItem.drawableUnselected);</div><div class="line">                holder.tabTitle.setTextColor(Color.BLACK);</div><div class="line">            &#125;</div></pre></td></tr></table></figure>
+<p>还没完全写完，还有一些bug。明天再说了。</p>
+<p>-DEC27</p>
 
       
     </div>
@@ -393,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/21/EP22-ToolBar的前世今生/" rel="next" title="EP22-ToolBar的前世今生">
-                <i class="fa fa-chevron-left"></i> EP22-ToolBar的前世今生
+              <a href="/2016/12/26/EP25-BottomNavigation的实现和改进方案/" rel="next" title="EP25-BottomNavigation的实现和改进方案">
+                <i class="fa fa-chevron-left"></i> EP25-BottomNavigation的实现和改进方案
               </a>
             
           </div>
@@ -402,10 +391,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/23/EP24-对SSL的理解/" rel="prev" title="EP24-对SSL的理解">
-                EP24-对SSL的理解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -431,8 +416,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/22/EP23-ListView/"
-           data-title="EP23-ListView" data-url="http://yoursite.com/2016/12/22/EP23-ListView/">
+      <div class="ds-thread" data-thread-key="2016/12/27/EP26-BottomNavigation改进/"
+           data-title="EP26-BottomNavigation改进" data-url="http://yoursite.com/2016/12/27/EP26-BottomNavigation改进/">
       </div>
     
   </div>
@@ -560,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView"><span class="nav-number">1.</span> <span class="nav-text">ListView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#借助Adapter"><span class="nav-number">1.1.</span> <span class="nav-text">借助Adapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跟RecyclerView的主要区别"><span class="nav-number">1.2.</span> <span class="nav-text">跟RecyclerView的主要区别</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BottomNavigation的改进"><span class="nav-number">1.</span> <span class="nav-text">BottomNavigation的改进</span></a></li></ol></div>
             
 
           </div>
