@@ -84,25 +84,16 @@
 
 
 
-<meta name="description" content="0x00 为什么PluginClassLoader对loadcass()进行覆写昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：
-1Class&amp;lt;?&amp;gt; clazz = findLoadedClass(className);
-替换成了：
-12345if (child != nu">
+<meta name="description" content="下载文件以及API23的权限申请今天实现下载升级功能，遇到了权限申请的问题。我们知道Android6.0以后(API23以上)有些「危险权限」即便写到Manifest里面也是需要手动赋予的。比如1234## 到底怎么申请权限怎么申请权限？很多网页都介绍得很复杂，而且我发现很多ROM对这个的处理都不尽相同。比如我手上三台6.0手机，同样的代码，有的会弹出申请权限的对话框，有的就不会。    主要是对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DrunkPianoDaily-ep4">
-<meta property="og:url" content="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/index.html">
+<meta property="og:title" content="EP27-下载文件以及API23的权限申请">
+<meta property="og:url" content="http://yoursite.com/2016/12/28/EP27-下载文件以及API23的权限申请/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="0x00 为什么PluginClassLoader对loadcass()进行覆写昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：
-1Class&amp;lt;?&amp;gt; clazz = findLoadedClass(className);
-替换成了：
-12345if (child != nu">
-<meta property="og:updated_time" content="2016-11-24T14:22:59.000Z">
+<meta property="og:description" content="下载文件以及API23的权限申请今天实现下载升级功能，遇到了权限申请的问题。我们知道Android6.0以后(API23以上)有些「危险权限」即便写到Manifest里面也是需要手动赋予的。比如1234## 到底怎么申请权限怎么申请权限？很多网页都介绍得很复杂，而且我发现很多ROM对这个的处理都不尽相同。比如我手上三台6.0手机，同样的代码，有的会弹出申请权限的对话框，有的就不会。    主要是对">
+<meta property="og:updated_time" content="2016-12-28T13:37:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkPianoDaily-ep4">
-<meta name="twitter:description" content="0x00 为什么PluginClassLoader对loadcass()进行覆写昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：
-1Class&amp;lt;?&amp;gt; clazz = findLoadedClass(className);
-替换成了：
-12345if (child != nu">
+<meta name="twitter:title" content="EP27-下载文件以及API23的权限申请">
+<meta name="twitter:description" content="下载文件以及API23的权限申请今天实现下载升级功能，遇到了权限申请的问题。我们知道Android6.0以后(API23以上)有些「危险权限」即便写到Manifest里面也是需要手动赋予的。比如1234## 到底怎么申请权限怎么申请权限？很多网页都介绍得很复杂，而且我发现很多ROM对这个的处理都不尽相同。比如我手上三台6.0手机，同样的代码，有的会弹出申请权限的对话框，有的就不会。    主要是对">
 
 
 
@@ -130,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/28/EP27-下载文件以及API23的权限申请/"/>
 
 
 
 
 
-  <title> DrunkPianoDaily-ep4 | DrunkPiano的Android日常 </title>
+  <title> EP27-下载文件以及API23的权限申请 | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/28/EP27-下载文件以及API23的权限申请/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -291,7 +282,7 @@
             
             
               
-                DrunkPianoDaily-ep4
+                EP27-下载文件以及API23的权限申请
               
             
           </h1>
@@ -304,8 +295,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-24T22:22:32+08:00">
-                2016-11-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-28T21:37:25+08:00">
+                2016-12-28
               </time>
             
 
@@ -320,8 +311,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/24/DrunkPianoDaily-ep4/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/24/DrunkPianoDaily-ep4/" itemprop="commentCount"></span>
+                <a href="/2016/12/28/EP27-下载文件以及API23的权限申请/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/28/EP27-下载文件以及API23的权限申请/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -347,23 +338,74 @@
       
 
       
-        <h3 id="0x00-为什么PluginClassLoader对loadcass-进行覆写"><a href="#0x00-为什么PluginClassLoader对loadcass-进行覆写" class="headerlink" title="0x00 为什么PluginClassLoader对loadcass()进行覆写"></a>0x00 为什么PluginClassLoader对loadcass()进行覆写</h3><p>昨天说到PluginClassLoader对ClassLoader.java里的loadclass()方法进行了覆写，具体就是把loadClass()函数体中的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class&lt;?&gt; clazz = findLoadedClass(className);</div></pre></td></tr></table></figure>
-<p>替换成了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (child != null &amp;&amp; nestedLoadLevels &gt; 0) &#123;</div><div class="line">	nestedLoadLevels = 0;</div><div class="line">	// 再次尝试父类装载器，模拟抛出异常等操作</div><div class="line">	return getParent().loadClass(className);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>其中findLoadedClass的注释是：    </p>
-<blockquote>
-<p>Returns the class with the specified name if it has already been loaded by the VM or {@code null} if it has not yet been loaded.    </p>
-<p>如果一个类已经被VM装载过了，就返回这个Class。        </p>
-</blockquote>
-<p>覆写之后要判断child classloader是否为空。nestedLoadLevels是loadClass的嵌套调用次数，不为0时说明是内部调用，直接返回。这句话是什么意思？我们看PluginClassLoader.java，覆写了findClass()；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String className)</div><div class="line">		<span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">	<span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">		nestedLoadLevels = <span class="number">0</span>;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.findClass(className);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.findClass(className);</div><div class="line">	&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">		<span class="comment">// 尝试使用child装载</span></div><div class="line">		nestedLoadLevels++;</div><div class="line">		<span class="keyword">return</span> child.loadClass(className);</div><div class="line">	&#125; <span class="keyword">finally</span> &#123;</div><div class="line">		nestedLoadLevels = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我唯一看到nestedLoadLevels自加的地方就是在super.findClass也就是ClassLoader中的findClass找不到对应类名的时候。比如loadclass的时候找不到这个类了，我们知道找类会先去找load parent有没有加载过这个类，这里findClass重写的逻辑是：<br>1.判断子类有没有被加载过，如果没有，调用父类的findclass方法找这个类。<br>2.如果子类已经被加载过，尝试查找这个类。如果没找到（why？），就尝试使用child装载。</p>
-<p>之前我们分析过，findClass会调用BaseDexClassLoader中的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Class clazz = pathList.findClass(name);</div></pre></td></tr></table></figure></p>
-<p>最终调用的是DexPathList中的findClass():</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Finds the named class in one of the dex files pointed at by</div><div class="line">     * this instance. This will find the one in the earliest listed</div><div class="line">     * path element. If the class is found but has not yet been</div><div class="line">     * defined, then this method will define it in the defining</div><div class="line">     * context that this instance was constructed with.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> the named class or &#123;<span class="doctag">@code</span> null&#125; if the class is not</div><div class="line">     * found in any of the dex files</div><div class="line">     */</div><div class="line">     <span class="comment">//找到最早在path元素中罗列出的类（我理解是根节点的那个类）</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Class <span class="title">findClass</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (Element element : dexElements) &#123;</div><div class="line">            DexFile dex = element.dexFile;</div><div class="line">            <span class="keyword">if</span> (dex != <span class="keyword">null</span>) &#123;</div><div class="line">                Class clazz = dex.loadClassBinaryName(name, definingContext);</div><div class="line">                <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">return</span> clazz;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>PluginClassLoader中的findclass改变了类装载的顺序，先去子类中findClass，找不到才去走正常的loadClass流程。</p>
-<p>-NOV 24</p>
+        <h1 id="下载文件以及API23的权限申请"><a href="#下载文件以及API23的权限申请" class="headerlink" title="下载文件以及API23的权限申请"></a>下载文件以及API23的权限申请</h1><p>今天实现下载升级功能，遇到了权限申请的问题。我们知道Android6.0以后(API23以上)有些「危险权限」即便写到Manifest里面也是需要手动赋予的。比如<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">## 到底怎么申请权限</div><div class="line">怎么申请权限？很多网页都介绍得很复杂，而且我发现很多ROM对这个的处理都不尽相同。比如我手上三台6.0手机，同样的代码，有的会弹出申请权限的对话框，有的就不会。    </div><div class="line"></div><div class="line">主要是对```shouldShowRequestPermissionRationale```这个函数的处理，这个函数的意思是，是否要展示申请权限的那个「理由(Rationale)」，比如你做了一个拍照应用，你请求拍照权限就不需要显示理由吧，但是你想记录照片的拍摄位置所以你请求Location权限，这样的话，不懂的兄弟就可能疑惑了，所以你就需要弹一个对话框来解释一下理由你为什么需要定位。但是系统怎么知道你是否需要弹出对话框来向用户解释呢？也就是```shouldShowRequestPermissionRationale```这个函数什么时候返回true/false？我们发现```shouldShowRequestPermissionRationale```这个函数最终指向：</div></pre></td></tr></table></figure></p>
+<p>//Activity.java<br>public boolean shouldShowRequestPermissionRationale(@NonNull String permission) {<br>        return getPackageManager().shouldShowRequestPermissionRationale(permission);<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">但是我们发现PackageManager是个抽象类：</div></pre></td></tr></table></figure></p>
+<p>//PackageManager.java<br>public abstract boolean shouldShowRequestPermissionRationale(String permission);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getPackageManager指向了：</div></pre></td></tr></table></figure></p>
+<p>//ContextWrapper.java<br>    @Override<br>    public PackageManager getPackageManager() {<br>        return mBase.getPackageManager();<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">也就是说```mBase```一定实现了```shouldShowRequestPermissionRationale```这个方法。我又搜到:</div></pre></td></tr></table></figure></p>
+<p>Context mBase;  //该属性指向一个ContextIml实例，一般在创建Application、Service、Activity时赋值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">是在是跟不到shouldShowRequestPermissionRationale这个方法的实现。</div><div class="line">但在调试的时候我还没有发现这个方法被调用过。这就要提到申请权限的步骤了：</div><div class="line">1. 用```checkSelfPermission```方法检查是否已经有权限。</div></pre></td></tr></table></figure></p>
+<pre><code>int permission = ContextCompat.checkSelfPermission(RunningContext.sAppContext,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这个方法在所有手机上首次启动都会返回-1，也就是未授予。。</div><div class="line">2. 判断是否需要「解释」。</div></pre></td></tr></table></figure>
+<pre><code>if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">很烦，这个方法在所有手机上都返回了false。于是我们根本不需弹出对话框要询问用户是否需要授予权限。</div><div class="line">3. 请求权限。</div></pre></td></tr></table></figure>
+<pre><code>ActivityCompat.requestPermissions(activity,
+        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+        REQUEST_WRITE_STORAGE);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">这个方法，在Nexus 5上执行后会弹出一个系统默认对话框询问是否给权限。HTC，魅族之类的手机上就没弹出，而且执行后直接授予了权限。</div><div class="line"></div><div class="line">我写了个简单的```PermissionUtil```，Fragment中请求权限之后可以弹出下载对话框：</div></pre></td></tr></table></figure>
+<p>package com.jd.wallet.indonesia.utils;</p>
+<p>import android.Manifest;<br>import android.app.Activity;<br>import android.app.AlertDialog;<br>import android.content.DialogInterface;<br>import android.content.pm.PackageManager;<br>import android.support.v4.app.ActivityCompat;<br>import android.support.v4.content.ContextCompat;</p>
+<p>import com.jd.wallet.appframe.RunningContext;<br>import com.jd.wallet.indonesia.main.ui.home.HomeFragment;</p>
+<p>/**</p>
+<ul>
+<li>Permission Utility.</li>
+<li>Created by DrunkPiano on 2016/12/28.<br>*/</li>
+</ul>
+<p>public class PermissionUtil {<br>    public static final int REQUEST_WRITE_STORAGE = 112;</p>
+<pre><code>public static void checkPermissionAndDownload(final Activity activity, final HomeFragment.ShowDialogCallback showDialogCallback) {
+    //首次启动APP，checkSelfPermission会返回-1，代表还没有对应权限
+    int permission = ContextCompat.checkSelfPermission(RunningContext.sAppContext,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RunningContext.sAppContext);
+            builder.setMessage(&quot;Permission to access the SD-CARD is required for this app to Download APK.&quot;)
+                    .setTitle(&quot;Permission required&quot;);
+            builder.setPositiveButton(&quot;OK&quot;, new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int id) {
+                    makeRequest(activity, showDialogCallback);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            makeRequest(activity, showDialogCallback);
+            return;
+        }
+    }
+    //已经获取权限的话，直接更新
+    if (permission == PackageManager.PERMISSION_GRANTED) {
+        showDialogCallback.showDialog();
+    }
+}
+
+private static void makeRequest(Activity activity, HomeFragment.ShowDialogCallback showDialogCallback) {
+    ActivityCompat.requestPermissions(activity,
+            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+            REQUEST_WRITE_STORAGE);
+    showDialogCallback.showDialog();
+}
+</code></pre><p>}</p>
+<p>```</p>
+<h2 id="关于下载文件"><a href="#关于下载文件" class="headerlink" title="关于下载文件"></a>关于下载文件</h2><p>提到下载文件，有很多种方式，</p>
+<ol>
+<li>比如用在AsyncTasj中用HttpConnection，然后用    mProgressDialog.setIndeterminate(false);更新进度条；</li>
+<li>Service中开新的线程配合Receiver；</li>
+<li><strong>DownloadManager</strong>。    </li>
+</ol>
+<p>我发现<code>DownloadManager</code>已经实现得非常好了，它直接帮你在通知栏下载了，而且有进度条。所以，它的源码也是可以读一读的。</p>
+<p>Reference:<br>[1] <a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1125/2057.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1125/2057.html</a></p>
 
       
     </div>
@@ -390,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/23/DrunkPianoDaily-ep3/" rel="next" title="DrunkPianoDaily-ep3">
-                <i class="fa fa-chevron-left"></i> DrunkPianoDaily-ep3
+              <a href="/2016/12/27/EP26-BottomNavigation改进/" rel="next" title="EP26-BottomNavigation改进">
+                <i class="fa fa-chevron-left"></i> EP26-BottomNavigation改进
               </a>
             
           </div>
@@ -399,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/25/DrunkPianoDaily-EP5/" rel="prev" title="DrunkPianoDaily-EP5">
-                DrunkPianoDaily-EP5 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -428,8 +466,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/24/DrunkPianoDaily-ep4/"
-           data-title="DrunkPianoDaily-ep4" data-url="http://yoursite.com/2016/11/24/DrunkPianoDaily-ep4/">
+      <div class="ds-thread" data-thread-key="2016/12/28/EP27-下载文件以及API23的权限申请/"
+           data-title="EP27-下载文件以及API23的权限申请" data-url="http://yoursite.com/2016/12/28/EP27-下载文件以及API23的权限申请/">
       </div>
     
   </div>
@@ -557,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-为什么PluginClassLoader对loadcass-进行覆写"><span class="nav-number">1.</span> <span class="nav-text">0x00 为什么PluginClassLoader对loadcass()进行覆写</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载文件以及API23的权限申请"><span class="nav-number">1.</span> <span class="nav-text">下载文件以及API23的权限申请</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于下载文件"><span class="nav-number">1.1.</span> <span class="nav-text">关于下载文件</span></a></li></ol></li></ol></div>
             
 
           </div>
