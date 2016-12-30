@@ -259,6 +259,153 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/30/EP29-DownloadManager分析-2/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="DrunkPiano">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="DrunkPiano的Android日常">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/30/EP29-DownloadManager分析-2/" itemprop="url">
+                  EP29-DownloadManager分析(2)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T17:49:19+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/30/EP29-DownloadManager分析-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/30/EP29-DownloadManager分析-2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="DownloadManager分析-2"><a href="#DownloadManager分析-2" class="headerlink" title="DownloadManager分析(2)"></a>DownloadManager分析(2)</h1><p>昨天说到:</p>
+<ul>
+<li>DownloadManager分发任务给DownloadProvider</li>
+<li>DownloadProvider调用DownloadService</li>
+<li>DownloadService真正执行下载操作</li>
+</ul>
+<p>所以DownloadProvider做了什么，怎么启动DownloadService的？然后DownloadSerivce又是怎么实现下载的？</p>
+<h2 id="DownloadProvider做了什么"><a href="#DownloadProvider做了什么" class="headerlink" title="DownloadProvider做了什么"></a>DownloadProvider做了什么</h2><p>DownloadProvider的描述是：</p>
+<blockquote>
+<p>Allows application to interact with the download manager.<br>允许应用和download manager之间进行交互。</p>
+</blockquote>
+<p>Application可以是不同的Application，<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">前面分析到，Android N之前，```DownloadManager```会把request以```ContentValues```形式pass给```DownloadProvider.insert()```,然后进行异步下载。</div></pre></td></tr></table></figure></p>
+<p>//传递URI和Content Values给ContentResolver<br>Uri downloadUri = mResolver.insert(Downloads.Impl.CONTENT_URI, values);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DownloadProvider的insert方法，将下载信息写入数据库，包括下载链接地址等信息，然后会启动```DownloadService```这个Service：</div></pre></td></tr></table></figure></p>
+<pre><code>//连请求头都写入了数据库
+insertRequestHeaders(db, rowID, values);  
+//启动DownloadService 
+context.startService(new Intent(context, DownloadService.class));  
+notifyContentChanged(uri, match);  
+return ContentUris.withAppendedId(Downloads.CONTENT_URI, rowID); 
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## DownloadService做了什么</div><div class="line">### UpdateThread</div><div class="line">```DownloadService```会利用```updateFromProvider```从provider的数据库里获取下载的请求，然后启动```UpdateThread```线程，这个线程会不断地查找数据库里还有没有下载任务，以及还有没有未完成的任务，直到完成才退出。</div></pre></td></tr></table></figure>
+<p>//UpdateThread的run方法<br>for (;;) {<br>    synchronized (DownloadService.this) {<br>        if (mUpdateThread != this) {<br>            throw new IllegalStateException(<br>                    “multiple UpdateThreads in DownloadService”);<br>        }<br>        if (!mPendingUpdate) {<br>            mUpdateThread = null;<br>            if (!keepService) {<br>                stopSelf();<br>            }<br>            if (wakeUp != Long.MAX_VALUE) {<br>                scheduleAlarm(wakeUp);<br>            }<br>            return;<br>        }<br>        mPendingUpdate = false;<br>    }<br>    …<br>    …<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### DownloadThread</div><div class="line">```DownloadThread```真正实现了下载，里面有很多功能，比如开始、暂停、断点续传。每个下载任务都是独立的线程，需要同步锁/线程池来限制下载数量。</div><div class="line">有这些方法：</div><div class="line"></div><div class="line">1. excuteDownload 执行下载</div><div class="line">2. setupDestinationFile 设置目标位置，如果位置已经有了file，就继续下载，实现了**断点续传**</div><div class="line">3. addRequestHeaders 添加请求头</div><div class="line">4. checkConnectivity 检查链接</div><div class="line">5. readFromResponse 读取response</div><div class="line">6. writeDataToDestination 写数据</div><div class="line">7. reportProgress 报告进度</div><div class="line">8. checkPauseOrCanceled 检查暂停或取消</div><div class="line">9. cleanUpDestination 清空目标位置</div><div class="line">10. notifyDownloadComplete 通知下载完成（更新数据库/发送广播）</div><div class="line"></div><div class="line">5~8是一个loop，不停地获取网络数据流，检查下载是否暂停。</div><div class="line">关键的下载操作都是在```DownloadThread```里面实现的，如果想参考就来这里看吧。另外，Android N之后```DownloadProvider```引入了```Job Schedule```，会将任务加入计划，满足指定条件再执行操作，App不用驻留，可以省电，大概是这样子。</div><div class="line"></div><div class="line">总结一下:</div></pre></td></tr></table></figure></p>
+<p>graph LR<br>DownloadManager–&gt;DownloadProvider<br>DownloadProvider–&gt;DownloadService<br>DownloadService–&gt;UpdateThread<br>DownloadService–&gt;DownloadThread<br>UpdateThread–&gt;DownloadProvider<br>```</p>
+<p>-Dec30</p>
+<p>Reference:<br>[1]<a href="http://www.jianshu.com/p/c9dc04af2f54#" target="_blank" rel="external">http://www.jianshu.com/p/c9dc04af2f54#</a><br>[2]<a href="http://blog.csdn.net/zhiyi2010/article/details/19152979" target="_blank" rel="external">http://blog.csdn.net/zhiyi2010/article/details/19152979</a><br>[3]<a href="http://blog.csdn.net/qq_31726827/article/details/50462025" target="_blank" rel="external">http://blog.csdn.net/qq_31726827/article/details/50462025</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/29/EP28-DownloadManager分析-1/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1731,158 +1878,6 @@ mCurrentLevel = savedInstanceState.getInt(STATE_LEVEL);
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="DrunkPiano">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="DrunkPiano的Android日常">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/" itemprop="url">
-                  EP19-ButterKnife会影响APP运行效率吗？
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-15T21:51:55+08:00">
-                2016-12-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/15/EP19-ButterKnife会影响APP运行效率吗？/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="0x00-要不要使用"><a href="#0x00-要不要使用" class="headerlink" title="0x00 要不要使用"></a>0x00 要不要使用</h2><p>ButterKnife是一个「依赖注入(dependency injection)」的工具。使用它的话，可以使用注解来绑定view、资源或者onclicklistener，省去了<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```Java</div><div class="line">@BindView(R.id.user) EditText username;</div><div class="line">  @BindView(R.id.pass) EditText password;</div><div class="line"></div><div class="line">  @BindString(R.string.login_error) String loginErrorMessage;</div><div class="line"></div><div class="line">  @OnClick(R.id.submit) void submit() &#123;</div><div class="line">    // TODO call server...</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<p>这边提一下「依赖注入」这个概念，我理解的就是在运行时给类注入一些参数，比如构造方法传入参数。这叫做「<a href="https://www.zhihu.com/question/32108444" target="_blank" rel="external">构造方法注入</a>」，可以实现解耦。    </p>
-<p>类似的工具还是Dagger、RoboGuice等等，我们看到很多人会担心依赖注入的工具会影响性能，比如有的人提到：</p>
-<blockquote>
-<p>使用RoboGuice之后，代码是简化了不少；然而，注入框架会扫描你的代码执行很多初始化的操作，会导致你的代码需要大量内存空间来mapping代码，而且mapped pages会长时间被保留在内存中。除非很有必要，谨慎使用这种技术。   </p>
-</blockquote>
-<p>对于内存管理，Google在<a href="https://developer.android.com/topic/performance/memory.html" target="_blank" rel="external">Manage Your App’s Memory</a>点名批评了Guice和RoboGuice（现在已经去掉了..），然后安利了Dagger 2，因为：</p>
-<blockquote>
-<p>If you intend to use a dependency injection framework in your app, consider using Dagger 2. Dagger does not use reflection to scan your app’s code. Dagger’s static, compile-time implementation means that it can be used in Android apps without needless runtime cost or memory usage.<br>如果你想要使用依赖注入框架，考虑使用Dagger 2，Dagger不会使用反射来扫描你app的代码。Dagger的静态、编译时实现意味着它不会产生额外的runtime cost或者内存使用。</p>
-<p>Other dependency injection frameworks that use reflection tend to initialize processes by scanning your code for annotations. This process can require significantly more CPU cycles and RAM, and can cause a noticeable lag when the app launches.<br>其他使用反射的依赖注入框架倾向于通过扫描你代码里的注解来初始化进程。需要显著的CPU和RAM资源。</p>
-</blockquote>
-<h2 id="0x01-ButterKnife的原理"><a href="#0x01-ButterKnife的原理" class="headerlink" title="0x01 ButterKnife的原理"></a>0x01 ButterKnife的原理</h2><p>使用<strong>注解处理器</strong>。Java编译器编译代码之前会先调用注解处理器，所以可以继承AbstractProcessor，自己写注解处理器。这样就可以在编译代码之前执行一段我们自己的代码了。比如生成新的代码，或者检查注解的代码是否规范。在ButterKnifeProcessor.process里：</p>
-<ol>
-<li>扫描所有的注解   </li>
-<li>自动生成一个ViewBinder类，包含<code>findViewById</code>、<code>setOnClickListener</code>等等</li>
-<li>加载生成的ViewBinder，调用其中的bind方法</li>
-</ol>
-<pre><code class="Java"><span class="comment">// Process each @Bind element.</span>
- <span class="keyword">for</span> (Element element : env.getElementsAnnotatedWith(Bind.class)) {
-   <span class="keyword">if</span> (!SuperficialValidation.validateElement(element)) <span class="keyword">continue</span>;
-   <span class="keyword">try</span> {
-     parseBind(element, targetClassMap, erasedTargetNames);
-   } <span class="keyword">catch</span> (Exception e) {
-     logParsingError(element, Bind.class, e);
-   }
- }
-</code></pre>
-<p>这个跟笑哥的<code>hotfix</code>不同，<code>hotfix</code>是在运行时在补丁apk(dex)里搜寻<code>fixed</code>注解然后生成新的类，替换原来的dex。这个过几天可以分析一波。<br>嗯，结论就是，ButterKnife是不影响App性能的，可以放心食用。</p>
-<p>具体的话，可以参考：<br>[1]<a href="http://bxbxbai.github.io/2016/03/12/how-butterknife-works/?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://bxbxbai.github.io/2016/03/12/how-butterknife-works/?utm_source=tuicool&amp;utm_medium=referral</a><br>[2]<a href="https://zhuanlan.zhihu.com/p/21628698" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/21628698</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1928,7 +1923,7 @@ mCurrentLevel = savedInstanceState.getInt(STATE_LEVEL);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

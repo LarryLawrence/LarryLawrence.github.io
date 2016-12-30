@@ -84,22 +84,37 @@
 
 
 
-<meta name="description" content="资源替换前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    
-有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    
-dynamic-load-apk方案用的是">
+<meta name="description" content="DownloadManager分析(2)昨天说到:
+
+DownloadManager分发任务给DownloadProvider
+DownloadProvider调用DownloadService
+DownloadService真正执行下载操作
+
+所以DownloadProvider做了什么，怎么启动DownloadService的？然后DownloadSerivce又是怎么实现下载的？
+Downl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DrunkPianoDaily-EP7">
-<meta property="og:url" content="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/index.html">
+<meta property="og:title" content="EP29-DownloadManager分析(2)">
+<meta property="og:url" content="http://yoursite.com/2016/12/30/EP29-DownloadManager分析-2/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="资源替换前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    
-有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    
-dynamic-load-apk方案用的是">
-<meta property="og:updated_time" content="2016-11-29T14:35:28.000Z">
+<meta property="og:description" content="DownloadManager分析(2)昨天说到:
+
+DownloadManager分发任务给DownloadProvider
+DownloadProvider调用DownloadService
+DownloadService真正执行下载操作
+
+所以DownloadProvider做了什么，怎么启动DownloadService的？然后DownloadSerivce又是怎么实现下载的？
+Downl">
+<meta property="og:updated_time" content="2016-12-30T09:52:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DrunkPianoDaily-EP7">
-<meta name="twitter:description" content="资源替换前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    
-有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    
-dynamic-load-apk方案用的是">
+<meta name="twitter:title" content="EP29-DownloadManager分析(2)">
+<meta name="twitter:description" content="DownloadManager分析(2)昨天说到:
+
+DownloadManager分发任务给DownloadProvider
+DownloadProvider调用DownloadService
+DownloadService真正执行下载操作
+
+所以DownloadProvider做了什么，怎么启动DownloadService的？然后DownloadSerivce又是怎么实现下载的？
+Downl">
 
 
 
@@ -127,13 +142,13 @@ dynamic-load-apk方案用的是">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/30/EP29-DownloadManager分析-2/"/>
 
 
 
 
 
-  <title> DrunkPianoDaily-EP7 | DrunkPiano的Android日常 </title>
+  <title> EP29-DownloadManager分析(2) | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +279,7 @@ dynamic-load-apk方案用的是">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/30/EP29-DownloadManager分析-2/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -288,7 +303,7 @@ dynamic-load-apk方案用的是">
             
             
               
-                DrunkPianoDaily-EP7
+                EP29-DownloadManager分析(2)
               
             
           </h1>
@@ -301,8 +316,8 @@ dynamic-load-apk方案用的是">
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T22:34:44+08:00">
-                2016-11-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T17:49:19+08:00">
+                2016-12-30
               </time>
             
 
@@ -317,8 +332,8 @@ dynamic-load-apk方案用的是">
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/DrunkPianoDaily-EP7/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/DrunkPianoDaily-EP7/" itemprop="commentCount"></span>
+                <a href="/2016/12/30/EP29-DownloadManager分析-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/30/EP29-DownloadManager分析-2/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -344,28 +359,30 @@ dynamic-load-apk方案用的是">
       
 
       
-        <h3 id="资源替换"><a href="#资源替换" class="headerlink" title="资源替换"></a>资源替换</h3><p>前两回分析了如何动态加载dex并且执行里面的函数。这时候已经可以动态升级dex/apk了。那么apk的资源怎么动态替换呢。DexClassLoader只能加载dex，无法加载apk中的资源。    </p>
-<p>有的解决方案是，所有的XML呈现的布局全部用Java代码实现。这样做是可行的，真的有人在用，但很繁琐，比如分辨率等问题实现起来也会比较复杂。    </p>
-<p><a href="https://github.com/singwhatiwanna/dynamic-load-apk" target="_blank" rel="external">dynamic-load-apk</a>方案用的是这样的：<br>首先，Activity继承了Context，Context中有两个抽象方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** Return an AssetManager instance for your application's package. */</span></div><div class="line"><span class="comment">/** 为应用程序的包返回一个AssetManager实例。 */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AssetManager <span class="title">getAssets</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="comment">/** Return a Resources instance for your application's package. */</span></div><div class="line"><span class="comment">/** 为应用程序包返回一个Resources实例 */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Resources <span class="title">getResources</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure>
-<p>context就是通过这两个方法在Activity中获取资源的。这两个方法的实现在ContextImpl中。getResuorces返回的resources是这样的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Resources resources = packageInfo.getResources(mainThread);</div><div class="line"><span class="keyword">if</span> (resources != <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (displayId != Display.DEFAULT_DISPLAY</div><div class="line">            || overrideConfiguration != <span class="keyword">null</span></div><div class="line">            || (compatInfo != <span class="keyword">null</span> &amp;&amp; compatInfo.applicationScale</div><div class="line">                    != resources.getCompatibilityInfo().applicationScale)) &#123;</div><div class="line">        <span class="comment">//getTopLevelResources根据资源目录、分隔资源目录..等参数提供顶级资源给application</span></div><div class="line">        resources = mResourcesManager.getTopLevelResources(packageInfo.getResDir(),</div><div class="line">                packageInfo.getSplitResDirs(), packageInfo.getOverlayDirs(),</div><div class="line">                packageInfo.getApplicationInfo().sharedLibraryFiles, displayId,</div><div class="line">                overrideConfiguration, compatInfo);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们也想通过<strong>getResources</strong>获取资源，那么可以模仿它这样来写。    </p>
+        <h1 id="DownloadManager分析-2"><a href="#DownloadManager分析-2" class="headerlink" title="DownloadManager分析(2)"></a>DownloadManager分析(2)</h1><p>昨天说到:</p>
 <ul>
-<li><p>1.AssetManager中有addAssetsPath方法，参数可以是一个dircetory或者一个ZIP file。它里面有个native方法可以把资源加载到res中。   </p>
-</li>
-<li><p>2.嗯，然后用assetManager来反射调用（为什么addAssetPath是隐藏的API?）addAssetPath方法，参数是mDexPath，也就是外部apk的路径。如下。    </p>
-</li>
+<li>DownloadManager分发任务给DownloadProvider</li>
+<li>DownloadProvider调用DownloadService</li>
+<li>DownloadService真正执行下载操作</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">addAssetPath.invoke(assetManager, mDexPath);</div></pre></td></tr></table></figure>
-<ul>
-<li>3.然后用这个assetManager创建一个新的资源：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Resources superRes = <span class="keyword">super</span>.getResources();  </div><div class="line">mResources = <span class="keyword">new</span> Resources(mAssetManager, superRes.getDisplayMetrics(),  </div><div class="line">            superRes.getConfiguration());</div></pre></td></tr></table></figure>
-<p>最后，要覆写那两个抽象方法哦，不然的话会一直用父类默认得到的AssetManager和Resources：    </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> AssetManager <span class="title">getAssets</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> mAssetManager == <span class="keyword">null</span> ? <span class="keyword">super</span>.getAssets() : mAssetManager;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> Resources <span class="title">getResources</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> mResources == <span class="keyword">null</span> ? <span class="keyword">super</span>.getResources() : mResources;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>大概就是这样了。    </p>
-<p>-NOV29</p>
+<p>所以DownloadProvider做了什么，怎么启动DownloadService的？然后DownloadSerivce又是怎么实现下载的？</p>
+<h2 id="DownloadProvider做了什么"><a href="#DownloadProvider做了什么" class="headerlink" title="DownloadProvider做了什么"></a>DownloadProvider做了什么</h2><p>DownloadProvider的描述是：</p>
+<blockquote>
+<p>Allows application to interact with the download manager.<br>允许应用和download manager之间进行交互。</p>
+</blockquote>
+<p>Application可以是不同的Application，<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">前面分析到，Android N之前，```DownloadManager```会把request以```ContentValues```形式pass给```DownloadProvider.insert()```,然后进行异步下载。</div></pre></td></tr></table></figure></p>
+<p>//传递URI和Content Values给ContentResolver<br>Uri downloadUri = mResolver.insert(Downloads.Impl.CONTENT_URI, values);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DownloadProvider的insert方法，将下载信息写入数据库，包括下载链接地址等信息，然后会启动```DownloadService```这个Service：</div></pre></td></tr></table></figure></p>
+<pre><code>//连请求头都写入了数据库
+insertRequestHeaders(db, rowID, values);  
+//启动DownloadService 
+context.startService(new Intent(context, DownloadService.class));  
+notifyContentChanged(uri, match);  
+return ContentUris.withAppendedId(Downloads.CONTENT_URI, rowID); 
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## DownloadService做了什么</div><div class="line">### UpdateThread</div><div class="line">```DownloadService```会利用```updateFromProvider```从provider的数据库里获取下载的请求，然后启动```UpdateThread```线程，这个线程会不断地查找数据库里还有没有下载任务，以及还有没有未完成的任务，直到完成才退出。</div></pre></td></tr></table></figure>
+<p>//UpdateThread的run方法<br>for (;;) {<br>    synchronized (DownloadService.this) {<br>        if (mUpdateThread != this) {<br>            throw new IllegalStateException(<br>                    “multiple UpdateThreads in DownloadService”);<br>        }<br>        if (!mPendingUpdate) {<br>            mUpdateThread = null;<br>            if (!keepService) {<br>                stopSelf();<br>            }<br>            if (wakeUp != Long.MAX_VALUE) {<br>                scheduleAlarm(wakeUp);<br>            }<br>            return;<br>        }<br>        mPendingUpdate = false;<br>    }<br>    …<br>    …<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### DownloadThread</div><div class="line">```DownloadThread```真正实现了下载，里面有很多功能，比如开始、暂停、断点续传。每个下载任务都是独立的线程，需要同步锁/线程池来限制下载数量。</div><div class="line">有这些方法：</div><div class="line"></div><div class="line">1. excuteDownload 执行下载</div><div class="line">2. setupDestinationFile 设置目标位置，如果位置已经有了file，就继续下载，实现了**断点续传**</div><div class="line">3. addRequestHeaders 添加请求头</div><div class="line">4. checkConnectivity 检查链接</div><div class="line">5. readFromResponse 读取response</div><div class="line">6. writeDataToDestination 写数据</div><div class="line">7. reportProgress 报告进度</div><div class="line">8. checkPauseOrCanceled 检查暂停或取消</div><div class="line">9. cleanUpDestination 清空目标位置</div><div class="line">10. notifyDownloadComplete 通知下载完成（更新数据库/发送广播）</div><div class="line"></div><div class="line">5~8是一个loop，不停地获取网络数据流，检查下载是否暂停。</div><div class="line">关键的下载操作都是在```DownloadThread```里面实现的，如果想参考就来这里看吧。另外，Android N之后```DownloadProvider```引入了```Job Schedule```，会将任务加入计划，满足指定条件再执行操作，App不用驻留，可以省电，大概是这样子。</div><div class="line"></div><div class="line">总结一下:</div></pre></td></tr></table></figure></p>
+<p>graph LR<br>DownloadManager–&gt;DownloadProvider<br>DownloadProvider–&gt;DownloadService<br>DownloadService–&gt;UpdateThread<br>DownloadService–&gt;DownloadThread<br>UpdateThread–&gt;DownloadProvider<br>```</p>
+<p>-Dec30</p>
+<p>Reference:<br>[1]<a href="http://www.jianshu.com/p/c9dc04af2f54#" target="_blank" rel="external">http://www.jianshu.com/p/c9dc04af2f54#</a><br>[2]<a href="http://blog.csdn.net/zhiyi2010/article/details/19152979" target="_blank" rel="external">http://blog.csdn.net/zhiyi2010/article/details/19152979</a><br>[3]<a href="http://blog.csdn.net/qq_31726827/article/details/50462025" target="_blank" rel="external">http://blog.csdn.net/qq_31726827/article/details/50462025</a></p>
 
       
     </div>
@@ -392,8 +409,8 @@ dynamic-load-apk方案用的是">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/28/DrunkPianoDaily-EP6/" rel="next" title="DrunkPianoDaily-EP6">
-                <i class="fa fa-chevron-left"></i> DrunkPianoDaily-EP6
+              <a href="/2016/12/29/EP28-DownloadManager分析-1/" rel="next" title="EP28-DownloadManager分析(1)">
+                <i class="fa fa-chevron-left"></i> EP28-DownloadManager分析(1)
               </a>
             
           </div>
@@ -401,10 +418,6 @@ dynamic-load-apk方案用的是">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/30/DrunkPianoDaily-EP8/" rel="prev" title="DrunkPianoDaily-EP8">
-                DrunkPianoDaily-EP8 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -430,8 +443,8 @@ dynamic-load-apk方案用的是">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/29/DrunkPianoDaily-EP7/"
-           data-title="DrunkPianoDaily-EP7" data-url="http://yoursite.com/2016/11/29/DrunkPianoDaily-EP7/">
+      <div class="ds-thread" data-thread-key="2016/12/30/EP29-DownloadManager分析-2/"
+           data-title="EP29-DownloadManager分析(2)" data-url="http://yoursite.com/2016/12/30/EP29-DownloadManager分析-2/">
       </div>
     
   </div>
@@ -559,7 +572,7 @@ dynamic-load-apk方案用的是">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源替换"><span class="nav-number">1.</span> <span class="nav-text">资源替换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DownloadManager分析-2"><span class="nav-number">1.</span> <span class="nav-text">DownloadManager分析(2)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DownloadProvider做了什么"><span class="nav-number">1.1.</span> <span class="nav-text">DownloadProvider做了什么</span></a></li></ol></li></ol></div>
             
 
           </div>
