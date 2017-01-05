@@ -259,6 +259,138 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/EP32-性能优化最佳实践之多线程操作/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="DrunkPiano">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="DrunkPiano的Android日常">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/05/EP32-性能优化最佳实践之多线程操作/" itemprop="url">
+                  EP32-性能优化最佳实践之多线程操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-05T22:30:44+08:00">
+                2017-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/01/05/EP32-性能优化最佳实践之多线程操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/EP32-性能优化最佳实践之多线程操作/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="性能优化最佳实践之多线程操作"><a href="#性能优化最佳实践之多线程操作" class="headerlink" title="性能优化最佳实践之多线程操作"></a>性能优化最佳实践之多线程操作</h1><p>今天本来是想分析一下<figure class="highlight plain"><figcaption><span>Developers](https://developer.android.com/training/multiple-threads/create-threadpool.html)看到了对**多线程**比较完整的介绍，觉得应该从线程学起。这个文章是对它的整理、理解和发散，包括对线程的理解。其中一些简单的东西就省略了。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 发送动作给多个线程</div><div class="line">### 指定部分代码运行在Thread里面</div><div class="line">Thread和Runnable是基本的类，独自运作的话能力有限；但是他们是很多强大的类比如 HandlerThread, AsyncTask, and IntentService的基础。同时Thread和Runnable还是``` ThreadPoolExecutor```的基础，``` ThreadPoolExecutor```自动管理进程和任务队列，甚至能并行运行多个线程。</div><div class="line"></div><div class="line">Runnable接口只有一个```run()```方法。把想要运行在新的线程里的内容写在```run()```里面。注意Runnable不会运行在UI Thread中。在run()方法的开始，可以使用```Process.setThreadPriority() ```,可以减少Runnable对象进程和UI进程之间的竞争。</div><div class="line"></div><div class="line"></div><div class="line">## 疑问，为什么实现Runnable接口就可以实现多线程？</div><div class="line">学线程的时候，一般会有学到两种方法：</div><div class="line">- 继承Thread类 :```MyThread().start();</div></pre></td></tr></table></figure></p>
+<ul>
+<li>实现Runnable接口 : <figure class="highlight plain"><figcaption><span>Thread(myRunnable).start();```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">但其实```Runnable```只是一个```interface```，里面只有一个run方法；为什么它可以实现多线程呢？</div><div class="line"></div><div class="line">从Thread源码中看到，Thread也是实现了Runnable接口的，也覆写了run方法，方法说明：  </div><div class="line">   * If this thread was constructed using a separate</div><div class="line">     * &lt;code&gt;Runnable&lt;/code&gt; run object, then that</div><div class="line">     * &lt;code&gt;Runnable&lt;/code&gt; object&apos;s &lt;code&gt;run&lt;/code&gt; method is called;</div><div class="line">     * otherwise, this method does nothing and returns.</div><div class="line"></div><div class="line">也就是说，如果这个Thread是通过独立的Runnable run对象构建的，那么那个Runnable run方法会被调用，否则，这个方法什么都不做并且返回。</div><div class="line"></div><div class="line">Thread的构造方法传入一个Runnable(它的构造方法是重载的，这里取了其中一个)：</div><div class="line">```Java</div><div class="line">    public Thread(Runnable target, String name) &#123;</div><div class="line">        init(null, target, name, 0);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></li>
+</ul>
+<p>init方法接收这个Runnable为target，然后如果target不为空，就执行Runnable的run方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (target != <span class="keyword">null</span>) &#123;</div><div class="line">        target.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>真是接口的典型应用啊。Runnable只是为了实现Thread不能实现的「多继承」而出现的。如果不执行start方法，是不会在新线程中执行run里面的代码的。start方法会让JVM调用当前Thread的run方法。</p>
+<p>大部分资料都会推荐大家用Runnable多过继承Thread，因为如果只是想用多线程中的run方法，没必要继承一个Thread，除非想要改变Thread中的某个行为。但是问题是，这两种方式难道不都是要new一个对象，占用同样多的内存空间么。。</p>
+<p>-Jan 5</p>
+<p>Reference:<br>[1]<a href="http://www.tuicool.com/articles/Z3aEbeF" target="_blank" rel="external">http://www.tuicool.com/articles/Z3aEbeF</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/EP31-BottomNavigation的重新设计/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1673,222 +1805,6 @@ break;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/EP22-ToolBar的前世今生/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="DrunkPiano">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="DrunkPiano的Android日常">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="DrunkPiano的Android日常" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/21/EP22-ToolBar的前世今生/" itemprop="url">
-                  EP22-ToolBar的前世今生
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-21T20:54:16+08:00">
-                2016-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/21/EP22-ToolBar的前世今生/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/21/EP22-ToolBar的前世今生/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="ToolBar的前世今生"><a href="#ToolBar的前世今生" class="headerlink" title="ToolBar的前世今生"></a>ToolBar的前世今生</h1><h2 id="上古时代"><a href="#上古时代" class="headerlink" title="上古时代"></a>上古时代</h2><p>我们回想起Android 2.x时代的应用程序，那时候没有ActionBar/TitleBar的概念，但是会有一窄条;其实现在也有啦。。你可以打开铁路12306，在splash弹出来之前会看到上面一窄条灰色，那就是ActionBar的雏形了：    </p>
-<p><img src="/uploads/Screenshot_20161221-104423.png" alt="image"></p>
-<h2 id="远古时代"><a href="#远古时代" class="headerlink" title="远古时代"></a>远古时代</h2><p>后来出现了ActionBar，是在Activity顶部的。很不灵活。现在，如果你新建一个Activity什么都不做，默认就会有一个ActionBar。就不放图了。。AS创建的默认Activigty中，顶部蓝色的宽宽的那个就是。   </p>
-<h2 id="近代"><a href="#近代" class="headerlink" title="近代.."></a>近代..</h2><p>API21之后，出现了ToolBar（可以用v7包支持API21以前的系统）。ToolBar是「ActionBar」的「精神继承者」。ToolBar的外观和行为比ActionBar要更容易定制。<br><img src="/uploads/ToolBar.png" alt="image"></p>
-<p>使用ToolBar有两种方式： </p>
-<ul>
-<li>把ToolBar当成ActionBar来用，但想要获取更多对外观的控制。   </li>
-<li>使用独立的ToolBar，ActionBar不支持的情况；比如显示多个toolbar（会有这种需求吗。。），只对部分的宽度做span等等。</li>
-</ul>
-<p><strong><em>注：下面的内容，大部分手动翻译自：<a href="https://guides.codepath.com/android/Using-the-App-ToolBar#advanced-scrolling-behavior-for-toolbar" target="_blank" rel="external">https://guides.codepath.com/android/Using-the-App-ToolBar#advanced-scrolling-behavior-for-toolbar</a></em></strong></p>
-<h2 id="ToolBar-vs-ActionBar"><a href="#ToolBar-vs-ActionBar" class="headerlink" title="ToolBar vs ActionBar"></a>ToolBar vs ActionBar</h2><p>ToolBar和ActionBar的主要不同：  </p>
-<ul>
-<li>ToolBar像所有其他常规view一样，是一个包含在layout中的view（ActionBar不是这样哦）</li>
-<li>所以它可以很容易得被放置、加动画、和控制</li>
-<li>一个Activity中可以放置多个不同的ToolBar元素</li>
-</ul>
-<p>记住，你仍然可以把ToolBar当成Activity的Action来设置。<br>另外，如果只需要一个顶部的静态的bar，可以放置icon，添加返回键，那么ActionBar仍然可用。</p>
-<h2 id="第一种情形：把ToolBar当成ActionBar来使用"><a href="#第一种情形：把ToolBar当成ActionBar来使用" class="headerlink" title="第一种情形：把ToolBar当成ActionBar来使用"></a>第一种情形：把ToolBar当成ActionBar来使用</h2><ol>
-<li>首先在gradle里加上v7包。</li>
-<li><p>禁用系统提供的ActionBar。最简单的方式是在<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```XML</div><div class="line">&lt;resources&gt;</div><div class="line">  &lt;!-- Base application theme. --&gt;</div><div class="line">  &lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.NoActionBar&quot;&gt;  &lt;!--Theme.AppCompat.NoActionBar也行--&gt;</div><div class="line">  &lt;/style&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure></p>
-</li>
-<li><p>现在你就可以在Activity的布局文件里面添加ToolBar了。一个使用ToolBar的便利的就是你可以在任何地方放置它。下面我们按照ActionBar一样把ToolBar放到最顶端：  </p>
-</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></div><div class="line">      <span class="attr">android:id</span>=<span class="string">"@+id/toolbar"</span></div><div class="line">      <span class="attr">android:minHeight</span>=<span class="string">"?attr/actionBarSize"</span>  </div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">      <span class="attr">app:titleTextColor</span>=<span class="string">"@android:color/white"</span></div><div class="line">      <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span>&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Layout for content is here. This can be a RelativeLayout  --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>注意：<br>你可能需要给Toolbar的父类布局添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">另外，如果是在relativelayout里面，记得保证toolbar保持在顶部不要被覆盖。 </div><div class="line"></div><div class="line">4. 在Activity或者Fragment中，使用```setSupportActionBar(Toolbar)```来把你的ToolBar当成ActionBar来用。    </div><div class="line"></div><div class="line">```Java</div><div class="line">// Menu icons are inflated just as they were with actionbar</div><div class="line">// Menu 图标跟在ActionBar中一样被渲染</div><div class="line">    @Override</div><div class="line">    public boolean onCreateOptionsMenu(Menu menu) &#123;</div><div class="line">        // Inflate the menu; this adds items to the action bar if it is present.</div><div class="line">        getMenuInflater().inflate(R.menu.menu_main, menu);</div><div class="line">        return true;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>然后呢，要记住在menu_main里面加入item哦。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">      xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;</div><div class="line">    &lt;item</div><div class="line">        android:id=&quot;@+id/miCompose&quot;</div><div class="line">        android:icon=&quot;@drawable/ic_compose&quot;</div><div class="line">        app:showAsAction=&quot;ifRoom&quot;</div><div class="line">        android:title=&quot;Compose&quot;&gt;</div><div class="line">    &lt;/item&gt;</div><div class="line">    &lt;item</div><div class="line">        android:id=&quot;@+id/miProfile&quot;</div><div class="line">        android:icon=&quot;@drawable/ic_profile&quot;</div><div class="line">        app:showAsAction=&quot;ifRoom|withText&quot;</div><div class="line">        android:title=&quot;Profile&quot;&gt;</div><div class="line">    &lt;/item&gt;</div><div class="line">&lt;/menu&gt;</div></pre></td></tr></table></figure>
-<p>好了，这样就可以了。你可以添加点击事件。<br><img src="/uploads/ToolBar.png" alt="image"></p>
-<h2 id="重用（Reusing）ToolBar"><a href="#重用（Reusing）ToolBar" class="headerlink" title="重用（Reusing）ToolBar"></a>重用（Reusing）ToolBar</h2><p>许多应用里面，同一个ToolBar可以在很多Activity里重用的。怎么用？定义一个只包含ToolBar的资源文件（比如<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
-<p><android.support.v7.widget.toolbar xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="?attr/colorPrimary"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">然后再include。 </div><div class="line">这样的话你就有了在不同Activity中的「持续的navigation体验」。</div><div class="line"></div><div class="line">## 更换Toolbar的Style</div><div class="line">使用```android:theme, app:titleTextAppearance, app:popupTheme```可以更换TitleBar的样式。这里不细谈了。</div><div class="line"></div><div class="line">## 展示App Icon</div><div class="line">这样：</div></pre></td></tr></table></figure></android.support.v7.widget.toolbar></p>
-<p>// Display icon in the toolbar<br>getSupportActionBar().setDisplayShowHomeEnabled(true);<br>getSupportActionBar().setLogo(R.mipmap.ic_launcher);<br>getSupportActionBar().setDisplayUseLogoEnabled(true);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">如果想防止left margin把icon推得太远，可以加上```contentInsetStart```：</div></pre></td></tr></table></figure></p>
-<p><android.support.v7.widget.toolbar android:id="@+id/toolbar" app:contentinsetleft="0dp" app:contentinsetstart="0dp" ...=""><br></android.support.v7.widget.toolbar><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## 自定义Title View</div><div class="line">```Toolbar```终究只是一个装试过的```ViewGroup```，所以，其中的title是可以完全自己修改的。</div></pre></td></tr></table></figure></p>
-<android.support.v7.widget.toolbar android:id="@+id/toolbar" android:minheight="?attr/actionBarSize" android:layout_width="match_parent" android:layout_height="wrap_content" app:titletextcolor="@android:color/white" android:background="?attr/colorPrimary">
-
-<pre><code>&lt;TextView
-   android:id=&quot;@+id/toolbar_title&quot;
-   android:layout_width=&quot;wrap_content&quot;
-   android:layout_height=&quot;wrap_content&quot;
-   android:text=&quot;Toolbar Title&quot;
-   android:textColor=&quot;@android:color/white&quot;
-   style=&quot;@style/TextAppearance.AppCompat.Widget.ActionBar.Title&quot;
-   android:layout_gravity=&quot;center&quot;
-/&gt;
-</code></pre><p></p></android.support.v7.widget.toolbar><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这样的话，你可以在代码中通过：</div></pre></td></tr></table></figure><p></p>
-<p>TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">来获取这个TextView。    </div><div class="line"></div><div class="line">## Status Bar半透明(Translucent)化和透明(Transparent)化</div><div class="line">类似前几个版本的QQ的那种。我个人认为不好看啦。用法是，在```res/values/styles.xml```里加上对main theme的一些额外设置。这里不介绍了。   </div><div class="line"></div><div class="line">## 对页面滚动的响应 </div><div class="line">比如，像知乎app那样实现向上滑动的时候toolbar消失效果：     </div><div class="line">![image](/uploads/ToolBar3.gif)     </div><div class="line">借助 ```CoordinatorLayout```，可以实现很多效果。</div><div class="line">我们需要在 CoordinatorLayout里面，加上```Toolbar```和一个可滚动的container比如```RecyclerView```:</div></pre></td></tr></table></figure></p>
-<!-- CoordinatorLayout is used to create scrolling and "floating" effects within a layout -->
-<p>CoordinatorLayout用来创建滚动和浮动特效。<br><!-- This is typically the root layout which wraps the app bar and content --></p>
-<android.support.design.widget.coordinatorlayout android:id="@+id/main_content" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent">
-
-<pre><code>&lt;!-- AppBarLayout is a wrapper for a Toolbar in order to apply scrolling effects. --&gt;
-AppBarLayout是一个wrapper，包裹着ToolBar，为了应用滚动特效。
-&lt;!-- Note that AppBarLayout expects to be the first child nested within a CoordinatorLayout --&gt;
-注意，AppBarLayout应该作为CoordinatorLayout的第一个child。
-&lt;android.support.design.widget.AppBarLayout
-    android:id=&quot;@+id/appBar&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:theme=&quot;@style/ThemeOverlay.AppCompat.ActionBar&quot;&gt;
-
-    &lt;!-- Toolbar is the actual app bar with text and the action items --&gt; 
-    &lt;android.support.v7.widget.Toolbar
-        android:id=&quot;@+id/toolbar&quot;
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;?attr/actionBarSize&quot;
-        android:background=&quot;?attr/colorPrimary&quot;
-        app:layout_scrollFlags=&quot;scroll|enterAlways&quot; /&gt;
-&lt;/android.support.design.widget.AppBarLayout&gt;
-
-&lt;!-- This could also be included from another file using the include tag --&gt;
-也可以使用include方式引入。
-&lt;!-- i.e `res/layout/content_main.xml` --&gt;
-&lt;!-- `app:layout_behavior` is set to a pre-defined standard scrolling behavior --&gt;
-&lt;android.support.v7.widget.RecyclerView
-    android:id=&quot;@+id/my_recycler_view&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    android:clipToPadding=&quot;false&quot;
-    app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot; /&gt;
-</code></pre><p></p></android.support.design.widget.coordinatorlayout><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">关于ToolBar的滚动响应还有很多内容，这里不详细介绍了。</div><div class="line"></div><div class="line"></div><div class="line">---</div><div class="line">## 写的时候遇到的一些问题：    </div><div class="line"></div><div class="line">1. 如果想在fragment里面应用TitleBar，要在```onCreateView```这样写：</div></pre></td></tr></table></figure><p></p>
-<p>//下面这两行缺一个都无法显示optionsMenu。<br>((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);<br>setHasOptionsMenu(true);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">这样才会显示OptionsMenu。   </div><div class="line">2. 使用```mToolbar.setTitle(R.string.app_name);```来设置tilte。</div><div class="line"></div><div class="line">3. 如果要控制OptionsMenu里面的项目显示不现实，在XML里写没有用了，要在Fragment里这样写：</div></pre></td></tr></table></figure>
-<pre><code>@Override
-public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.menu_main, menu);
-    menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-    menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-    menu.getItem(2).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-    super.onCreateOptionsMenu(menu,inflater);
-}
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">4. 如果想改变OptionsMenu的背景色，在Theme里添加：</div></pre></td></tr></table></figure>
-<p><item name="android:itemBackground">@color/overflow_background</item><br>```</p>
-<p>Reference:<br>【1】<a href="https://guides.codepath.com/android/Using-the-App-ToolBar#advanced-scrolling-behavior-for-toolbar" target="_blank" rel="external">https://guides.codepath.com/android/Using-the-App-ToolBar#advanced-scrolling-behavior-for-toolbar</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1934,7 +1850,7 @@ public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

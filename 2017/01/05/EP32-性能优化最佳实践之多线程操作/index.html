@@ -84,40 +84,16 @@
 
 
 
-<meta name="description" content="WYPHotFix分析引
-这篇文章发出的时候，写HotFix的人已经看不到了。
-
-大体步骤HotFix的目的是在不重新安装apk的情况下做到代码的局部修改。HotFix的大体执行步骤是这样的：
-
-制作一个「空」的apk，里面只包含要修复的代码所在的类；
-类中的要修改的方法打上注解；
-在应用程序入口的onCreate方法里，检查网络上有没有patch；
-检查完毕，调用1234567## 具体执行顺序">
+<meta name="description" content="性能优化最佳实践之多线程操作今天本来是想分析一下Developers](https://developer.android.com/training/multiple-threads/create-threadpool.html)看到了对**多线程**比较完整的介绍，觉得应该从线程学起。这个文章是对它的整理、理解和发散，包括对线程的理解。其中一些简单的东西就省略了。1234567891011##">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EP30-WYPHotFix分析">
-<meta property="og:url" content="http://yoursite.com/2017/01/03/EP30-WYPHotFix分析/index.html">
+<meta property="og:title" content="EP32-性能优化最佳实践之多线程操作">
+<meta property="og:url" content="http://yoursite.com/2017/01/05/EP32-性能优化最佳实践之多线程操作/index.html">
 <meta property="og:site_name" content="DrunkPiano的Android日常">
-<meta property="og:description" content="WYPHotFix分析引
-这篇文章发出的时候，写HotFix的人已经看不到了。
-
-大体步骤HotFix的目的是在不重新安装apk的情况下做到代码的局部修改。HotFix的大体执行步骤是这样的：
-
-制作一个「空」的apk，里面只包含要修复的代码所在的类；
-类中的要修改的方法打上注解；
-在应用程序入口的onCreate方法里，检查网络上有没有patch；
-检查完毕，调用1234567## 具体执行顺序">
-<meta property="og:updated_time" content="2017-01-03T13:45:27.000Z">
+<meta property="og:description" content="性能优化最佳实践之多线程操作今天本来是想分析一下Developers](https://developer.android.com/training/multiple-threads/create-threadpool.html)看到了对**多线程**比较完整的介绍，觉得应该从线程学起。这个文章是对它的整理、理解和发散，包括对线程的理解。其中一些简单的东西就省略了。1234567891011##">
+<meta property="og:updated_time" content="2017-01-05T14:31:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EP30-WYPHotFix分析">
-<meta name="twitter:description" content="WYPHotFix分析引
-这篇文章发出的时候，写HotFix的人已经看不到了。
-
-大体步骤HotFix的目的是在不重新安装apk的情况下做到代码的局部修改。HotFix的大体执行步骤是这样的：
-
-制作一个「空」的apk，里面只包含要修复的代码所在的类；
-类中的要修改的方法打上注解；
-在应用程序入口的onCreate方法里，检查网络上有没有patch；
-检查完毕，调用1234567## 具体执行顺序">
+<meta name="twitter:title" content="EP32-性能优化最佳实践之多线程操作">
+<meta name="twitter:description" content="性能优化最佳实践之多线程操作今天本来是想分析一下Developers](https://developer.android.com/training/multiple-threads/create-threadpool.html)看到了对**多线程**比较完整的介绍，觉得应该从线程学起。这个文章是对它的整理、理解和发散，包括对线程的理解。其中一些简单的东西就省略了。1234567891011##">
 
 
 
@@ -145,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/03/EP30-WYPHotFix分析/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/05/EP32-性能优化最佳实践之多线程操作/"/>
 
 
 
 
 
-  <title> EP30-WYPHotFix分析 | DrunkPiano的Android日常 </title>
+  <title> EP32-性能优化最佳实践之多线程操作 | DrunkPiano的Android日常 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/EP30-WYPHotFix分析/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/EP32-性能优化最佳实践之多线程操作/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="DrunkPiano">
@@ -306,7 +282,7 @@
             
             
               
-                EP30-WYPHotFix分析
+                EP32-性能优化最佳实践之多线程操作
               
             
           </h1>
@@ -319,8 +295,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T21:45:02+08:00">
-                2017-01-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-05T22:30:44+08:00">
+                2017-01-05
               </time>
             
 
@@ -335,8 +311,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/01/03/EP30-WYPHotFix分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/EP30-WYPHotFix分析/" itemprop="commentCount"></span>
+                <a href="/2017/01/05/EP32-性能优化最佳实践之多线程操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/EP32-性能优化最佳实践之多线程操作/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -362,24 +338,15 @@
       
 
       
-        <h1 id="WYPHotFix分析"><a href="#WYPHotFix分析" class="headerlink" title="WYPHotFix分析"></a>WYPHotFix分析</h1><h2 id="引"><a href="#引" class="headerlink" title="引"></a>引</h2><blockquote>
-<p>这篇文章发出的时候，写HotFix的人已经看不到了。</p>
-</blockquote>
-<h2 id="大体步骤"><a href="#大体步骤" class="headerlink" title="大体步骤"></a>大体步骤</h2><p>HotFix的目的是在不重新安装apk的情况下做到代码的局部修改。<br>HotFix的大体执行步骤是这样的：</p>
+        <h1 id="性能优化最佳实践之多线程操作"><a href="#性能优化最佳实践之多线程操作" class="headerlink" title="性能优化最佳实践之多线程操作"></a>性能优化最佳实践之多线程操作</h1><p>今天本来是想分析一下<figure class="highlight plain"><figcaption><span>Developers](https://developer.android.com/training/multiple-threads/create-threadpool.html)看到了对**多线程**比较完整的介绍，觉得应该从线程学起。这个文章是对它的整理、理解和发散，包括对线程的理解。其中一些简单的东西就省略了。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 发送动作给多个线程</div><div class="line">### 指定部分代码运行在Thread里面</div><div class="line">Thread和Runnable是基本的类，独自运作的话能力有限；但是他们是很多强大的类比如 HandlerThread, AsyncTask, and IntentService的基础。同时Thread和Runnable还是``` ThreadPoolExecutor```的基础，``` ThreadPoolExecutor```自动管理进程和任务队列，甚至能并行运行多个线程。</div><div class="line"></div><div class="line">Runnable接口只有一个```run()```方法。把想要运行在新的线程里的内容写在```run()```里面。注意Runnable不会运行在UI Thread中。在run()方法的开始，可以使用```Process.setThreadPriority() ```,可以减少Runnable对象进程和UI进程之间的竞争。</div><div class="line"></div><div class="line"></div><div class="line">## 疑问，为什么实现Runnable接口就可以实现多线程？</div><div class="line">学线程的时候，一般会有学到两种方法：</div><div class="line">- 继承Thread类 :```MyThread().start();</div></pre></td></tr></table></figure></p>
 <ul>
-<li>制作一个「空」的apk，里面只包含要修复的代码所在的类；</li>
-<li>类中的要修改的方法打上注解；</li>
-<li>在应用程序入口的onCreate方法里，检查网络上有没有patch；</li>
-<li>检查完毕，调用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 具体执行顺序</div><div class="line">```fix```的执行步骤：</div><div class="line">1. 判断本地是否有补丁包，有就删掉，没有就加载</div><div class="line">2. 加载Dex用的是```DexFile.loadDex```方法。这个方法第一个参数是``` Jar or APK file with &quot;classes.dex&quot;```，包含classes.dex的jar或者apk；第二个参数是```File that will hold the optimized form of the DEX data```，优化后的dex文件；返回一个新的或者之前打开的DexFile。</div><div class="line"></div><div class="line">3. 然后新建一个新的classLoader，名为**patchClassLoader**，这个classloader使用当前```context```的classloader作为它的```parent(双亲)```（这样就把新加载的class跟当前的context关联起来了，关联在同一棵树上），并且覆写这个双亲的```findClass```方法。读过前面ClassLoader分析的朋友还记得吗，原本的```findClass```方法是在```DexPathList.java```中实现的，它遍历所有加载过的dex文件，用了native方法```adClassBinaryName```一个个试，看能不能加载到想要的类，返回找到的```Class```。覆写之后findClass的实现是这样的：</div></pre></td></tr></table></figure></li>
+<li>实现Runnable接口 : <figure class="highlight plain"><figcaption><span>Thread(myRunnable).start();```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">但其实```Runnable```只是一个```interface```，里面只有一个run方法；为什么它可以实现多线程呢？</div><div class="line"></div><div class="line">从Thread源码中看到，Thread也是实现了Runnable接口的，也覆写了run方法，方法说明：  </div><div class="line">   * If this thread was constructed using a separate</div><div class="line">     * &lt;code&gt;Runnable&lt;/code&gt; run object, then that</div><div class="line">     * &lt;code&gt;Runnable&lt;/code&gt; object&apos;s &lt;code&gt;run&lt;/code&gt; method is called;</div><div class="line">     * otherwise, this method does nothing and returns.</div><div class="line"></div><div class="line">也就是说，如果这个Thread是通过独立的Runnable run对象构建的，那么那个Runnable run方法会被调用，否则，这个方法什么都不做并且返回。</div><div class="line"></div><div class="line">Thread的构造方法传入一个Runnable(它的构造方法是重载的，这里取了其中一个)：</div><div class="line">```Java</div><div class="line">    public Thread(Runnable target, String name) &#123;</div><div class="line">        init(null, target, name, 0);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></li>
 </ul>
-<p>//the new overrided findClass() funciton</p>
-<p>//patchDexFile是第二步中loadDex方法加载到的补丁包的DexFile<br>Class&lt;?&gt; clazz = patchDexFile.loadClass(className, this);<br>if (clazz == null<br>        &amp;&amp; className.startsWith(“com.wangyin.payment”)) {<br>    return Class.forName(className);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">```patchDexFile```是第2步中loadDex方法加载到的补丁包的DexFile，如果类名以```com.wangyin.payment```开头，那就返回这个Class。</div><div class="line"></div><div class="line">4. 利用```patchDexFile.entries```返回```Enumeration&lt;String&gt;```枚举类型的值，里面包含了patch中所有的class。然后，用第3步中新建的那个修改过双亲的findClass方法的classLoader来依次load patch中所有的class，step3中我们把findClass指定的寻找特征改成了```com.wangyin.payment```开头的类。</div><div class="line">5. 反射调用step4中找到的要修改的类中的```run```方法。（这个run方法干了什么，由于我没有补丁apk，所以也不太清楚。。）</div><div class="line">```Java</div><div class="line">//run方法是Patch接口里的空方法，参数是patchPath，补丁apk的位置</div><div class="line">patchClazz.getMethod(&quot;run&quot;, String.class).invoke(</div><div class="line">		patchClazz.newInstance(), patchPath);</div></pre></td></tr></table></figure></p>
-<ol>
-<li>执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">```Java</div><div class="line">//fixClass</div><div class="line">for (Method patchMethod : patchMethods) &#123;</div><div class="line">			isFixed = patchMethod.getAnnotation(Fixed.class);</div><div class="line">			if (isFixed != null &amp;&amp; isFixed.value()) &#123;</div><div class="line">				fixMethod(mainClassLoader, patchMethod);</div><div class="line">			&#125;</div><div class="line">		&#125;</div></pre></td></tr></table></figure></li>
-</ol>
-<p>这个<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">fixClass(patchClazz, mContext.getClassLoader());</div></pre></td></tr></table></figure></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>主要还是对classLoader的理解。最终的修复用的是native方法。</p>
-<p>Jan 3rd</p>
+<p>init方法接收这个Runnable为target，然后如果target不为空，就执行Runnable的run方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (target != <span class="keyword">null</span>) &#123;</div><div class="line">        target.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>真是接口的典型应用啊。Runnable只是为了实现Thread不能实现的「多继承」而出现的。如果不执行start方法，是不会在新线程中执行run里面的代码的。start方法会让JVM调用当前Thread的run方法。</p>
+<p>大部分资料都会推荐大家用Runnable多过继承Thread，因为如果只是想用多线程中的run方法，没必要继承一个Thread，除非想要改变Thread中的某个行为。但是问题是，这两种方式难道不都是要new一个对象，占用同样多的内存空间么。。</p>
+<p>-Jan 5</p>
+<p>Reference:<br>[1]<a href="http://www.tuicool.com/articles/Z3aEbeF" target="_blank" rel="external">http://www.tuicool.com/articles/Z3aEbeF</a></p>
 
       
     </div>
@@ -406,8 +373,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/30/EP29-DownloadManager分析-2/" rel="next" title="EP29-DownloadManager分析(2)">
-                <i class="fa fa-chevron-left"></i> EP29-DownloadManager分析(2)
+              <a href="/2017/01/04/EP31-BottomNavigation的重新设计/" rel="next" title="EP31-BottomNavigation的重新设计">
+                <i class="fa fa-chevron-left"></i> EP31-BottomNavigation的重新设计
               </a>
             
           </div>
@@ -415,10 +382,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/04/EP31-BottomNavigation的重新设计/" rel="prev" title="EP31-BottomNavigation的重新设计">
-                EP31-BottomNavigation的重新设计 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -444,8 +407,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/03/EP30-WYPHotFix分析/"
-           data-title="EP30-WYPHotFix分析" data-url="http://yoursite.com/2017/01/03/EP30-WYPHotFix分析/">
+      <div class="ds-thread" data-thread-key="2017/01/05/EP32-性能优化最佳实践之多线程操作/"
+           data-title="EP32-性能优化最佳实践之多线程操作" data-url="http://yoursite.com/2017/01/05/EP32-性能优化最佳实践之多线程操作/">
       </div>
     
   </div>
@@ -573,7 +536,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WYPHotFix分析"><span class="nav-number">1.</span> <span class="nav-text">WYPHotFix分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引"><span class="nav-number">1.1.</span> <span class="nav-text">引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大体步骤"><span class="nav-number">1.2.</span> <span class="nav-text">大体步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#性能优化最佳实践之多线程操作"><span class="nav-number">1.</span> <span class="nav-text">性能优化最佳实践之多线程操作</span></a></li></ol></div>
             
 
           </div>
